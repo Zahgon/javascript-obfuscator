@@ -44,15 +44,7 @@ export class CustomCodeHelperFormatter implements ICustomCodeHelperFormatter {
         for (const statement of statements) {
             estraverse.replace(statement, {
                 enter: (node: ESTree.Node): ESTree.Node | void => {
-                    if (!NodeGuards.isVariableDeclarationNode(node)) {
-                        return;
-                    }
-
-                    if (this.prevailingKindOfVariables === 'var') {
-                        node.kind = 'var';
-                    }
-
-                    return node;
+                    throw new Error("STUB");
                 }
             });
         }

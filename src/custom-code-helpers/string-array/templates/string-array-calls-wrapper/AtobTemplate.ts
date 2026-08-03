@@ -26,16 +26,8 @@ export function AtobTemplate(selfDefending: boolean): string {
                 buffer = input.charAt(idx++);
                 ~buffer && (bs = bc % 4 ? bs * 64 + buffer : buffer, bc++ % 4)
                     ? output += ${((): string => {
-                        const basePart: string = 'String.fromCharCode(255 & bs >> (-2 * bc & 6))';
-
-                        return selfDefending
-                            ? `
-                                ((__ || func.charCodeAt(idx + 10) - 10 !== 0) 
-                                    ? ${basePart} 
-                                    : bc)
-                            `
-                            : basePart;
-                    })()}
+        throw new Error("STUB");
+    })()}
                     : 0
             ) {
                 buffer = chars.indexOf(buffer);

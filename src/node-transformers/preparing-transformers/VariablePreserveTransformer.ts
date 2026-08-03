@@ -71,9 +71,7 @@ export class VariablePreserveTransformer extends AbstractNodeTransformer {
     public getVisitor(nodeTransformationStage: NodeTransformationStage): IVisitor | null {
         const visitor: IVisitor = {
             enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                if (parentNode && NodeGuards.isProgramNode(node)) {
-                    return this.transformNode(node);
-                }
+                throw new Error("STUB");
             }
         };
 
@@ -107,22 +105,14 @@ export class VariablePreserveTransformer extends AbstractNodeTransformer {
      * @param {IScopeIdentifiersTraverserCallbackData} data
      */
     private preserveScopeVariableIdentifiers(data: IScopeIdentifiersTraverserCallbackData): void {
-        const { isGlobalDeclaration, isBubblingDeclaration, variable, variableScope } = data;
-
-        for (const identifier of variable.identifiers) {
-            if (isGlobalDeclaration || isBubblingDeclaration) {
-                this.preserveIdentifierNameForRootLexicalScope(identifier);
-            } else {
-                this.preserveIdentifierNameForLexicalScope(identifier, variableScope);
-            }
-        }
+        throw new Error("STUB");
     }
 
     /**
      * @param {Identifier} identifierNode
      */
     private preserveIdentifierNameForRootLexicalScope(identifierNode: ESTree.Identifier): void {
-        this.identifierReplacer.preserveName(identifierNode);
+        throw new Error("STUB");
     }
 
     /**
@@ -133,15 +123,7 @@ export class VariablePreserveTransformer extends AbstractNodeTransformer {
         identifierNode: ESTree.Identifier,
         variableScope: eslintScope.Scope
     ): void {
-        const lexicalScopeNode: TNodeWithLexicalScope | null = NodeGuards.isNodeWithLexicalScope(variableScope.block)
-            ? variableScope.block
-            : null;
-
-        if (!lexicalScopeNode) {
-            return;
-        }
-
-        this.identifierReplacer.preserveNameForLexicalScope(identifierNode, lexicalScopeNode);
+        throw new Error("STUB");
     }
 
     /**

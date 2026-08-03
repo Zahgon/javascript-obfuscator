@@ -47,15 +47,7 @@ export class EvalCallExpressionTransformer extends AbstractNodeTransformer {
     private static extractEvalStringFromCallExpressionArgument(
         node: ESTree.Expression | ESTree.SpreadElement
     ): string | null {
-        if (NodeGuards.isLiteralNode(node)) {
-            return EvalCallExpressionTransformer.extractEvalStringFromLiteralNode(node);
-        }
-
-        if (NodeGuards.isTemplateLiteralNode(node)) {
-            return EvalCallExpressionTransformer.extractEvalStringFromTemplateLiteralNode(node);
-        }
-
-        return null;
+        throw new Error("STUB");
     }
 
     /**
@@ -63,7 +55,7 @@ export class EvalCallExpressionTransformer extends AbstractNodeTransformer {
      * @returns {string | null}
      */
     private static extractEvalStringFromLiteralNode(node: ESTree.Literal): string | null {
-        return typeof node.value === 'string' ? node.value : null;
+        throw new Error("STUB");
     }
 
     /**
@@ -71,14 +63,7 @@ export class EvalCallExpressionTransformer extends AbstractNodeTransformer {
      * @returns {string | null}
      */
     private static extractEvalStringFromTemplateLiteralNode(node: ESTree.TemplateLiteral): string | null {
-        const quasis: ESTree.TemplateElement[] = node.quasis;
-        const allowedQuasisLength: number = 1;
-
-        if (quasis.length !== allowedQuasisLength || node.expressions.length) {
-            return null;
-        }
-
-        return quasis[0].value.cooked ?? null;
+        throw new Error("STUB");
     }
 
     /**
@@ -90,18 +75,14 @@ export class EvalCallExpressionTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.Preparing:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
             case NodeTransformationStage.Finalizing:
                 return {
                     leave: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode) {
-                            return this.restoreNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -189,6 +170,6 @@ export class EvalCallExpressionTransformer extends AbstractNodeTransformer {
      * @returns {boolean}
      */
     private isEvalRootAstHostNode(node: ESTree.Node): node is ESTree.FunctionExpression {
-        return NodeMetadata.isEvalHostNode(node);
+        throw new Error("STUB");
     }
 }

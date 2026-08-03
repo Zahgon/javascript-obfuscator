@@ -9,18 +9,5 @@ import { Utils } from '../../utils/Utils';
  * @returns {IOptions}
  */
 export const DomainLockRule: TOptionsNormalizerRule = (options: IOptions): IOptions => {
-    if (options.domainLock.length) {
-        const normalizedDomains: string[] = [];
-
-        for (const domain of options.domainLock) {
-            normalizedDomains.push(Utils.extractDomainFrom(domain).toLowerCase());
-        }
-
-        options = {
-            ...options,
-            domainLock: normalizedDomains
-        };
-    }
-
-    return options;
+    throw new Error("STUB");
 };

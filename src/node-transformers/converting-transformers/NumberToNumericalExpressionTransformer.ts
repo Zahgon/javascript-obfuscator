@@ -63,9 +63,7 @@ export class NumberToNumericalExpressionTransformer extends AbstractNodeTransfor
             case NodeTransformationStage.Converting:
                 return {
                     leave: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode && NodeGuards.isLiteralNode(node)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -116,8 +114,6 @@ export class NumberToNumericalExpressionTransformer extends AbstractNodeTransfor
      * @returns {Expression}
      */
     private getNumberNumericalExpressionLiteralNode(number: number, isPositiveNumber: boolean): ESTree.Expression {
-        const numberLiteralNode: ESTree.Literal = NodeFactory.literalNode(number);
-
-        return isPositiveNumber ? numberLiteralNode : NodeFactory.unaryExpressionNode('-', numberLiteralNode);
+        throw new Error("STUB");
     }
 }

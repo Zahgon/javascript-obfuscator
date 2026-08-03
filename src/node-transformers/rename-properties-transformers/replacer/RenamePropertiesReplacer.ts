@@ -76,7 +76,7 @@ export class RenamePropertiesReplacer implements IRenamePropertiesReplacer {
      * @param {string} propertyName
      */
     public excludePropertyName(propertyName: string): void {
-        this.excludedPropertyNames.add(propertyName);
+        throw new Error("STUB");
     }
 
     /**
@@ -157,7 +157,7 @@ export class RenamePropertiesReplacer implements IRenamePropertiesReplacer {
         }
 
         return this.options.reservedNames.some((reservedName: string) => {
-            return new RegExp(reservedName, 'g').exec(name) !== null;
+            throw new Error("STUB");
         });
     }
 

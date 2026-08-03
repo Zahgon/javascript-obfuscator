@@ -118,11 +118,7 @@ export class StringArrayRotateFunctionTransformer extends AbstractNodeTransforme
 
         estraverse.traverse(programNode, {
             enter: (node: ESTree.Node): estraverse.VisitorOption | void => {
-                if (NodeGuards.isLiteralNode(node) && NodeLiteralUtils.isStringLiteralNode(node)) {
-                    hasStringLiterals = true;
-
-                    return estraverse.VisitorOption.Break;
-                }
+                throw new Error("STUB");
             }
         });
 
@@ -142,15 +138,7 @@ export class StringArrayRotateFunctionTransformer extends AbstractNodeTransforme
             case NodeTransformationStage.StringArray:
                 return {
                     enter: (node: ESTree.Node): ESTree.Node | estraverse.VisitorOption => {
-                        if (!NodeGuards.isProgramNode(node)) {
-                            return node;
-                        }
-
-                        if (!StringArrayRotateFunctionTransformer.isProgramNodeHasStringLiterals(node)) {
-                            return estraverse.VisitorOption.Break;
-                        }
-
-                        return this.transformNode(node);
+                        throw new Error("STUB");
                     }
                 };
 
@@ -191,17 +179,7 @@ export class StringArrayRotateFunctionTransformer extends AbstractNodeTransforme
         // as ignored to prevent additional transformation of these nodes
         estraverse.traverse(wrappedStringArrayRotateFunctionNode, {
             enter: (node: ESTree.Node): void => {
-                if (!NodeGuards.isLiteralNode(node) || !NodeLiteralUtils.isStringLiteralNode(node)) {
-                    return;
-                }
-
-                // force add item data for string literal nodes of comparison expressions
-                // set all other nodes as ignored to prevent them from obfuscation
-                if (this.isComparisonExpressionStringLiteralNode(node)) {
-                    this.stringArrayStorageAnalyzer.addItemDataForLiteralNode(node);
-                } else {
-                    NodeMetadata.set(node, { ignoredNode: true });
-                }
+                throw new Error("STUB");
             }
         });
 
@@ -214,52 +192,7 @@ export class StringArrayRotateFunctionTransformer extends AbstractNodeTransforme
      * @returns {TStatement}
      */
     private getStringArrayRotateFunctionNode(): TStatement {
-        const comparisonValue: number = this.getComparisonValue();
-        const comparisonExpressionNumberNumericalExpressionData: TNumberNumericalExpressionData =
-            this.numberNumericalExpressionAnalyzer.analyze(
-                comparisonValue,
-                StringArrayRotateFunctionTransformer.comparisonExpressionAdditionalPartsCount
-            );
-
-        let index: number = 1;
-        const comparisonExpressionNode: ESTree.Expression =
-            NumericalExpressionDataToNodeConverter.convertIntegerNumberData(
-                comparisonExpressionNumberNumericalExpressionData,
-                (number: number, isPositiveNumber) => {
-                    const multipliedNumber: number = number * index;
-                    const literalNode: ESTree.Literal = NodeFactory.literalNode(
-                        `${multipliedNumber}${this.randomGenerator.getRandomString(6)}`
-                    );
-                    const parseIntCallExpression: ESTree.CallExpression = NodeFactory.callExpressionNode(
-                        NodeFactory.identifierNode('parseInt'),
-                        [literalNode]
-                    );
-
-                    const binaryExpressionNode: ESTree.BinaryExpression = NodeFactory.binaryExpressionNode(
-                        '/',
-                        isPositiveNumber
-                            ? parseIntCallExpression
-                            : NodeFactory.unaryExpressionNode('-', parseIntCallExpression),
-                        NodeFactory.literalNode(index, index.toString())
-                    );
-
-                    index++;
-
-                    return binaryExpressionNode;
-                }
-            );
-
-        const stringArrayRotateFunctionCodeHelper: ICustomCodeHelper<
-            TInitialData<StringArrayRotateFunctionCodeHelper>
-        > = this.customCodeHelperFactory(CustomCodeHelper.StringArrayRotateFunction);
-
-        stringArrayRotateFunctionCodeHelper.initialize(
-            this.stringArrayStorage.getStorageName(),
-            comparisonValue,
-            comparisonExpressionNode
-        );
-
-        return stringArrayRotateFunctionCodeHelper.getNode()[0];
+        throw new Error("STUB");
     }
 
     /**
@@ -267,7 +200,7 @@ export class StringArrayRotateFunctionTransformer extends AbstractNodeTransforme
      * @returns {boolean}
      */
     private isComparisonExpressionStringLiteralNode(stringLiteralNode: TStringLiteralNode): boolean {
-        return /\d/.test(stringLiteralNode.value);
+        throw new Error("STUB");
     }
 
     /**
@@ -276,6 +209,6 @@ export class StringArrayRotateFunctionTransformer extends AbstractNodeTransforme
      * @returns {number}
      */
     private getComparisonValue(): number {
-        return this.randomGenerator.getRandomInteger(100000, 1_000_000);
+        throw new Error("STUB");
     }
 }

@@ -9,9 +9,6 @@ import { CommentsTransformer } from '../../../node-transformers/initializing-tra
 
 export const initializingTransformersModule: ContainerModule = new ContainerModule(
     (options: ContainerModuleLoadOptions) => {
-        // preparing transformers
-        options.bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-            .to(CommentsTransformer)
-            .whenNamed(NodeTransformer.CommentsTransformer);
+        throw new Error("STUB");
     }
 );

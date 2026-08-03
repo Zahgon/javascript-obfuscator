@@ -24,7 +24,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isArrayPatternNode(node: ESTree.Node): node is ESTree.ArrayPattern {
-        return node.type === NodeType.ArrayPattern;
+        throw new Error("STUB");
     }
 
     /**
@@ -40,7 +40,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isAssignmentExpressionNode(node: ESTree.Node): node is ESTree.AssignmentExpression {
-        return node.type === NodeType.AssignmentExpression;
+        throw new Error("STUB");
     }
 
     /**
@@ -48,7 +48,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isAssignmentPatternNode(node: ESTree.Node): node is ESTree.AssignmentPattern {
-        return node.type === NodeType.AssignmentPattern;
+        throw new Error("STUB");
     }
 
     /**
@@ -56,7 +56,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isAwaitExpressionNode(node: ESTree.Node): node is ESTree.AwaitExpression {
-        return node.type === NodeType.AwaitExpression;
+        throw new Error("STUB");
     }
 
     /**
@@ -64,7 +64,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isBigIntLiteralNode(node: ESTree.Node): node is ESTree.BigIntLiteral {
-        return NodeGuards.isLiteralNode(node) && !!(<ESTree.BigIntLiteral>node).bigint;
+        throw new Error("STUB");
     }
 
     /**
@@ -80,7 +80,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isBreakStatementNode(node: ESTree.Node): node is ESTree.BreakStatement {
-        return node.type === NodeType.BreakStatement;
+        throw new Error("STUB");
     }
 
     /**
@@ -104,7 +104,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isClassBodyNode(node: ESTree.Node): node is ESTree.ClassBody {
-        return node.type === NodeType.ClassBody;
+        throw new Error("STUB");
     }
 
     /**
@@ -114,7 +114,7 @@ export class NodeGuards {
     public static isClassDeclarationNode(
         node: ESTree.Node
     ): node is ESTree.ClassDeclaration & { id: ESTree.Identifier } {
-        return node.type === NodeType.ClassDeclaration && node.id !== null;
+        throw new Error("STUB");
     }
 
     /**
@@ -122,7 +122,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isConditionalExpressionNode(node: ESTree.Node): node is ESTree.ConditionalExpression {
-        return node.type === NodeType.ConditionalExpression;
+        throw new Error("STUB");
     }
 
     /**
@@ -130,7 +130,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isContinueStatementNode(node: ESTree.Node): node is ESTree.ContinueStatement {
-        return node.type === NodeType.ContinueStatement;
+        throw new Error("STUB");
     }
 
     /**
@@ -138,7 +138,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isDirectiveNode(node: ESTree.Node): node is ESTree.Directive {
-        return node.type === NodeType.ExpressionStatement && 'directive' in node;
+        throw new Error("STUB");
     }
 
     /**
@@ -146,7 +146,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isDoWhileStatementNode(node: ESTree.Node): node is ESTree.DoWhileStatement {
-        return node.type === NodeType.DoWhileStatement;
+        throw new Error("STUB");
     }
 
     /**
@@ -154,7 +154,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isExportAllDeclarationNode(node: ESTree.Node): node is ESTree.ExportAllDeclaration {
-        return node.type === NodeType.ExportAllDeclaration;
+        throw new Error("STUB");
     }
 
     /**
@@ -162,7 +162,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isExportNamedDeclarationNode(node: ESTree.Node): node is ESTree.ExportNamedDeclaration {
-        return node.type === NodeType.ExportNamedDeclaration;
+        throw new Error("STUB");
     }
 
     /**
@@ -186,7 +186,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isForStatementNode(node: ESTree.Node): node is ESTree.ForStatement {
-        return node.type === NodeType.ForStatement;
+        throw new Error("STUB");
     }
 
     /**
@@ -194,7 +194,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isForInStatementNode(node: ESTree.Node): node is ESTree.ForInStatement {
-        return node.type === NodeType.ForInStatement;
+        throw new Error("STUB");
     }
 
     /**
@@ -202,7 +202,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isForOfStatementNode(node: ESTree.Node): node is ESTree.ForOfStatement {
-        return node.type === NodeType.ForOfStatement;
+        throw new Error("STUB");
     }
 
     /**
@@ -256,14 +256,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isIfStatementNodeWithSingleStatementBody(node: ESTree.Node): node is ESTree.IfStatement {
-        if (!NodeGuards.isIfStatementNode(node)) {
-            return false;
-        }
-
-        return (
-            !NodeGuards.isBlockStatementNode(node.consequent) ||
-            (!!node.alternate && !NodeGuards.isBlockStatementNode(node.alternate))
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -271,7 +264,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isImportDeclarationNode(node: ESTree.Node): node is ESTree.ImportDeclaration {
-        return node.type === NodeType.ImportDeclaration;
+        throw new Error("STUB");
     }
 
     /**
@@ -279,7 +272,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isImportExpressionNode(node: ESTree.Node): node is ESTree.ImportExpression {
-        return node.type === NodeType.ImportExpression;
+        throw new Error("STUB");
     }
 
     /**
@@ -287,7 +280,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isImportSpecifierNode(node: ESTree.Node): node is ESTree.ImportSpecifier {
-        return node.type === NodeType.ImportSpecifier;
+        throw new Error("STUB");
     }
 
     /**
@@ -296,14 +289,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isLabelIdentifierNode(node: ESTree.Node, parentNode: ESTree.Node): node is ESTree.Identifier {
-        const parentNodeIsLabeledStatementNode: boolean =
-            NodeGuards.isLabeledStatementNode(parentNode) && parentNode.label === node;
-        const parentNodeIsContinueStatementNode: boolean =
-            NodeGuards.isContinueStatementNode(parentNode) && parentNode.label === node;
-        const parentNodeIsBreakStatementNode: boolean =
-            NodeGuards.isBreakStatementNode(parentNode) && parentNode.label === node;
-
-        return parentNodeIsLabeledStatementNode || parentNodeIsContinueStatementNode || parentNodeIsBreakStatementNode;
+        throw new Error("STUB");
     }
 
     /**
@@ -327,7 +313,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isLogicalExpressionNode(node: ESTree.Node): node is ESTree.LogicalExpression {
-        return node.type === NodeType.LogicalExpression;
+        throw new Error("STUB");
     }
 
     /**
@@ -342,13 +328,7 @@ export class NodeGuards {
         | ESTree.ForOfStatement
         | ESTree.WhileStatement
         | ESTree.DoWhileStatement {
-        return (
-            NodeGuards.isForStatementNode(node) ||
-            NodeGuards.isForInStatementNode(node) ||
-            NodeGuards.isForOfStatementNode(node) ||
-            NodeGuards.isWhileStatementNode(node) ||
-            NodeGuards.isDoWhileStatementNode(node)
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -364,7 +344,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isMetaPropertyNode(node: ESTree.Node): node is ESTree.MetaProperty {
-        return node.type === NodeType.MetaProperty;
+        throw new Error("STUB");
     }
 
     /**
@@ -380,7 +360,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isNewExpressionNode(node: ESTree.Node): node is ESTree.NewExpression {
-        return node.type === NodeType.NewExpression;
+        throw new Error("STUB");
     }
 
     /**
@@ -405,11 +385,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isNodeWithBlockLexicalScope(node: ESTree.Node): node is TNodeWithLexicalScope {
-        return (
-            NodeGuards.isNodeWithLexicalScope(node) ||
-            NodeGuards.isBlockStatementNode(node) ||
-            NodeGuards.isStaticBlockNode(node)
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -424,22 +400,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isNodeWithSingleStatementBody(node: ESTree.Node): node is TNodeWithSingleStatementBody {
-        // Different approach for `IfStatement` node because this node hasn't `body` property
-        if (NodeGuards.isIfStatementNode(node)) {
-            return NodeGuards.isIfStatementNodeWithSingleStatementBody(node);
-        }
-
-        // All other nodes with `Statement` node as `body` property
-        return (
-            (NodeGuards.isForStatementNode(node) ||
-                NodeGuards.isForOfStatementNode(node) ||
-                NodeGuards.isForInStatementNode(node) ||
-                NodeGuards.isWhileStatementNode(node) ||
-                NodeGuards.isDoWhileStatementNode(node) ||
-                NodeGuards.isWithStatementNode(node) ||
-                NodeGuards.isLabeledStatementNode(node)) &&
-            !NodeGuards.isBlockStatementNode(node.body)
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -462,12 +423,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isNodeWithStatements(node: ESTree.Node): node is TNodeWithStatements {
-        return (
-            NodeGuards.isProgramNode(node) ||
-            NodeGuards.isBlockStatementNode(node) ||
-            NodeGuards.isStaticBlockNode(node) ||
-            NodeGuards.isSwitchCaseNode(node)
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -475,7 +431,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isNodeWithComments(node: ESTree.Node): node is ESTree.Node {
-        return Boolean(node.leadingComments) || Boolean(node.trailingComments);
+        throw new Error("STUB");
     }
 
     /**
@@ -483,7 +439,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isObjectPatternNode(node: ESTree.Node): node is ESTree.ObjectPattern {
-        return node.type === NodeType.ObjectPattern;
+        throw new Error("STUB");
     }
 
     /**
@@ -531,7 +487,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isRestElementNode(node: ESTree.Node): node is ESTree.RestElement {
-        return node.type === NodeType.RestElement;
+        throw new Error("STUB");
     }
 
     /**
@@ -547,7 +503,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isSequenceExpressionNode(node: ESTree.Node): node is ESTree.SequenceExpression {
-        return node.type === NodeType.SequenceExpression;
+        throw new Error("STUB");
     }
 
     /**
@@ -563,7 +519,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isStaticBlockNode(node: ESTree.Node): node is ESTree.StaticBlock {
-        return node.type === NodeType.StaticBlock;
+        throw new Error("STUB");
     }
 
     /**
@@ -571,7 +527,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isSuperNode(node: ESTree.Node): node is ESTree.Super {
-        return node.type === NodeType.Super;
+        throw new Error("STUB");
     }
 
     /**
@@ -579,7 +535,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isSwitchCaseNode(node: ESTree.Node): node is ESTree.SwitchCase {
-        return node.type === NodeType.SwitchCase;
+        throw new Error("STUB");
     }
 
     /**
@@ -587,7 +543,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isTaggedTemplateExpressionNode(node: ESTree.Node): node is ESTree.TaggedTemplateExpression {
-        return node.type === NodeType.TaggedTemplateExpression;
+        throw new Error("STUB");
     }
 
     /**
@@ -603,7 +559,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isThisExpressionNode(node: ESTree.Node): node is ESTree.ThisExpression {
-        return node.type === NodeType.ThisExpression;
+        throw new Error("STUB");
     }
 
     /**
@@ -627,7 +583,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isVariableDeclaratorNode(node: ESTree.Node): node is ESTree.VariableDeclarator {
-        return node.type === NodeType.VariableDeclarator;
+        throw new Error("STUB");
     }
 
     /**
@@ -635,7 +591,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isWithStatementNode(node: ESTree.Node): node is ESTree.WithStatement {
-        return node.type === NodeType.WithStatement;
+        throw new Error("STUB");
     }
 
     /**
@@ -643,7 +599,7 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isWhileStatementNode(node: ESTree.Node): node is ESTree.WhileStatement {
-        return node.type === NodeType.WhileStatement;
+        throw new Error("STUB");
     }
 
     /**
@@ -651,6 +607,6 @@ export class NodeGuards {
      * @returns {boolean}
      */
     public static isYieldExpressionNode(node: ESTree.Node): node is ESTree.YieldExpression {
-        return node.type === NodeType.YieldExpression;
+        throw new Error("STUB");
     }
 }

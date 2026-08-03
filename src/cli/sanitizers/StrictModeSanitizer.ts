@@ -5,9 +5,5 @@ import { TCLISanitizer } from '../../types/cli/TCLISanitizer';
  * @returns {boolean | null}
  */
 export const StrictModeSanitizer: TCLISanitizer<boolean | null> = (value: string): boolean | null => {
-    if (value === 'null') {
-        return null;
-    }
-
-    return value === 'true' || value === '1';
+    throw new Error("STUB");
 };

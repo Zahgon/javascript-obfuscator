@@ -84,20 +84,7 @@ export class CallsGraphAnalyzer implements ICallsGraphAnalyzer {
      * @returns {number}
      */
     public static getLimitIndex(blockScopeBodyLength: number): number {
-        const lastIndex: number = blockScopeBodyLength - 1;
-        const limitThresholdActivationIndex: number = CallsGraphAnalyzer.limitThresholdActivationLength - 1;
-
-        let limitIndex: number = lastIndex;
-
-        if (lastIndex > limitThresholdActivationIndex) {
-            limitIndex = Math.round(limitThresholdActivationIndex + lastIndex * CallsGraphAnalyzer.limitThreshold);
-
-            if (limitIndex > lastIndex) {
-                limitIndex = lastIndex;
-            }
-        }
-
-        return limitIndex;
+        throw new Error("STUB");
     }
 
     /**
@@ -105,7 +92,7 @@ export class CallsGraphAnalyzer implements ICallsGraphAnalyzer {
      * @returns {ICallsGraphData[]}
      */
     public analyze(astTree: ESTree.Program): ICallsGraphData[] {
-        return this.analyzeRecursive(astTree.body);
+        throw new Error("STUB");
     }
 
     /**
@@ -113,33 +100,7 @@ export class CallsGraphAnalyzer implements ICallsGraphAnalyzer {
      * @returns {ICallsGraphData[]}
      */
     private analyzeRecursive(blockScopeBody: ESTree.Node[]): ICallsGraphData[] {
-        const limitIndex: number = CallsGraphAnalyzer.getLimitIndex(blockScopeBody.length);
-        const callsGraphData: ICallsGraphData[] = [];
-        const blockScopeBodyLength: number = blockScopeBody.length;
-
-        for (let index: number = 0; index < blockScopeBodyLength; index++) {
-            if (index > limitIndex) {
-                break;
-            }
-
-            const blockScopeBodyNode: ESTree.Node = blockScopeBody[index];
-
-            estraverse.traverse(blockScopeBodyNode, {
-                enter: (node: ESTree.Node): estraverse.VisitorOption | void => {
-                    if (!NodeGuards.isCallExpressionNode(node)) {
-                        return;
-                    }
-
-                    if (blockScopeBodyNode.parentNode !== NodeStatementUtils.getParentNodeWithStatements(node)) {
-                        return estraverse.VisitorOption.Skip;
-                    }
-
-                    this.analyzeCallExpressionNode(callsGraphData, blockScopeBody, node);
-                }
-            });
-        }
-
-        return callsGraphData;
+        throw new Error("STUB");
     }
 
     /**
@@ -152,20 +113,6 @@ export class CallsGraphAnalyzer implements ICallsGraphAnalyzer {
         blockScopeBody: ESTree.Node[],
         callExpressionNode: ESTree.CallExpression
     ): void {
-        CallsGraphAnalyzer.calleeDataExtractorsList.forEach((calleeDataExtractorName: CalleeDataExtractor) => {
-            const calleeData: ICalleeData | null = this.calleeDataExtractorFactory(calleeDataExtractorName).extract(
-                blockScopeBody,
-                callExpressionNode.callee
-            );
-
-            if (!calleeData) {
-                return;
-            }
-
-            callsGraphData.push({
-                ...calleeData,
-                callsGraph: this.analyzeRecursive(calleeData.callee.body)
-            });
-        });
+        throw new Error("STUB");
     }
 }

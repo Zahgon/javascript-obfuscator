@@ -41,9 +41,7 @@ export class IfStatementSimplifyTransformer extends AbstractStatementSimplifyTra
             case NodeTransformationStage.Simplifying:
                 return {
                     leave: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode && NodeGuards.isIfStatementNode(node)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -101,57 +99,7 @@ export class IfStatementSimplifyTransformer extends AbstractStatementSimplifyTra
         ifStatementNode: ESTree.IfStatement,
         consequentSimplifyData: IStatementSimplifyData
     ): ESTree.Node {
-        /**
-         * Converts:
-         * if (true) {
-         *     const foo = 1;
-         *     console.log(1);
-         *     return 1;
-         * }
-         *
-         * to:
-         * if (true) {
-         *     const foo = 1;
-         *     return console.log(1), 1;
-         * }
-         */
-        if (consequentSimplifyData.leadingStatements.length || !consequentSimplifyData.trailingStatement) {
-            return NodeFactory.ifStatementNode(ifStatementNode.test, this.getPartialStatement(consequentSimplifyData));
-        }
-
-        /**
-         * Converts:
-         * if (true) {
-         *     return 1;
-         * }
-         *
-         * to:
-         * if (true)
-         *     return 1;
-         */
-        if (consequentSimplifyData.hasReturnStatement) {
-            return NodeFactory.ifStatementNode(
-                ifStatementNode.test,
-                consequentSimplifyData.trailingStatement.statement
-            );
-        }
-
-        /**
-         * Converts:
-         * if (true) {
-         *     console.log(1);
-         * }
-         *
-         * to:
-         * true && console.log(1);
-         */
-        return NodeFactory.expressionStatementNode(
-            NodeFactory.logicalExpressionNode(
-                '&&',
-                ifStatementNode.test,
-                consequentSimplifyData.trailingStatement.expression
-            )
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -165,94 +113,7 @@ export class IfStatementSimplifyTransformer extends AbstractStatementSimplifyTra
         consequentSimplifyData: IStatementSimplifyData,
         alternateSimplifyData: IStatementSimplifyData
     ): ESTree.Node {
-        /**
-         * Converts:
-         * if (true) {
-         *     const foo = 1;
-         *     console.log(1);
-         *     return 1;
-         * }
-         *
-         * to:
-         * if (true) {
-         *     const foo = 1;
-         *     return console.log(1), 1;
-         * }
-         */
-        if (
-            consequentSimplifyData.leadingStatements.length ||
-            alternateSimplifyData.leadingStatements.length ||
-            !consequentSimplifyData.trailingStatement ||
-            !alternateSimplifyData.trailingStatement
-        ) {
-            return NodeFactory.ifStatementNode(
-                ifStatementNode.test,
-                this.getPartialStatement(consequentSimplifyData),
-                this.getPartialStatement(alternateSimplifyData)
-            );
-        }
-
-        /**
-         * Converts:
-         * if (true) {
-         *     return 1;
-         * } else {
-         *     return 2;
-         * }
-         *
-         * to:
-         * return true ? 1 : 2;
-         */
-        if (consequentSimplifyData.hasReturnStatement && alternateSimplifyData.hasReturnStatement) {
-            return NodeFactory.returnStatementNode(
-                NodeFactory.conditionalExpressionNode(
-                    ifStatementNode.test,
-                    consequentSimplifyData.trailingStatement.expression,
-                    alternateSimplifyData.trailingStatement.expression
-                )
-            );
-        }
-
-        /**
-         * Converts:
-         * if (true) {
-         *     return 1;
-         * } else {
-         *     console.log(2);
-         * }
-         *
-         * to:
-         * if (true)
-         *     return 1;
-         * else
-         *     console.log(2);
-         */
-        if (consequentSimplifyData.hasReturnStatement || alternateSimplifyData.hasReturnStatement) {
-            return NodeFactory.ifStatementNode(
-                ifStatementNode.test,
-                consequentSimplifyData.trailingStatement.statement,
-                alternateSimplifyData.trailingStatement.statement
-            );
-        }
-
-        /**
-         * Converts:
-         * if (true) {
-         *     console.log(1);
-         * } else {
-         *     console.log(2);
-         * }
-         *
-         * to:
-         * true ? console.log(1) : console.log(2);
-         */
-        return NodeFactory.expressionStatementNode(
-            NodeFactory.conditionalExpressionNode(
-                ifStatementNode.test,
-                consequentSimplifyData.trailingStatement.expression,
-                alternateSimplifyData.trailingStatement.expression
-            )
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -260,16 +121,7 @@ export class IfStatementSimplifyTransformer extends AbstractStatementSimplifyTra
      * @returns {ESTree.Statement}
      */
     protected override getPartialStatement(statementSimplifyData: IStatementSimplifyData): ESTree.Statement {
-        const partialStatement: ESTree.Statement = super.getPartialStatement(statementSimplifyData);
-
-        if (!NodeGuards.isBlockStatementNode(partialStatement)) {
-            return partialStatement;
-        }
-
-        return partialStatement.body.length === 1 &&
-            !this.isProhibitedSingleStatementForIfStatementBranch(partialStatement.body[0])
-            ? partialStatement.body[0]
-            : partialStatement;
+        throw new Error("STUB");
     }
 
     /**
@@ -277,47 +129,6 @@ export class IfStatementSimplifyTransformer extends AbstractStatementSimplifyTra
      * @returns {boolean}
      */
     protected isProhibitedSingleStatementForIfStatementBranch(statement: ESTree.Statement): boolean {
-        /**
-         * Function declaration is not allowed outside of block in `strict` mode
-         */
-        return (
-            NodeGuards.isFunctionDeclarationNode(statement) ||
-            /**
-             * Have to ignore all `IfStatement` nodes
-             * Also have to ignore any nodes with a single statement as a `body`
-             * Without ignore it can break following code:
-             * Input:
-             * if (condition1) {
-             *     if (condition2) {
-             *         var foo = bar();
-             *     }
-             * } else {
-             *     var baz = bark();
-             * }
-             *
-             * Invalid output:
-             * if (condition1)
-             *     if (condition2)
-             *         var foo = bar();
-             *     else
-             *         var baz = bark();
-             *
-             * See issue: https://github.com/javascript-obfuscator/javascript-obfuscator/issues/860
-             */
-            NodeGuards.isIfStatementNode(statement) ||
-            NodeGuards.isNodeWithSingleStatementBody(statement) ||
-            /**
-             * `let` and `const` variable declarations are not allowed outside of `IfStatement` block statement
-             * Input:
-             * if (condition1) {
-             *     const foo = 1;
-             * }
-             *
-             * Invalid output with runtime error:
-             * if (condition1)
-             *     const foo = 1;
-             */
-            (NodeGuards.isVariableDeclarationNode(statement) && statement.kind !== 'var')
-        );
+        throw new Error("STUB");
     }
 }

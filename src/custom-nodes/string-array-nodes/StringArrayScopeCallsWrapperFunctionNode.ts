@@ -106,7 +106,7 @@ export class StringArrayScopeCallsWrapperFunctionNode extends AbstractStringArra
                   AbstractStringArrayCallNode.stringArrayRootCallsWrapperParametersCount
                 : // scope string array calls wrapper
                   this.options.stringArrayWrappersParametersMaxCount,
-            () => this.getFakeParameterNode()
+            () => { throw new Error("STUB"); }
         );
         parameters.splice(
             this.stringArrayScopeCallsWrapperData.parameterIndexesData?.valueIndexParameterIndex ?? 0,
@@ -128,7 +128,7 @@ export class StringArrayScopeCallsWrapperFunctionNode extends AbstractStringArra
                 : // scope string array calls wrapper
                   this.options.stringArrayWrappersParametersMaxCount,
             (index: number) =>
-                this.getUpperStringArrayCallNode(parameters[index], this.getFakeUpperStringArrayIndexNode())
+                { throw new Error("STUB"); }
         );
 
         callExpressionArgs.splice(

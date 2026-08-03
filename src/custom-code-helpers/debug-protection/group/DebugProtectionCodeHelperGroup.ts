@@ -63,73 +63,7 @@ export class DebugProtectionCodeHelperGroup extends AbstractCustomCodeHelperGrou
      * @param {ICallsGraphData[]} callsGraphData
      */
     public appendOnPreparingStage(nodeWithStatements: TNodeWithStatements, callsGraphData: ICallsGraphData[]): void {
-        if (!this.options.debugProtection) {
-            return;
-        }
-
-        const randomCallsGraphIndex: number = this.getRandomCallsGraphIndex(callsGraphData.length);
-
-        const debugProtectionFunctionCallHostNode: TNodeWithStatements = callsGraphData.length
-            ? NodeAppender.getOptimalBlockScope(callsGraphData, randomCallsGraphIndex)
-            : nodeWithStatements;
-        const callsControllerHostNode: TNodeWithStatements = callsGraphData.length
-            ? NodeAppender.getOptimalBlockScope(callsGraphData, randomCallsGraphIndex, 1)
-            : nodeWithStatements;
-
-        const debugProtectionFunctionCallScopeNode: TNodeWithLexicalScope | null =
-            NodeLexicalScopeUtils.getLexicalScope(debugProtectionFunctionCallHostNode) ?? null;
-
-        const debugProtectionFunctionName: string = debugProtectionFunctionCallScopeNode
-            ? this.identifierNamesGenerator.generate(debugProtectionFunctionCallScopeNode)
-            : this.identifierNamesGenerator.generateNext();
-        const callsControllerFunctionName: string = debugProtectionFunctionCallScopeNode
-            ? this.identifierNamesGenerator.generate(debugProtectionFunctionCallScopeNode)
-            : this.identifierNamesGenerator.generateNext();
-
-        // debugProtectionFunctionCall helper nodes append
-        this.appendCustomNodeIfExist(
-            CustomCodeHelper.DebugProtectionFunctionCall,
-            (customCodeHelper: ICustomCodeHelper<TInitialData<DebugProtectionFunctionCallCodeHelper>>) => {
-                customCodeHelper.initialize(debugProtectionFunctionName, callsControllerFunctionName);
-
-                NodeAppender.prepend(debugProtectionFunctionCallHostNode, customCodeHelper.getNode());
-            }
-        );
-
-        // nodeCallsControllerFunction helper nodes append
-        this.appendCustomNodeIfExist(
-            CustomCodeHelper.CallsControllerFunction,
-            (customCodeHelper: ICustomCodeHelper<TInitialData<CallsControllerFunctionCodeHelper>>) => {
-                customCodeHelper.initialize(NodeTransformationStage.Preparing, callsControllerFunctionName);
-
-                NodeAppender.prepend(callsControllerHostNode, customCodeHelper.getNode());
-            }
-        );
-
-        // debugProtectionFunction helper nodes append
-        this.appendCustomNodeIfExist(
-            CustomCodeHelper.DebugProtectionFunction,
-            (customCodeHelper: ICustomCodeHelper<TInitialData<DebugProtectionFunctionCodeHelper>>) => {
-                customCodeHelper.initialize(debugProtectionFunctionName);
-
-                NodeAppender.append(nodeWithStatements, customCodeHelper.getNode());
-            }
-        );
-
-        // debugProtectionFunctionInterval helper nodes append
-        this.appendCustomNodeIfExist(
-            CustomCodeHelper.DebugProtectionFunctionInterval,
-            (customCodeHelper: ICustomCodeHelper<TInitialData<DebugProtectionFunctionIntervalCodeHelper>>) => {
-                const programBodyLength: number = NodeGuards.isSwitchCaseNode(nodeWithStatements)
-                    ? nodeWithStatements.consequent.length
-                    : nodeWithStatements.body.length;
-                const randomIndex: number = this.randomGenerator.getRandomInteger(0, programBodyLength);
-
-                customCodeHelper.initialize(debugProtectionFunctionName, this.options.debugProtectionInterval);
-
-                NodeAppender.insertAtIndex(nodeWithStatements, customCodeHelper.getNode(), randomIndex);
-            }
-        );
+        throw new Error("STUB");
     }
 
     public initialize(): void {

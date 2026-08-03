@@ -62,13 +62,7 @@ export abstract class WeakMapStorage<K extends object, V> implements IWeakMapSto
      * @returns {V}
      */
     public getOrThrow(key: K): V {
-        const value: V | undefined = this.get(key);
-
-        if (!value) {
-            throw new Error(`No value found in weak map storage with key \`${key}\``);
-        }
-
-        return value;
+        throw new Error("STUB");
     }
 
     /**

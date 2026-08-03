@@ -11,12 +11,6 @@ import { RenamePropertiesTransformer } from '../../../node-transformers/rename-p
 
 export const renamePropertiesTransformersModule: ContainerModule = new ContainerModule(
     (options: ContainerModuleLoadOptions) => {
-        // rename properties transformers
-        options.bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-            .to(RenamePropertiesTransformer)
-            .whenNamed(NodeTransformer.RenamePropertiesTransformer);
-
-        // rename properties obfuscating replacer
-        options.bind<IRenamePropertiesReplacer>(ServiceIdentifiers.IRenamePropertiesReplacer).to(RenamePropertiesReplacer);
+        throw new Error("STUB");
     }
 );

@@ -97,7 +97,7 @@ export class MangledIdentifierNamesGenerator extends AbstractIdentifierNamesGene
      * @returns {string}
      */
     public generateForGlobalScope(nameLength?: number): string {
-        return this.generateForGlobalScopeInternal((name) => this.isValidIdentifierName(name));
+        return this.generateForGlobalScopeInternal((name) => { throw new Error("STUB"); });
     }
 
     /**
@@ -105,7 +105,7 @@ export class MangledIdentifierNamesGenerator extends AbstractIdentifierNamesGene
      * @returns {string}
      */
     public generateForGlobalScopeWithAllScopesValidation(nameLength?: number): string {
-        return this.generateForGlobalScopeInternal((name) => this.isValidIdentifierNameInAllScopes(name));
+        return this.generateForGlobalScopeInternal((name) => { throw new Error("STUB"); });
     }
 
     /**
@@ -122,7 +122,7 @@ export class MangledIdentifierNamesGenerator extends AbstractIdentifierNamesGene
         const lastMangledNameForScope: string = this.getLastMangledNameForScopes(lexicalScopes);
         const identifierName: string = this.generateNewMangledName(
             lastMangledNameForScope,
-            (newIdentifierName: string) => this.isValidIdentifierNameInLexicalScopes(newIdentifierName, lexicalScopes)
+            (newIdentifierName: string) => { throw new Error("STUB"); }
         );
 
         this.lastMangledNameForScopeMap.set(lexicalScopeNode, identifierName);
@@ -317,9 +317,7 @@ export class MangledIdentifierNamesGenerator extends AbstractIdentifierNamesGene
         const identifierName: string = this.generateNewMangledName(
             this.lastMangledName,
             (newIdentifierName: string) => {
-                const identifierNameWithPrefix: string = `${prefix}${newIdentifierName}`;
-
-                return validationFn(identifierNameWithPrefix);
+                throw new Error("STUB");
             }
         );
         const identifierNameWithPrefix: string = `${prefix}${identifierName}`;

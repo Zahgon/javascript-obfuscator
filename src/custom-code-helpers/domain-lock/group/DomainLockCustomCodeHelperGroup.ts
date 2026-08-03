@@ -60,48 +60,7 @@ export class DomainLockCustomCodeHelperGroup extends AbstractCustomCodeHelperGro
      * @param {ICallsGraphData[]} callsGraphData
      */
     public appendOnPreparingStage(nodeWithStatements: TNodeWithStatements, callsGraphData: ICallsGraphData[]): void {
-        if (!this.options.domainLock.length) {
-            return;
-        }
-
-        const randomCallsGraphIndex: number = this.getRandomCallsGraphIndex(callsGraphData.length);
-
-        const domainLockFunctionHostNode: TNodeWithStatements = callsGraphData.length
-            ? NodeAppender.getOptimalBlockScope(callsGraphData, randomCallsGraphIndex)
-            : nodeWithStatements;
-        const callsControllerHostNode: TNodeWithStatements = callsGraphData.length
-            ? NodeAppender.getOptimalBlockScope(callsGraphData, randomCallsGraphIndex, 1)
-            : nodeWithStatements;
-
-        const domainLockFunctionLexicalScopeNode: TNodeWithLexicalScope | null =
-            NodeLexicalScopeUtils.getLexicalScope(domainLockFunctionHostNode) ?? null;
-
-        const domainLockFunctionName: string = domainLockFunctionLexicalScopeNode
-            ? this.identifierNamesGenerator.generate(domainLockFunctionLexicalScopeNode)
-            : this.identifierNamesGenerator.generateNext();
-        const callsControllerFunctionName: string = domainLockFunctionLexicalScopeNode
-            ? this.identifierNamesGenerator.generate(domainLockFunctionLexicalScopeNode)
-            : this.identifierNamesGenerator.generateNext();
-
-        // domainLock helper nodes append
-        this.appendCustomNodeIfExist(
-            CustomCodeHelper.DomainLock,
-            (customCodeHelper: ICustomCodeHelper<TInitialData<DomainLockCodeHelper>>) => {
-                customCodeHelper.initialize(callsControllerFunctionName, domainLockFunctionName);
-
-                NodeAppender.prepend(domainLockFunctionHostNode, customCodeHelper.getNode());
-            }
-        );
-
-        // nodeCallsControllerFunction helper nodes append
-        this.appendCustomNodeIfExist(
-            CustomCodeHelper.CallsControllerFunction,
-            (customCodeHelper: ICustomCodeHelper<TInitialData<CallsControllerFunctionCodeHelper>>) => {
-                customCodeHelper.initialize(NodeTransformationStage.Preparing, callsControllerFunctionName);
-
-                NodeAppender.prepend(callsControllerHostNode, customCodeHelper.getNode());
-            }
-        );
+        throw new Error("STUB");
     }
 
     public initialize(): void {

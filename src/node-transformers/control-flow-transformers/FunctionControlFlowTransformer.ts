@@ -127,9 +127,7 @@ export class FunctionControlFlowTransformer extends AbstractNodeTransformer {
                         node: ESTree.Node,
                         parentNode: ESTree.Node | null
                     ): ESTree.Node | estraverse.VisitorOption | void => {
-                        if (parentNode && NodeGuards.isFunctionNode(node)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -171,10 +169,7 @@ export class FunctionControlFlowTransformer extends AbstractNodeTransformer {
      * @param {IControlFlowStorage} controlFlowStorage
      */
     protected transformFunctionBody(functionNode: ESTree.Function, controlFlowStorage: IControlFlowStorage): void {
-        estraverse.replace(functionNode.body, {
-            enter: (node: ESTree.Node, parentNode: ESTree.Node | null): estraverse.VisitorOption | ESTree.Node =>
-                this.transformFunctionBodyNode(node, parentNode, functionNode, controlFlowStorage)
-        });
+        throw new Error("STUB");
     }
 
     /**
@@ -190,31 +185,7 @@ export class FunctionControlFlowTransformer extends AbstractNodeTransformer {
         functionNode: ESTree.Function,
         controlFlowStorage: IControlFlowStorage
     ): estraverse.VisitorOption | ESTree.Node {
-        const shouldSkipTraverse = !parentNode || NodeMetadata.isIgnoredNode(node) || this.isVisitedFunctionNode(node);
-
-        if (shouldSkipTraverse) {
-            return estraverse.VisitorOption.Skip;
-        }
-
-        const controlFlowReplacerName: ControlFlowReplacer | null = this.controlFlowReplacersMap.get(node.type) ?? null;
-
-        if (!controlFlowReplacerName) {
-            return node;
-        }
-
-        if (!this.isAllowedTransformationByThreshold()) {
-            return node;
-        }
-
-        const replacedNode: ESTree.Node = this.controlFlowReplacerFactory(controlFlowReplacerName).replace(
-            node,
-            parentNode,
-            controlFlowStorage
-        );
-
-        NodeUtils.parentizeNode(replacedNode, parentNode);
-
-        return replacedNode;
+        throw new Error("STUB");
     }
 
     /**
@@ -222,24 +193,7 @@ export class FunctionControlFlowTransformer extends AbstractNodeTransformer {
      * @returns {TNodeWithStatements}
      */
     protected getHostNode(functionNodeBody: ESTree.BlockStatement): TNodeWithStatements {
-        const blockScopesOfNode: TNodeWithStatements[] =
-            NodeStatementUtils.getParentNodesWithStatements(functionNodeBody);
-
-        if (blockScopesOfNode.length === 1) {
-            return functionNodeBody;
-        } else {
-            blockScopesOfNode.pop();
-        }
-
-        if (blockScopesOfNode.length > FunctionControlFlowTransformer.hostNodeSearchMinDepth) {
-            blockScopesOfNode.splice(0, FunctionControlFlowTransformer.hostNodeSearchMinDepth);
-        }
-
-        if (blockScopesOfNode.length > FunctionControlFlowTransformer.hostNodeSearchMaxDepth) {
-            blockScopesOfNode.length = FunctionControlFlowTransformer.hostNodeSearchMaxDepth;
-        }
-
-        return this.randomGenerator.getRandomGenerator().pickone(blockScopesOfNode);
+        throw new Error("STUB");
     }
 
     /**
@@ -247,26 +201,7 @@ export class FunctionControlFlowTransformer extends AbstractNodeTransformer {
      * @returns {TControlFlowStorage}
      */
     protected getControlFlowStorage(hostNode: TNodeWithStatements): IControlFlowStorage {
-        let controlFlowStorage: IControlFlowStorage;
-
-        const hostControlFlowStorage: IControlFlowStorage | null = this.controlFlowData.get(hostNode) ?? null;
-
-        if (!hostControlFlowStorage) {
-            controlFlowStorage = this.controlFlowStorageFactory();
-        } else {
-            const existingControlFlowStorageNode: ESTree.VariableDeclaration | null =
-                this.hostNodesWithControlFlowNode.get(hostNode) ?? null;
-
-            if (existingControlFlowStorageNode) {
-                NodeAppender.remove(hostNode, existingControlFlowStorageNode);
-            }
-
-            controlFlowStorage = hostControlFlowStorage;
-        }
-
-        this.controlFlowData.set(hostNode, controlFlowStorage);
-
-        return controlFlowStorage;
+        throw new Error("STUB");
     }
 
     /**
@@ -274,20 +209,7 @@ export class FunctionControlFlowTransformer extends AbstractNodeTransformer {
      * @returns {VariableDeclaration}
      */
     protected getControlFlowStorageNode(controlFlowStorage: IControlFlowStorage): ESTree.VariableDeclaration {
-        const controlFlowStorageCustomNode: ICustomNode<TInitialData<ControlFlowStorageNode>> =
-            this.controlFlowCustomNodeFactory(ControlFlowCustomNode.ControlFlowStorageNode);
-
-        controlFlowStorageCustomNode.initialize(controlFlowStorage);
-
-        const controlFlowStorageNode: ESTree.Node = controlFlowStorageCustomNode.getNode()[0];
-
-        if (!NodeGuards.isVariableDeclarationNode(controlFlowStorageNode)) {
-            throw new Error(
-                '`controlFlowStorageNode` should contain `VariableDeclaration` node with control flow storage object'
-            );
-        }
-
-        return controlFlowStorageNode;
+        throw new Error("STUB");
     }
 
     /**
@@ -298,10 +220,7 @@ export class FunctionControlFlowTransformer extends AbstractNodeTransformer {
         hostNode: TNodeWithStatements,
         controlFlowStorageNode: ESTree.VariableDeclaration
     ): void {
-        NodeUtils.parentizeAst(controlFlowStorageNode);
-        NodeAppender.prepend(hostNode, [controlFlowStorageNode]);
-
-        this.hostNodesWithControlFlowNode.set(hostNode, controlFlowStorageNode);
+        throw new Error("STUB");
     }
 
     /**
@@ -309,13 +228,13 @@ export class FunctionControlFlowTransformer extends AbstractNodeTransformer {
      * @returns {boolean}
      */
     protected isVisitedFunctionNode(node: ESTree.Node): boolean {
-        return NodeGuards.isFunctionNode(node) && this.visitedFunctionNodes.has(node);
+        throw new Error("STUB");
     }
 
     /**
      * @returns {boolean}
      */
     protected isAllowedTransformationByThreshold(): boolean {
-        return this.randomGenerator.getMathRandom() <= this.options.controlFlowFlatteningThreshold;
+        throw new Error("STUB");
     }
 }

@@ -43,9 +43,7 @@ export class ObjectExpressionTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.Converting:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode && NodeGuards.isObjectExpressionNode(node)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -61,19 +59,7 @@ export class ObjectExpressionTransformer extends AbstractNodeTransformer {
      */
     public transformNode(objectExpressionNode: ESTree.ObjectExpression, parentNode: ESTree.Node): ESTree.Node {
         objectExpressionNode.properties.forEach((property: ESTree.Property | ESTree.SpreadElement) => {
-            if (!NodeGuards.isPropertyNode(property)) {
-                return;
-            }
-
-            if (!property.key) {
-                return;
-            }
-
-            if (property.computed) {
-                this.transformComputedProperty(property);
-            } else {
-                this.transformBaseProperty(property);
-            }
+            throw new Error("STUB");
         });
 
         return objectExpressionNode;
@@ -83,25 +69,13 @@ export class ObjectExpressionTransformer extends AbstractNodeTransformer {
      * @param {Property} property
      */
     private transformComputedProperty(property: ESTree.Property): void {
-        if (!NodeGuards.isLiteralNode(property.key) || !(typeof property.key.value === 'string')) {
-            return;
-        }
-
-        property.key = NodeFactory.literalNode(property.key.value);
+        throw new Error("STUB");
     }
 
     /**
      * @param {Property} property
      */
     private transformBaseProperty(property: ESTree.Property): void {
-        if (property.shorthand) {
-            property.shorthand = false;
-        }
-
-        if (!NodeGuards.isIdentifierNode(property.key)) {
-            return;
-        }
-
-        property.key = NodeFactory.literalNode(property.key.name);
+        throw new Error("STUB");
     }
 }

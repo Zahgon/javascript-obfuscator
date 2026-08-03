@@ -52,9 +52,7 @@ export class ExpressionStatementsMergeTransformer extends AbstractNodeTransforme
                         node: ESTree.Node,
                         parentNode: ESTree.Node | null
                     ): ESTree.Node | estraverse.VisitorOption | undefined => {
-                        if (parentNode && NodeGuards.isExpressionStatementNode(node)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 

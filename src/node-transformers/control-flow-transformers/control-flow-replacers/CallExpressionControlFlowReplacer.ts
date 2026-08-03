@@ -79,7 +79,7 @@ export class CallExpressionControlFlowReplacer extends AbstractControlFlowReplac
         // would drop the `?.` short-circuit and crash on undefined callees (issue #1408).
         const argumentsShape: string = expressionArguments
             .map((argument: ESTree.Expression | ESTree.SpreadElement): string =>
-                NodeGuards.isSpreadElementNode(argument) ? 's' : 'p'
+                { throw new Error("STUB"); }
             )
             .join('');
         const replacerId: string = `${argumentsShape}-${isChainExpressionParent ? 'optional' : 'standard'}`;

@@ -9,21 +9,5 @@ import { DEFAULT_PRESET } from '../presets/Default';
  * @returns {IOptions}
  */
 export const DeadCodeInjectionRule: TOptionsNormalizerRule = (options: IOptions): IOptions => {
-    if (options.deadCodeInjection) {
-        options = {
-            ...options,
-            deadCodeInjection: true,
-            stringArray: true
-        };
-
-        if (!options.stringArrayThreshold) {
-            options = {
-                ...options,
-                stringArray: true,
-                stringArrayThreshold: <number>DEFAULT_PRESET.stringArrayThreshold
-            };
-        }
-    }
-
-    return options;
+    throw new Error("STUB");
 };

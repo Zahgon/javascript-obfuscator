@@ -72,9 +72,7 @@ export class ScopeThroughIdentifiersTransformer extends AbstractNodeTransformer 
             case NodeTransformationStage.RenameIdentifiers:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode && NodeGuards.isProgramNode(node)) {
-                            return this.transformNode(node);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -91,9 +89,7 @@ export class ScopeThroughIdentifiersTransformer extends AbstractNodeTransformer 
         this.scopeIdentifiersTraverser.traverseScopeThroughIdentifiers(
             programNode,
             (data: IScopeThroughIdentifiersTraverserCallbackData) => {
-                const { reference, variableLexicalScopeNode } = data;
-
-                this.transformScopeThroughIdentifiers(reference, variableLexicalScopeNode);
+                throw new Error("STUB");
             },
             false
         );
@@ -109,21 +105,13 @@ export class ScopeThroughIdentifiersTransformer extends AbstractNodeTransformer 
         reference: eslintScope.Reference,
         lexicalScopeNode: TNodeWithLexicalScope
     ): void {
-        if (reference.resolved) {
-            return;
-        }
-
-        this.replaceIdentifierName(reference);
+        throw new Error("STUB");
     }
 
     /**
      * @param {Variable} reference
      */
     protected replaceIdentifierName(reference: eslintScope.Reference): void {
-        const identifier: ESTree.Identifier = reference.identifier;
-        const newIdentifier: ESTree.Identifier = this.throughIdentifierReplacer.replace(identifier);
-
-        // rename of identifier
-        reference.identifier.name = newIdentifier.name;
+        throw new Error("STUB");
     }
 }

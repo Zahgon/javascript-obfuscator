@@ -76,27 +76,7 @@ export class StringArrayStorageAnalyzer implements IStringArrayStorageAnalyzer {
      * @param {Program} astTree
      */
     public analyze(astTree: ESTree.Program): void {
-        if (!this.options.stringArray) {
-            return;
-        }
-
-        estraverse.traverse(astTree, {
-            enter: (node: ESTree.Node, parentNode: ESTree.Node | null): estraverse.VisitorOption | void => {
-                if (!parentNode) {
-                    return;
-                }
-
-                if (NodeMetadata.isIgnoredNode(node)) {
-                    return estraverse.VisitorOption.Skip;
-                }
-
-                if (!NodeGuards.isLiteralNode(node)) {
-                    return;
-                }
-
-                this.analyzeLiteralNode(node, parentNode);
-            }
-        });
+        throw new Error("STUB");
     }
 
     /**
@@ -104,26 +84,14 @@ export class StringArrayStorageAnalyzer implements IStringArrayStorageAnalyzer {
      * @param {Node} parentNode
      */
     public analyzeLiteralNode(literalNode: ESTree.Literal, parentNode: ESTree.Node): void {
-        if (!NodeLiteralUtils.isStringLiteralNode(literalNode)) {
-            return;
-        }
-
-        if (NodeLiteralUtils.isProhibitedLiteralNode(literalNode, parentNode)) {
-            return;
-        }
-
-        if (!this.shouldAddValueToStringArray(literalNode)) {
-            return;
-        }
-
-        this.addItemDataForLiteralNode(literalNode);
+        throw new Error("STUB");
     }
 
     /**
      * @param {TStringLiteralNode} literalNode
      */
     public addItemDataForLiteralNode(literalNode: TStringLiteralNode): void {
-        this.stringArrayStorageData.set(literalNode, this.stringArrayStorage.getOrThrow(literalNode.value));
+        throw new Error("STUB");
     }
 
     /**
@@ -131,7 +99,7 @@ export class StringArrayStorageAnalyzer implements IStringArrayStorageAnalyzer {
      * @returns {IStringArrayStorageItemData | undefined}
      */
     public getItemDataForLiteralNode(literalNode: ESTree.Literal): IStringArrayStorageItemData | undefined {
-        return this.stringArrayStorageData.get(literalNode);
+        throw new Error("STUB");
     }
 
     /**
@@ -139,25 +107,7 @@ export class StringArrayStorageAnalyzer implements IStringArrayStorageAnalyzer {
      * @returns {boolean}
      */
     private shouldAddValueToStringArray(literalNode: TStringLiteralNode): boolean {
-        // `base64` and `rc4` encodings rely on `encodeURIComponent`/`decodeURIComponent`, which cannot
-        // represent lone (unpaired) surrogate code units. Keeping such values inline avoids a
-        // `URIError: URI malformed` crash while still producing valid obfuscated code.
-        // Fixes https://github.com/javascript-obfuscator/javascript-obfuscator/issues/1431
-        if (this.isProhibitedStringArrayValue(literalNode.value)) {
-            return false;
-        }
-
-        const isForceTransformNode: boolean = NodeMetadata.isForceTransformNode(literalNode);
-
-        if (isForceTransformNode) {
-            return true;
-        }
-
-        return (
-            literalNode.value.length >= StringArrayStorageAnalyzer.minimumLengthForStringArray &&
-            !!this.options.stringArrayThreshold &&
-            this.randomGenerator.getMathRandom() <= this.options.stringArrayThreshold
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -165,11 +115,6 @@ export class StringArrayStorageAnalyzer implements IStringArrayStorageAnalyzer {
      * @returns {boolean}
      */
     private isProhibitedStringArrayValue(value: string): boolean {
-        const hasUnicodeEncoding: boolean = this.options.stringArrayEncoding.some(
-            (encoding: TStringArrayEncoding): boolean =>
-                encoding === StringArrayEncoding.Base64 || encoding === StringArrayEncoding.Rc4
-        );
-
-        return hasUnicodeEncoding && StringArrayStorageAnalyzer.loneSurrogateRegExp.test(value);
+        throw new Error("STUB");
     }
 }

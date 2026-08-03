@@ -91,9 +91,7 @@ export class StringArrayControlFlowTransformer extends FunctionControlFlowTransf
                         node: ESTree.Node,
                         parentNode: ESTree.Node | null
                     ): ESTree.Node | estraverse.VisitorOption | void => {
-                        if (parentNode && NodeGuards.isFunctionNode(node)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -115,14 +113,7 @@ export class StringArrayControlFlowTransformer extends FunctionControlFlowTransf
         functionNode: ESTree.Function,
         controlFlowStorage: IControlFlowStorage
     ): estraverse.VisitorOption | ESTree.Node {
-        const isControlFlowStorageNode =
-            NodeGuards.isVariableDeclarationNode(node) && this.controlFlowStorageNodes.has(node);
-
-        if (isControlFlowStorageNode) {
-            return estraverse.VisitorOption.Skip;
-        }
-
-        return super.transformFunctionBodyNode(node, parentNode, functionNode, controlFlowStorage);
+        throw new Error("STUB");
     }
 
     /**
@@ -130,7 +121,7 @@ export class StringArrayControlFlowTransformer extends FunctionControlFlowTransf
      * @returns {TControlFlowStorage}
      */
     protected override getControlFlowStorage(hostNode: TNodeWithStatements): IControlFlowStorage {
-        return this.controlFlowStorageFactory();
+        throw new Error("STUB");
     }
 
     /**
@@ -141,15 +132,13 @@ export class StringArrayControlFlowTransformer extends FunctionControlFlowTransf
         hostNode: TNodeWithStatements,
         controlFlowStorageNode: ESTree.VariableDeclaration
     ): void {
-        super.appendControlFlowStorageNode(hostNode, controlFlowStorageNode);
-
-        this.controlFlowStorageNodes.add(controlFlowStorageNode);
+        throw new Error("STUB");
     }
 
     /**
      * @returns {boolean}
      */
     protected override isAllowedTransformationByThreshold(): boolean {
-        return this.randomGenerator.getMathRandom() <= this.options.stringArrayCallsTransformThreshold;
+        throw new Error("STUB");
     }
 }

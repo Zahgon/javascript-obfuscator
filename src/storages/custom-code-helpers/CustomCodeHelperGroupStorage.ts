@@ -52,10 +52,7 @@ export class CustomCodeHelperGroupStorage extends MapStorage<string, ICustomCode
 
         CustomCodeHelperGroupStorage.customCodeHelperGroupsList.forEach(
             (customCodeHelperGroupName: CustomCodeHelperGroup) => {
-                const customCodeHelperGroup: ICustomCodeHelperGroup =
-                    this.customCodeHelperGroupFactory(customCodeHelperGroupName);
-
-                this.storage.set(customCodeHelperGroupName, customCodeHelperGroup);
+                throw new Error("STUB");
             }
         );
     }

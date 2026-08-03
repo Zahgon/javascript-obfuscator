@@ -62,9 +62,7 @@ export class DirectivePlacementTransformer extends AbstractNodeTransformer {
                         node: ESTree.Node,
                         parentNode: ESTree.Node | null
                     ): ESTree.Node | estraverse.VisitorOption | undefined => {
-                        if (parentNode && NodeGuards.isNodeWithLexicalScopeStatements(node, parentNode)) {
-                            return this.analyzeNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -74,9 +72,7 @@ export class DirectivePlacementTransformer extends AbstractNodeTransformer {
                         node: ESTree.Node,
                         parentNode: ESTree.Node | null
                     ): ESTree.Node | estraverse.VisitorOption | undefined => {
-                        if (parentNode && NodeGuards.isNodeWithLexicalScopeStatements(node, parentNode)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -129,7 +125,7 @@ export class DirectivePlacementTransformer extends AbstractNodeTransformer {
             NodeAppender.prepend(nodeWithLexicalScopeStatements, [newDirectiveNode]);
 
             nodeWithLexicalScopeStatements.body = nodeWithLexicalScopeStatements.body.filter(
-                (node) => node !== directiveNode
+                (node) => { throw new Error("STUB"); }
             );
         }
 

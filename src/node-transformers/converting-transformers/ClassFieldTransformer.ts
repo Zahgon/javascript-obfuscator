@@ -57,12 +57,7 @@ export class ClassFieldTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.Converting:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (
-                            parentNode &&
-                            (NodeGuards.isMethodDefinitionNode(node) || NodeGuards.isPropertyDefinitionNode(node))
-                        ) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -96,11 +91,7 @@ export class ClassFieldTransformer extends AbstractNodeTransformer {
      * @returns {boolean}
      */
     private isIgnoredName(name: string): boolean {
-        if (name === ClassFieldTransformer.ignoredName) {
-            return true;
-        }
-
-        return IdentifierReplacer.isReservedName(name, this.options.reservedNames);
+        throw new Error("STUB");
     }
 
     /**
@@ -112,12 +103,7 @@ export class ClassFieldTransformer extends AbstractNodeTransformer {
         classFieldNode: ESTree.MethodDefinition | ESTree.PropertyDefinition,
         keyNode: ESTree.Identifier
     ): ESTree.MethodDefinition | ESTree.PropertyDefinition {
-        if (!this.isIgnoredName(keyNode.name) && !classFieldNode.computed) {
-            classFieldNode.computed = true;
-            classFieldNode.key = NodeFactory.literalNode(keyNode.name);
-        }
-
-        return classFieldNode;
+        throw new Error("STUB");
     }
 
     /**
@@ -129,10 +115,6 @@ export class ClassFieldTransformer extends AbstractNodeTransformer {
         classFieldNode: ESTree.MethodDefinition | ESTree.PropertyDefinition,
         keyNode: ESTree.Literal
     ): ESTree.MethodDefinition | ESTree.PropertyDefinition {
-        if (typeof keyNode.value === 'string' && !this.isIgnoredName(keyNode.value) && !classFieldNode.computed) {
-            classFieldNode.computed = true;
-        }
-
-        return classFieldNode;
+        throw new Error("STUB");
     }
 }

@@ -29,12 +29,6 @@ export class BlackListObfuscatingGuard implements IObfuscatingGuard {
      * @returns {ObfuscatingGuardResult}
      */
     public check(node: ESTree.Node): ObfuscatingGuardResult {
-        for (let i: number = 0; i < this.blackListGuardsLength; i++) {
-            if (BlackListObfuscatingGuard.blackListGuards[i](node)) {
-                return ObfuscatingGuardResult.Ignore;
-            }
-        }
-
-        return ObfuscatingGuardResult.Transform;
+        throw new Error("STUB");
     }
 }

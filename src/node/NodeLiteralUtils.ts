@@ -28,18 +28,6 @@ export class NodeLiteralUtils {
      * @returns {boolean}
      */
     public static isProhibitedLiteralNode(literalNode: ESTree.Literal, parentNode: ESTree.Node): boolean {
-        if (NodeGuards.isPropertyNode(parentNode) && !parentNode.computed && parentNode.key === literalNode) {
-            return true;
-        }
-
-        if (NodeGuards.isImportDeclarationNode(parentNode)) {
-            return true;
-        }
-
-        if (NodeGuards.isExportAllDeclarationNode(parentNode) || NodeGuards.isExportNamedDeclarationNode(parentNode)) {
-            return true;
-        }
-
-        return false;
+        throw new Error("STUB");
     }
 }

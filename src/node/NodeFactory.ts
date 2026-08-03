@@ -12,12 +12,7 @@ export class NodeFactory {
      * @returns {Program}
      */
     public static programNode(body: TStatement[] = []): ESTree.Program {
-        return {
-            type: NodeType.Program,
-            body,
-            sourceType: 'script',
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -27,11 +22,7 @@ export class NodeFactory {
     public static arrayExpressionNode(
         elements: (ESTree.Expression | ESTree.SpreadElement)[] = []
     ): ESTree.ArrayExpression {
-        return {
-            type: NodeType.ArrayExpression,
-            elements,
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -45,13 +36,7 @@ export class NodeFactory {
         left: ESTree.Pattern | ESTree.MemberExpression,
         right: ESTree.Expression
     ): ESTree.AssignmentExpression {
-        return {
-            type: NodeType.AssignmentExpression,
-            operator,
-            left,
-            right,
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -141,13 +126,7 @@ export class NodeFactory {
         consequent: ESTree.Expression,
         alternate: ESTree.Expression
     ): ESTree.ConditionalExpression {
-        return {
-            type: NodeType.ConditionalExpression,
-            test,
-            consequent,
-            alternate,
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -168,12 +147,7 @@ export class NodeFactory {
      * @returns {Directive}
      */
     public static directiveNode(expression: ESTree.Literal, directive: string): ESTree.Directive {
-        return {
-            type: NodeType.ExpressionStatement,
-            expression,
-            directive,
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -182,12 +156,7 @@ export class NodeFactory {
      * @returns {DoWhileStatement}
      */
     public static doWhileStatementNode(body: ESTree.Statement, test: ESTree.Expression): ESTree.DoWhileStatement {
-        return {
-            type: NodeType.DoWhileStatement,
-            body,
-            test,
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -199,12 +168,7 @@ export class NodeFactory {
         source: ESTree.Literal,
         exported: ESTree.Identifier | null
     ): ESTree.ExportAllDeclaration {
-        return {
-            type: NodeType.ExportAllDeclaration,
-            exported,
-            source,
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -216,12 +180,7 @@ export class NodeFactory {
         specifiers: ESTree.ExportSpecifier[],
         source: ESTree.Literal
     ): ESTree.ExportNamedDeclaration {
-        return {
-            type: NodeType.ExportNamedDeclaration,
-            specifiers,
-            source,
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -249,14 +208,7 @@ export class NodeFactory {
         update: ESTree.Expression | null,
         body: ESTree.Statement
     ): ESTree.ForStatement {
-        return {
-            type: NodeType.ForStatement,
-            init,
-            test,
-            update,
-            body,
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -270,13 +222,7 @@ export class NodeFactory {
         right: ESTree.Expression,
         body: ESTree.Statement
     ): ESTree.ForInStatement {
-        return {
-            type: NodeType.ForInStatement,
-            left,
-            right,
-            body,
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -292,14 +238,7 @@ export class NodeFactory {
         right: ESTree.Expression,
         body: ESTree.Statement
     ): ESTree.ForOfStatement {
-        return {
-            type: NodeType.ForOfStatement,
-            await: asAwait,
-            left,
-            right,
-            body,
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -394,12 +333,7 @@ export class NodeFactory {
         specifiers: (ESTree.ImportSpecifier | ESTree.ImportDefaultSpecifier | ESTree.ImportNamespaceSpecifier)[],
         source: ESTree.Literal
     ): ESTree.ImportDeclaration {
-        return {
-            type: NodeType.ImportDeclaration,
-            specifiers,
-            source,
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -408,12 +342,7 @@ export class NodeFactory {
      * @returns {LabeledStatement}
      */
     public static labeledStatementNode(label: ESTree.Identifier, body: ESTree.Statement): ESTree.LabeledStatement {
-        return {
-            type: NodeType.LabeledStatement,
-            label,
-            body,
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -546,11 +475,7 @@ export class NodeFactory {
      * @returns {ESTree.SequenceExpression}
      */
     public static sequenceExpressionNode(expressions: ESTree.Expression[]): ESTree.SequenceExpression {
-        return {
-            type: NodeType.SequenceExpression,
-            expressions,
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -570,11 +495,7 @@ export class NodeFactory {
      * @returns {StaticBlock}
      */
     public static staticBlockNode(body: ESTree.Statement[] = []): ESTree.StaticBlock {
-        return {
-            type: NodeType.StaticBlock,
-            body,
-            metadata: { ignoredNode: false }
-        };
+        throw new Error("STUB");
     }
 
     /**

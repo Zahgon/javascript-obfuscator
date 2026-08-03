@@ -9,10 +9,6 @@ import { SourceMapSourcesMode } from '../../enums/source-map/SourceMapSourcesMod
  */
 export const IsInputFileName = (): PropertyDecorator => {
     return (target: any, key: string | symbol): void => {
-        IsString()(target, key);
-        ValidateIf(({ sourceMapSourcesMode }: TInputOptions) => {
-            return sourceMapSourcesMode === SourceMapSourcesMode.Sources;
-        })(target, key);
-        IsNotEmpty()(target, key);
+        throw new Error("STUB");
     };
 };

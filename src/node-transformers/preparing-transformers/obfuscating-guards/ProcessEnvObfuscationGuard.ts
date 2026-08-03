@@ -16,17 +16,7 @@ export class ProcessEnvObfuscationGuard implements IObfuscatingGuard {
      * @private
      */
     private static isProcessEnvMemberExpression(node: ESTree.Node): boolean {
-        if (!NodeGuards.isMemberExpressionNode(node)) {
-            return false;
-        }
-
-        return (
-            NodeGuards.isIdentifierNode(node.object) &&
-            node.object.name === 'process' &&
-            NodeGuards.isIdentifierNode(node.property) &&
-            node.property.name === 'env' &&
-            !node.computed
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -35,23 +25,7 @@ export class ProcessEnvObfuscationGuard implements IObfuscatingGuard {
      * @private
      */
     private static isPartOfProcessEnvChain(node: ESTree.Node): boolean {
-        if (ProcessEnvObfuscationGuard.isProcessEnvMemberExpression(node)) {
-            return true;
-        }
-
-        const parentNode = node.parentNode;
-
-        if (parentNode && NodeGuards.isMemberExpressionNode(parentNode)) {
-            if (ProcessEnvObfuscationGuard.isProcessEnvMemberExpression(parentNode.object)) {
-                return true;
-            }
-
-            if (ProcessEnvObfuscationGuard.isProcessEnvMemberExpression(parentNode)) {
-                return true;
-            }
-        }
-
-        return false;
+        throw new Error("STUB");
     }
 
     /**
@@ -59,8 +33,6 @@ export class ProcessEnvObfuscationGuard implements IObfuscatingGuard {
      * @returns {ObfuscatingGuardResult}
      */
     public check(node: ESTree.Node): ObfuscatingGuardResult {
-        return ProcessEnvObfuscationGuard.isPartOfProcessEnvChain(node)
-            ? ObfuscatingGuardResult.Ignore
-            : ObfuscatingGuardResult.Transform;
+        throw new Error("STUB");
     }
 }

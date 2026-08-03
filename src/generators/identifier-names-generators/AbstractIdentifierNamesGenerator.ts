@@ -157,7 +157,7 @@ export abstract class AbstractIdentifierNamesGenerator implements IIdentifierNam
     private isReservedName(name: string): boolean {
         return this.options.reservedNames.length
             ? this.options.reservedNames.some(
-                  (reservedName: string) => new RegExp(reservedName, 'g').exec(name) !== null
+                  (reservedName: string) => { throw new Error("STUB"); }
               )
             : false;
     }

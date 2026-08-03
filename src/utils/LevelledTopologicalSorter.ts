@@ -122,13 +122,7 @@ export class LevelledTopologicalSorter<TValue extends string = string> implement
      * @returns {TValue[]}
      */
     private getPrecedents(consequent: TValue): TValue[] {
-        const precedents: TValue[] | undefined = this.graph.get(consequent);
-
-        if (!precedents) {
-            throw new Error(`Unknown node: ${consequent}`);
-        }
-
-        return precedents;
+        throw new Error("STUB");
     }
 
     /**
@@ -143,7 +137,7 @@ export class LevelledTopologicalSorter<TValue extends string = string> implement
      * @returns {boolean}
      */
     private hasPrecedents(consequent: TValue): boolean {
-        return this.getPrecedents(consequent).length > 0;
+        throw new Error("STUB");
     }
 
     /**
@@ -183,27 +177,6 @@ export class LevelledTopologicalSorter<TValue extends string = string> implement
      * @returns {null}
      */
     private visit(results: TValue[], marks: IVisitMarks<TValue>, name: TValue): void {
-        const mark: TVisitMark = marks[name];
-
-        if (mark === 'visiting') {
-            throw new Error(`Detected cycle involving node: ${name}`);
-        }
-
-        if (mark) {
-            return;
-        }
-
-        marks[name] = 'visiting';
-
-        const precedents: TValue[] = this.getPrecedents(name);
-
-        for (const precedent of precedents) {
-            this.visit(results, marks, precedent);
-        }
-
-        marks[name] = 'ok';
-        results.push(name);
-
-        return;
+        throw new Error("STUB");
     }
 }

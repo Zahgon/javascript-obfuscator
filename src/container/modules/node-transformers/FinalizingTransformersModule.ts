@@ -9,12 +9,5 @@ import { DirectivePlacementTransformer } from '../../../node-transformers/finali
 import { EscapeSequenceTransformer } from '../../../node-transformers/finalizing-transformers/EscapeSequenceTransformer';
 
 export const finalizingTransformersModule: ContainerModule = new ContainerModule((options: ContainerModuleLoadOptions) => {
-    // finalizing transformers
-    options.bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-        .to(DirectivePlacementTransformer)
-        .whenNamed(NodeTransformer.DirectivePlacementTransformer);
-
-    options.bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-        .to(EscapeSequenceTransformer)
-        .whenNamed(NodeTransformer.EscapeSequenceTransformer);
+    throw new Error("STUB");
 });

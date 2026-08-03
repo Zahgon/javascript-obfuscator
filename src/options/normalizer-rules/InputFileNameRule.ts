@@ -9,18 +9,5 @@ import { StringSeparator } from '../../enums/StringSeparator';
  * @returns {IOptions}
  */
 export const InputFileNameRule: TOptionsNormalizerRule = (options: IOptions): IOptions => {
-    let { inputFileName } = options;
-
-    if (inputFileName) {
-        inputFileName =
-            inputFileName.replace(/^\/+/, '').split(StringSeparator.Dot).slice(0, -1).join(StringSeparator.Dot) ||
-            inputFileName;
-
-        options = {
-            ...options,
-            inputFileName: `${inputFileName}.js`
-        };
-    }
-
-    return options;
+    throw new Error("STUB");
 };

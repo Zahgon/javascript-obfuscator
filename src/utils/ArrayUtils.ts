@@ -23,13 +23,7 @@ export class ArrayUtils implements IArrayUtils {
      * @returns {number[]}
      */
     public createWithRange(length: number): number[] {
-        const range: number[] = [];
-
-        for (let i: number = 0; i < length; i++) {
-            range.push(i);
-        }
-
-        return range;
+        throw new Error("STUB");
     }
 
     /**
@@ -52,30 +46,7 @@ export class ArrayUtils implements IArrayUtils {
      * @returns {T | null}
      */
     public findMostOccurringElement<T extends string | number>(array: T[]): T | null {
-        const arrayLength: number = array.length;
-
-        if (!arrayLength) {
-            return null;
-        }
-
-        const elementsMap: Partial<{ [key in T]: number }> = {};
-
-        let mostOccurringElement: T = array[0];
-        let mostOccurringElementCount: number = 1;
-
-        for (const element of array) {
-            const currentElementCount: number = elementsMap[element] ?? 0;
-            const updatedElementCount: number = currentElementCount + 1;
-
-            if (updatedElementCount > mostOccurringElementCount) {
-                mostOccurringElement = element;
-                mostOccurringElementCount = updatedElementCount;
-            }
-
-            elementsMap[element] = updatedElementCount;
-        }
-
-        return mostOccurringElement;
+        throw new Error("STUB");
     }
 
     /**
@@ -103,26 +74,7 @@ export class ArrayUtils implements IArrayUtils {
      * @returns {T[]}
      */
     public rotate<T>(array: T[], times: number): T[] {
-        const arrayLength: number = array.length;
-
-        if (!arrayLength) {
-            throw new ReferenceError('Cannot rotate empty array.');
-        }
-
-        if (times <= 0) {
-            return array;
-        }
-
-        // Normalize rotation amount to avoid unnecessary full rotations
-        // O(N) algorithm using slice instead of O(N*R) with pop/unshift
-        const normalizedTimes: number = times % arrayLength;
-
-        if (normalizedTimes === 0) {
-            return [...array];
-        }
-
-        // Right rotation: take last `normalizedTimes` elements and put them at the front
-        return [...array.slice(-normalizedTimes), ...array.slice(0, -normalizedTimes)];
+        throw new Error("STUB");
     }
 
     /**

@@ -30,10 +30,7 @@ export class ConditionalCommentObfuscatingGuard implements IObfuscatingGuard {
      * @returns {boolean}
      */
     public static isConditionalComment(comment: ESTree.Comment): boolean {
-        return (
-            ConditionalCommentObfuscatingGuard.obfuscationEnableCommentRegExp.test(comment.value) ||
-            ConditionalCommentObfuscatingGuard.obfuscationDisableCommentRegExp.test(comment.value)
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -41,15 +38,7 @@ export class ConditionalCommentObfuscatingGuard implements IObfuscatingGuard {
      * @returns {ObfuscatingGuardResult}
      */
     public check(node: ESTree.Node): ObfuscatingGuardResult {
-        if (NodeGuards.isNodeWithComments(node)) {
-            const leadingComments: ESTree.Comment[] | undefined = node.leadingComments;
-
-            if (leadingComments) {
-                this.obfuscationAllowed = this.checkComments(leadingComments);
-            }
-        }
-
-        return this.obfuscationAllowed ? ObfuscatingGuardResult.Transform : ObfuscatingGuardResult.Ignore;
+        throw new Error("STUB");
     }
 
     /**
@@ -57,24 +46,6 @@ export class ConditionalCommentObfuscatingGuard implements IObfuscatingGuard {
      * @returns {boolean}
      */
     private checkComments(comments: ESTree.Comment[]): boolean {
-        const commentsLength: number = comments.length;
-
-        let obfuscationAllowed: boolean = this.obfuscationAllowed;
-
-        for (let i: number = 0; i < commentsLength; i++) {
-            const comment: ESTree.Comment = comments[i];
-
-            if (ConditionalCommentObfuscatingGuard.obfuscationEnableCommentRegExp.test(comment.value)) {
-                obfuscationAllowed = true;
-
-                continue;
-            }
-
-            if (ConditionalCommentObfuscatingGuard.obfuscationDisableCommentRegExp.test(comment.value)) {
-                obfuscationAllowed = false;
-            }
-        }
-
-        return obfuscationAllowed;
+        throw new Error("STUB");
     }
 }

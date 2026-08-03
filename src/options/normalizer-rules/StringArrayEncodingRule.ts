@@ -9,12 +9,5 @@ import { StringArrayEncoding } from '../../enums/node-transformers/string-array-
  * @returns {IOptions}
  */
 export const StringArrayEncodingRule: TOptionsNormalizerRule = (options: IOptions): IOptions => {
-    if (!options.stringArrayEncoding.length) {
-        options = {
-            ...options,
-            stringArrayEncoding: [StringArrayEncoding.None]
-        };
-    }
-
-    return options;
+    throw new Error("STUB");
 };

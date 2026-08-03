@@ -115,18 +115,7 @@ export class BlockStatementControlFlowFlatteningNode extends AbstractCustomNode 
                             true
                         ),
                         this.shuffledKeys.map((key: number, index: number) => {
-                            const statement: ESTree.Statement = this.blockStatementBody[key];
-                            const consequent: ESTree.Statement[] = [statement];
-
-                            /**
-                             * We shouldn't add continue statement after return statement
-                             * to prevent `unreachable code after return statement` warnings
-                             */
-                            if (!NodeGuards.isReturnStatementNode(statement)) {
-                                consequent.push(NodeFactory.continueStatement());
-                            }
-
-                            return NodeFactory.switchCaseNode(NodeFactory.literalNode(String(index)), consequent);
+                            throw new Error("STUB");
                         })
                     ),
                     NodeFactory.breakStatement()

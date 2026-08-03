@@ -17,33 +17,7 @@ const initializeMethodName: 'initialize' = 'initialize';
  */
 export function initializable(): (target: IInitializable, propertyKey: string | symbol) => any {
     return (target: IInitializable, propertyKey: string | symbol): PropertyDescriptor => {
-        const initializeMethod: Function = target[initializeMethodName];
-        const isInvalidInitializeMethod = !initializeMethod || typeof initializeMethod !== 'function';
-
-        if (isInvalidInitializeMethod) {
-            throw new Error(
-                `\`${initializeMethodName}\` method with initialization logic not ` +
-                    `found. \`@${decoratorName}\` decorator requires \`${initializeMethodName}\` method`
-            );
-        }
-
-        /**
-         * Stage #1: initialize target metadata
-         */
-        initializeTargetMetadata(initializedTargetMetadataKey, false, target);
-        initializeTargetMetadata(initializablePropertiesSetMetadataKey, new Set(), target);
-        initializeTargetMetadata(wrappedMethodsSetMetadataKey, new Set(), target);
-
-        /**
-         * Stage #2: wrap target methods
-         */
-        wrapTargetMethodsInInitializedCheck(target);
-        wrapInitializeMethodInInitializeCheck(target, propertyKey);
-
-        /**
-         * Stage #3: wrap target properties
-         */
-        return wrapInitializableProperty(target, propertyKey);
+        throw new Error("STUB");
     };
 }
 
@@ -70,43 +44,7 @@ function wrapTargetMethodsInInitializedCheck(target: IInitializable): void {
     const prohibitedPropertyNames: Set<string> = new Set([initializeMethodName, constructorMethodName]);
 
     ownPropertyNames.forEach((propertyName: string) => {
-        const initializablePropertiesSet: Set<string | symbol> = Reflect.getMetadata(
-            initializablePropertiesSetMetadataKey,
-            target
-        );
-        const wrappedMethodsSet: Set<string | symbol> = Reflect.getMetadata(wrappedMethodsSetMetadataKey, target);
-
-        const isProhibitedPropertyName: boolean =
-            prohibitedPropertyNames.has(propertyName) ||
-            initializablePropertiesSet.has(propertyName) ||
-            wrappedMethodsSet.has(propertyName);
-
-        if (isProhibitedPropertyName) {
-            return;
-        }
-
-        const targetProperty: IInitializable[keyof IInitializable] = target[propertyName];
-
-        if (typeof targetProperty !== 'function') {
-            return;
-        }
-
-        const methodDescriptor: PropertyDescriptor =
-            Object.getOwnPropertyDescriptor(target, propertyName) ?? defaultDescriptor;
-        const originalMethod: Function = methodDescriptor.value;
-
-        Object.defineProperty(target, propertyName, {
-            ...methodDescriptor,
-            value(): void {
-                if (!Reflect.getMetadata(initializedTargetMetadataKey, this)) {
-                    throw new Error(`Class should be initialized with \`${initializeMethodName}()\` method`);
-                }
-
-                return originalMethod.apply(this, arguments);
-            }
-        });
-
-        wrappedMethodsSet.add(propertyName);
+        throw new Error("STUB");
     });
 }
 
@@ -124,18 +62,7 @@ function wrapInitializeMethodInInitializeCheck(target: IInitializable, propertyK
     Object.defineProperty(target, initializeMethodName, {
         ...methodDescriptor,
         value: function (): typeof originalMethod {
-            /**
-             * should define metadata before `initialize` method call,
-             * because of cases when other methods will called inside `initialize` method
-             */
-            Reflect.defineMetadata(initializedTargetMetadataKey, true, this);
-
-            const result: typeof originalMethod = originalMethod.apply(this, arguments);
-
-            if (this[propertyKey]) {
-            }
-
-            return result;
+            throw new Error("STUB");
         }
     });
 }
@@ -162,14 +89,10 @@ function wrapInitializableProperty(target: IInitializable, propertyKey: string |
     Object.defineProperty(target, propertyKey, {
         ...propertyDescriptor,
         get: function (): any {
-            if (this[initializablePropertyMetadataKey] === undefined) {
-                throw new Error(`Property \`${propertyKey.toString()}\` is not initialized! Initialize it first!`);
-            }
-
-            return this[initializablePropertyMetadataKey];
+            throw new Error("STUB");
         },
         set: function (newVal: any): void {
-            this[initializablePropertyMetadataKey] = newVal;
+            throw new Error("STUB");
         }
     });
 

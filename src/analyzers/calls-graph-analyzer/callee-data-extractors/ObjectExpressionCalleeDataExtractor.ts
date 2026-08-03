@@ -23,18 +23,7 @@ export class ObjectExpressionCalleeDataExtractor extends AbstractCalleeDataExtra
         propertyNode: ESTree.Property,
         nextItemInCallsChain: string | number
     ): boolean {
-        if (!propertyNode.key) {
-            return false;
-        }
-
-        const isTargetPropertyNodeWithIdentifierKey: boolean =
-            NodeGuards.isIdentifierNode(propertyNode.key) && propertyNode.key.name === nextItemInCallsChain;
-        const isTargetPropertyNodeWithLiteralKey: boolean =
-            NodeGuards.isLiteralNode(propertyNode.key) &&
-            Boolean(propertyNode.key.value) &&
-            propertyNode.key.value === nextItemInCallsChain;
-
-        return isTargetPropertyNodeWithIdentifierKey || isTargetPropertyNodeWithLiteralKey;
+        throw new Error("STUB");
     }
 
     /**
@@ -43,31 +32,7 @@ export class ObjectExpressionCalleeDataExtractor extends AbstractCalleeDataExtra
      * @returns {ICalleeData}
      */
     public extract(blockScopeBody: ESTree.Node[], callee: ESTree.MemberExpression): ICalleeData | null {
-        if (!NodeGuards.isMemberExpressionNode(callee)) {
-            return null;
-        }
-
-        const objectMembersCallsChain: TObjectMembersCallsChain = this.createObjectMembersCallsChain([], callee);
-
-        if (!objectMembersCallsChain.length) {
-            return null;
-        }
-
-        const functionExpressionName: string | number | null =
-            objectMembersCallsChain[objectMembersCallsChain.length - 1];
-        const calleeBlockStatement: ESTree.BlockStatement | null = this.getCalleeBlockStatement(
-            NodeStatementUtils.getParentNodeWithStatements(blockScopeBody[0]),
-            objectMembersCallsChain
-        );
-
-        if (!calleeBlockStatement) {
-            return null;
-        }
-
-        return {
-            callee: calleeBlockStatement,
-            name: functionExpressionName
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -83,26 +48,7 @@ export class ObjectExpressionCalleeDataExtractor extends AbstractCalleeDataExtra
         currentChain: TObjectMembersCallsChain,
         memberExpression: ESTree.MemberExpression
     ): TObjectMembersCallsChain {
-        // first step: processing memberExpression `property` property
-        if (NodeGuards.isIdentifierNode(memberExpression.property) && !memberExpression.computed) {
-            currentChain.unshift(memberExpression.property.name);
-        } else if (
-            NodeGuards.isLiteralNode(memberExpression.property) &&
-            (typeof memberExpression.property.value === 'string' || typeof memberExpression.property.value === 'number')
-        ) {
-            currentChain.unshift(memberExpression.property.value);
-        } else {
-            return currentChain;
-        }
-
-        // second step: processing memberExpression `object` property
-        if (NodeGuards.isMemberExpressionNode(memberExpression.object)) {
-            return this.createObjectMembersCallsChain(currentChain, memberExpression.object);
-        } else if (NodeGuards.isIdentifierNode(memberExpression.object)) {
-            currentChain.unshift(memberExpression.object.name);
-        }
-
-        return currentChain;
+        throw new Error("STUB");
     }
 
     /**
@@ -114,31 +60,7 @@ export class ObjectExpressionCalleeDataExtractor extends AbstractCalleeDataExtra
         targetNode: ESTree.Node,
         objectMembersCallsChain: TObjectMembersCallsChain
     ): ESTree.BlockStatement | null {
-        const objectName: string | number | undefined = objectMembersCallsChain.shift();
-
-        if (!objectName) {
-            return null;
-        }
-
-        let calleeBlockStatement: ESTree.BlockStatement | null = null;
-
-        estraverse.traverse(targetNode, {
-            enter: (node: ESTree.Node): estraverse.VisitorOption | void => {
-                if (
-                    NodeGuards.isVariableDeclaratorNode(node) &&
-                    NodeGuards.isIdentifierNode(node.id) &&
-                    node.init &&
-                    NodeGuards.isObjectExpressionNode(node.init) &&
-                    node.id.name === objectName
-                ) {
-                    calleeBlockStatement = this.findCalleeBlockStatement(node.init.properties, objectMembersCallsChain);
-
-                    return estraverse.VisitorOption.Break;
-                }
-            }
-        });
-
-        return calleeBlockStatement;
+        throw new Error("STUB");
     }
 
     /**
@@ -150,30 +72,6 @@ export class ObjectExpressionCalleeDataExtractor extends AbstractCalleeDataExtra
         objectExpressionProperties: (ESTree.Property | ESTree.SpreadElement)[],
         objectMembersCallsChain: TObjectMembersCallsChain
     ): ESTree.BlockStatement | null {
-        const nextItemInCallsChain: string | number | undefined = objectMembersCallsChain.shift();
-
-        if (!nextItemInCallsChain) {
-            return null;
-        }
-
-        for (const propertyNode of objectExpressionProperties) {
-            if (!NodeGuards.isPropertyNode(propertyNode)) {
-                continue;
-            }
-
-            if (!ObjectExpressionCalleeDataExtractor.isValidTargetPropertyNode(propertyNode, nextItemInCallsChain)) {
-                continue;
-            }
-
-            if (NodeGuards.isObjectExpressionNode(propertyNode.value)) {
-                return this.findCalleeBlockStatement(propertyNode.value.properties, objectMembersCallsChain);
-            }
-
-            if (NodeGuards.isFunctionExpressionNode(propertyNode.value)) {
-                return propertyNode.value.body;
-            }
-        }
-
-        return null;
+        throw new Error("STUB");
     }
 }

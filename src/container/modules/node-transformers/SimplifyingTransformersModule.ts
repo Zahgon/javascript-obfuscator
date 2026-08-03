@@ -12,21 +12,6 @@ import { VariableDeclarationsMergeTransformer } from '../../../node-transformers
 
 export const simplifyingTransformersModule: ContainerModule = new ContainerModule(
     (options: ContainerModuleLoadOptions) => {
-        // simplifying transformers
-        options.bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-            .to(BlockStatementSimplifyTransformer)
-            .whenNamed(NodeTransformer.BlockStatementSimplifyTransformer);
-
-        options.bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-            .to(ExpressionStatementsMergeTransformer)
-            .whenNamed(NodeTransformer.ExpressionStatementsMergeTransformer);
-
-        options.bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-            .to(IfStatementSimplifyTransformer)
-            .whenNamed(NodeTransformer.IfStatementSimplifyTransformer);
-
-        options.bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-            .to(VariableDeclarationsMergeTransformer)
-            .whenNamed(NodeTransformer.VariableDeclarationsMergeTransformer);
+        throw new Error("STUB");
     }
 );

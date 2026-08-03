@@ -20,38 +20,6 @@ export function IsAllowedForObfuscationTargets(
     validationOptions?: ValidationOptions
 ): (options: IOptions, propertyName: keyof IOptions) => void {
     return (optionsObject: IOptions, propertyName: keyof IOptions): void => {
-        registerDecorator({
-            propertyName,
-            constraints: [obfuscationTargets],
-            name: 'IsAllowedForObfuscationTargets',
-            options: validationOptions,
-            target: optionsObject.constructor,
-            validator: {
-                /**
-                 * @param value
-                 * @param {ValidationArguments} validationArguments
-                 * @returns {boolean}
-                 */
-                validate(value: IOptions[keyof IOptions], validationArguments: ValidationArguments): boolean {
-                    const options: IOptions = <IOptions>validationArguments.object;
-                    const defaultValue: IOptions[keyof IOptions] | undefined = DEFAULT_PRESET[propertyName];
-                    const isDefaultValue: boolean = equal(value, defaultValue);
-
-                    return isDefaultValue || obfuscationTargets.includes(options.target);
-                },
-
-                /**
-                 * @param {ValidationArguments} validationArguments
-                 * @returns {string}
-                 */
-                defaultMessage(validationArguments: ValidationArguments): string {
-                    const requiredObfuscationTargetsString: string = obfuscationTargets.join(
-                        `${StringSeparator.Comma} `
-                    );
-
-                    return `This option allowed only for obfuscation targets: ${requiredObfuscationTargetsString}`;
-                }
-            }
-        });
+        throw new Error("STUB");
     };
 }

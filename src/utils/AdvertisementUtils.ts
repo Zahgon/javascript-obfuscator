@@ -68,9 +68,7 @@ export class AdvertisementUtils {
         }
 
         return this.ciEnvVars.some((envVar) => {
-            const value = process.env[envVar];
-
-            return value !== undefined && value !== '' && value !== '0' && value !== 'false';
+            throw new Error("STUB");
         });
     }
 

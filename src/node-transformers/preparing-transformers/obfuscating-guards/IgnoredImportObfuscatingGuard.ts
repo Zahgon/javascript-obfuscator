@@ -30,7 +30,7 @@ export class IgnoredImportObfuscatingGuard implements IObfuscatingGuard {
      * @returns {boolean}
      */
     private static isDynamicImport(node: ESTree.Node): boolean {
-        return NodeGuards.isImportExpressionNode(node);
+        throw new Error("STUB");
     }
 
     /**
@@ -38,11 +38,7 @@ export class IgnoredImportObfuscatingGuard implements IObfuscatingGuard {
      * @returns {boolean}
      */
     private static isRequireImport(node: ESTree.Node): boolean {
-        return (
-            NodeGuards.isCallExpressionNode(node) &&
-            NodeGuards.isIdentifierNode(node.callee) &&
-            node.callee.name === 'require'
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -50,16 +46,6 @@ export class IgnoredImportObfuscatingGuard implements IObfuscatingGuard {
      * @returns {ObfuscatingGuardResult}
      */
     public check(node: ESTree.Node): ObfuscatingGuardResult {
-        if (this.options.ignoreImports) {
-            const isIgnoredImport =
-                IgnoredImportObfuscatingGuard.isDynamicImport(node) ||
-                IgnoredImportObfuscatingGuard.isRequireImport(node);
-
-            if (isIgnoredImport) {
-                return ObfuscatingGuardResult.Ignore;
-            }
-        }
-
-        return ObfuscatingGuardResult.Transform;
+        throw new Error("STUB");
     }
 }

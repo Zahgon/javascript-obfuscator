@@ -47,9 +47,7 @@ export class BlockStatementSimplifyTransformer extends AbstractStatementSimplify
             case NodeTransformationStage.Simplifying:
                 return {
                     leave: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode && NodeGuards.isBlockStatementNode(node)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 

@@ -18,23 +18,7 @@ export class FunctionDeclarationCalleeDataExtractor extends AbstractCalleeDataEx
      * @returns {ICalleeData}
      */
     public extract(blockScopeBody: ESTree.Node[], callee: ESTree.Identifier): ICalleeData | null {
-        if (!NodeGuards.isIdentifierNode(callee)) {
-            return null;
-        }
-
-        const calleeBlockStatement: ESTree.BlockStatement | null = this.getCalleeBlockStatement(
-            NodeStatementUtils.getParentNodeWithStatements(blockScopeBody[0]),
-            callee.name
-        );
-
-        if (!calleeBlockStatement) {
-            return null;
-        }
-
-        return {
-            callee: calleeBlockStatement,
-            name: callee.name
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -43,18 +27,6 @@ export class FunctionDeclarationCalleeDataExtractor extends AbstractCalleeDataEx
      * @returns {BlockStatement}
      */
     private getCalleeBlockStatement(targetNode: ESTree.Node, name: string): ESTree.BlockStatement | null {
-        let calleeBlockStatement: ESTree.BlockStatement | null = null;
-
-        estraverse.traverse(targetNode, {
-            enter: (node: ESTree.Node): estraverse.VisitorOption | void => {
-                if (NodeGuards.isFunctionDeclarationNode(node) && node.id.name === name) {
-                    calleeBlockStatement = node.body;
-
-                    return estraverse.VisitorOption.Break;
-                }
-            }
-        });
-
-        return calleeBlockStatement;
+        throw new Error("STUB");
     }
 }

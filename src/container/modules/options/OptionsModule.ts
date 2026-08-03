@@ -8,7 +8,5 @@ import { Options } from '../../../options/Options';
 import { OptionsNormalizer } from '../../../options/OptionsNormalizer';
 
 export const optionsModule: ContainerModule = new ContainerModule((options: ContainerModuleLoadOptions) => {
-    options.bind<IOptions>(ServiceIdentifiers.IOptions).to(Options).inSingletonScope();
-
-    options.bind<IOptionsNormalizer>(ServiceIdentifiers.IOptionsNormalizer).to(OptionsNormalizer).inSingletonScope();
+    throw new Error("STUB");
 });

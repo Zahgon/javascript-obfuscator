@@ -63,7 +63,7 @@ export class IdentifierReplacer implements IIdentifierReplacer {
         }
 
         return reservedNames.some((reservedName: string) => {
-            return new RegExp(reservedName, 'g').exec(name) !== null;
+            throw new Error("STUB");
         });
     }
 
@@ -75,23 +75,7 @@ export class IdentifierReplacer implements IIdentifierReplacer {
      * @param {TNodeWithLexicalScope} lexicalScopeNode
      */
     public storeGlobalName(identifierNode: ESTree.Identifier, lexicalScopeNode: TNodeWithLexicalScope): void {
-        const identifierName: string = identifierNode.name;
-
-        if (IdentifierReplacer.isReservedName(identifierName, this.options.reservedNames)) {
-            return;
-        }
-
-        const newIdentifierName: string = this.identifierNamesGenerator.generateForGlobalScope();
-
-        const namesMap: Map<string, string> = this.blockScopesMap.get(lexicalScopeNode) ?? new Map();
-
-        namesMap.set(identifierName, newIdentifierName);
-        this.blockScopesMap.set(lexicalScopeNode, namesMap);
-
-        // Have to write all global identifier names to the identifier names cache storage
-        if (this.options.identifierNamesCache) {
-            this.identifierNamesCacheStorage.set(identifierName, newIdentifierName);
-        }
+        throw new Error("STUB");
     }
 
     /**
@@ -102,17 +86,7 @@ export class IdentifierReplacer implements IIdentifierReplacer {
      * @param {TNodeWithLexicalScope} lexicalScopeNode
      */
     public storeLocalName(identifierNode: ESTree.Identifier, lexicalScopeNode: TNodeWithLexicalScope): void {
-        const identifierName: string = identifierNode.name;
-
-        if (IdentifierReplacer.isReservedName(identifierName, this.options.reservedNames)) {
-            return;
-        }
-
-        const newIdentifierName: string = this.identifierNamesGenerator.generateForLexicalScope(lexicalScopeNode);
-        const namesMap: Map<string, string> | null = this.blockScopesMap.get(lexicalScopeNode) ?? new Map();
-
-        namesMap.set(identifierName, newIdentifierName);
-        this.blockScopesMap.set(lexicalScopeNode, namesMap);
+        throw new Error("STUB");
     }
 
     /**

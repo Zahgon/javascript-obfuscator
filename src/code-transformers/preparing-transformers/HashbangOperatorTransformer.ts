@@ -54,11 +54,7 @@ export class HashbangOperatorTransformer extends AbstractCodeTransformer {
     private removeAndSaveHashbangOperatorLine(code: string): string {
         return code
             .replace(/^#!.*$(\r?\n)*/m, (substring: string) => {
-                if (substring) {
-                    this.hashbangOperatorLine = substring;
-                }
-
-                return '';
+                throw new Error("STUB");
             })
             .trim();
     }

@@ -50,11 +50,7 @@ export class RenamePropertiesTransformer extends AbstractNodeTransformer {
         propertyNode: TNode,
         propertyKeyNode: ESTree.Expression | ESTree.PrivateIdentifier
     ): propertyKeyNode is ESTree.Identifier | ESTree.Literal | ESTree.PrivateIdentifier {
-        if (NodeGuards.isIdentifierNode(propertyKeyNode) && propertyNode.computed) {
-            return false;
-        }
-
-        return true;
+        throw new Error("STUB");
     }
 
     /**
@@ -66,18 +62,14 @@ export class RenamePropertiesTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.Preparing:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): void => {
-                        if (parentNode) {
-                            this.prepareNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
             case NodeTransformationStage.RenameProperties:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -149,10 +141,6 @@ export class RenamePropertiesTransformer extends AbstractNodeTransformer {
      * @param {Node} parentNode
      */
     private analyzeAutoExcludedPropertyNames(node: ESTree.Node, parentNode: ESTree.Node): void {
-        if (!NodeGuards.isLiteralNode(node) || !NodeLiteralUtils.isStringLiteralNode(node)) {
-            return;
-        }
-
-        this.renamePropertiesReplacer.excludePropertyName(node.value);
+        throw new Error("STUB");
     }
 }

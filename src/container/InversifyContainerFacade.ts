@@ -58,9 +58,7 @@ export class InversifyContainerFacade implements IInversifyContainerFacade {
         serviceIdentifier: ServiceIdentifier<U>
     ): (context: ResolutionContext) => (bindingName: T) => U {
         return (context: ResolutionContext): ((bindingName: T) => U) => {
-            return (bindingName: T): U => {
-                return context.get<U>(serviceIdentifier, { name: bindingName });
-            };
+            throw new Error("STUB");
         };
     }
 
@@ -72,19 +70,7 @@ export class InversifyContainerFacade implements IInversifyContainerFacade {
         serviceIdentifier: ServiceIdentifier<U>
     ): (context: ResolutionContext) => (bindingName: T) => U {
         return (context: ResolutionContext): ((bindingName: T) => U) => {
-            const cache: Map<T, U> = new Map();
-
-            return (bindingName: T): U => {
-                if (cache.has(bindingName)) {
-                    return <U>cache.get(bindingName);
-                }
-
-                const object: U = context.get<U>(serviceIdentifier, { name: bindingName });
-
-                cache.set(bindingName, object);
-
-                return object;
-            };
+            throw new Error("STUB");
         };
     }
 
@@ -98,30 +84,7 @@ export class InversifyContainerFacade implements IInversifyContainerFacade {
         ...dependencies: ServiceIdentifier<TConstructor<Record<string, any>[], U>>[]
     ): (context: ResolutionContext) => (bindingName: T) => U {
         return (context: ResolutionContext): ((bindingName: T) => U) => {
-            const cache: Map<T, TConstructor<Record<string, any>[], U>> = new Map();
-            const cachedDependencies: Record<string, any>[] = [];
-
-            return (bindingName: T): U => {
-                dependencies.forEach(
-                    (dependency: ServiceIdentifier<TConstructor<Record<string, any>[], U>>, index: number) => {
-                        if (!cachedDependencies[index]) {
-                            cachedDependencies[index] = context.get(dependency);
-                        }
-                    }
-                );
-
-                if (cache.has(bindingName)) {
-                    return new (<TConstructor<Record<string, any>[], U>>cache.get(bindingName))(...cachedDependencies);
-                }
-
-                const constructor = context.get<TConstructor<Record<string, any>[], U>>(serviceIdentifier, {
-                    name: bindingName
-                });
-
-                cache.set(bindingName, constructor);
-
-                return new constructor(...cachedDependencies);
-            };
+            throw new Error("STUB");
         };
     }
 
@@ -139,7 +102,7 @@ export class InversifyContainerFacade implements IInversifyContainerFacade {
      * @returns {T}
      */
     public getNamed<T>(serviceIdentifier: ServiceIdentifier<T>, named: string | number | symbol): T {
-        return this.container.get<T>(serviceIdentifier, { name: named });
+        throw new Error("STUB");
     }
 
     /**
@@ -150,12 +113,12 @@ export class InversifyContainerFacade implements IInversifyContainerFacade {
     public load(sourceCode: string, sourceMap: string, options: TInputOptions): void {
         this.container
             .bind<ISourceCode>(ServiceIdentifiers.ISourceCode)
-            .toDynamicValue(() => new SourceCode(sourceCode, sourceMap))
+            .toDynamicValue(() => { throw new Error("STUB"); })
             .inSingletonScope();
 
         this.container
             .bind<TInputOptions>(ServiceIdentifiers.TInputOptions)
-            .toDynamicValue(() => options)
+            .toDynamicValue(() => { throw new Error("STUB"); })
             .inSingletonScope();
 
         this.container.bind<ILogger>(ServiceIdentifiers.ILogger).to(Logger).inSingletonScope();
@@ -180,15 +143,7 @@ export class InversifyContainerFacade implements IInversifyContainerFacade {
         this.container
             .bind<Factory<IObfuscationResult, [string, string]>>(ServiceIdentifiers.Factory__IObfuscationResult)
             .toFactory((context: ResolutionContext) => {
-                return (obfuscatedCodeAsString: string, sourceMapAsString: string): IObfuscationResult => {
-                    const obfuscationResult: IObfuscationResult = context.get<IObfuscationResult>(
-                        ServiceIdentifiers.IObfuscationResult
-                    );
-
-                    obfuscationResult.initialize(obfuscatedCodeAsString, sourceMapAsString);
-
-                    return obfuscationResult;
-                };
+                throw new Error("STUB");
             });
 
         // modules

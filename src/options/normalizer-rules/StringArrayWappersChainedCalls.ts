@@ -7,13 +7,5 @@ import { IOptions } from '../../interfaces/options/IOptions';
  * @returns {IOptions}
  */
 export const StringArrayWrappersChainedCallsRule: TOptionsNormalizerRule = (options: IOptions): IOptions => {
-    if (options.stringArrayWrappersCount === 0) {
-        options = {
-            ...options,
-            stringArrayWrappersChainedCalls: false,
-            stringArrayWrappersCount: 0
-        };
-    }
-
-    return options;
+    throw new Error("STUB");
 };

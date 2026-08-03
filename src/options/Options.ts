@@ -181,7 +181,7 @@ export class Options implements IOptions {
     })
     @ValidateIf(
         (options: IOptions) =>
-            options.identifierNamesGenerator === IdentifierNamesGenerator.DictionaryIdentifierNamesGenerator
+            { throw new Error("STUB"); }
     )
     @ArrayNotEmpty()
     public readonly identifiersDictionary!: string[];
@@ -281,7 +281,7 @@ export class Options implements IOptions {
      * @type {string}
      */
     @IsString()
-    @ValidateIf((options: IOptions) => Boolean(options.sourceMapBaseUrl))
+    @ValidateIf((options: IOptions) => { throw new Error("STUB"); })
     @IsUrl({
         require_protocol: true,
         require_tld: false,
@@ -317,7 +317,7 @@ export class Options implements IOptions {
      * @type {number}
      */
     @IsNumber()
-    @ValidateIf((options: IOptions) => Boolean(options.splitStrings))
+    @ValidateIf((options: IOptions) => { throw new Error("STUB"); })
     @Min(1)
     public readonly splitStringsChunkLength!: number;
 
@@ -446,19 +446,7 @@ export class Options implements IOptions {
         @inject(ServiceIdentifiers.TInputOptions) inputOptions: TInputOptions,
         @inject(ServiceIdentifiers.IOptionsNormalizer) optionsNormalizer: IOptionsNormalizer
     ) {
-        const optionsPreset: TInputOptions = Options.getOptionsByPreset(
-            inputOptions.optionsPreset ?? OptionsPreset.Default
-        );
-
-        Object.assign(this, optionsPreset, inputOptions);
-
-        const errors: ValidationError[] = validateSync(this, Options.validatorOptions);
-
-        if (errors.length) {
-            throw new ReferenceError(`Validation failed. errors:\n${ValidationErrorsFormatter.format(errors)}`);
-        }
-
-        Object.assign(this, optionsNormalizer.normalize(this));
+        throw new Error("STUB");
     }
 
     /**

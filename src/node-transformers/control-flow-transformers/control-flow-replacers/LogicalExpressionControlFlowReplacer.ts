@@ -95,20 +95,7 @@ export class LogicalExpressionControlFlowReplacer extends ExpressionWithOperator
         }
 
         return [leftExpression, rightExpression].some((expressionNode: ESTree.Node | ESTree.Expression): boolean => {
-            let nodeForCheck: ESTree.Node | ESTree.Expression;
-
-            if (!NodeGuards.isUnaryExpressionNode(expressionNode)) {
-                nodeForCheck = expressionNode;
-            } else {
-                nodeForCheck = NodeUtils.getUnaryExpressionArgumentNode(expressionNode);
-            }
-
-            return (
-                !NodeGuards.isLiteralNode(nodeForCheck) &&
-                !NodeGuards.isIdentifierNode(nodeForCheck) &&
-                !NodeGuards.isObjectExpressionNode(nodeForCheck) &&
-                !NodeGuards.isExpressionStatementNode(nodeForCheck)
-            );
+            throw new Error("STUB");
         });
     }
 
@@ -121,17 +108,7 @@ export class LogicalExpressionControlFlowReplacer extends ExpressionWithOperator
 
         estraverse.traverse(expression, {
             enter: (node: ESTree.Node): estraverse.VisitorOption | void => {
-                if (NodeGuards.isMemberExpressionNode(node) && node.computed) {
-                    hasProhibitedNode = true;
-
-                    return estraverse.VisitorOption.Break;
-                }
-
-                if (NodeGuards.isCallExpressionNode(node)) {
-                    hasProhibitedNode = true;
-
-                    return estraverse.VisitorOption.Break;
-                }
+                throw new Error("STUB");
             }
         });
 

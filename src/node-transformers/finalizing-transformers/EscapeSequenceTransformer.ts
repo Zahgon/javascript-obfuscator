@@ -54,9 +54,7 @@ export class EscapeSequenceTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.Finalizing:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (NodeGuards.isLiteralNode(node)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 

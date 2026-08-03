@@ -85,12 +85,7 @@ export class CodeTransformersRunner implements ICodeTransformersRunner {
     ): TDictionary<ICodeTransformer> {
         return codeTransformerNames.reduce<TDictionary<ICodeTransformer>>(
             (acc: TDictionary<ICodeTransformer>, codeTransformerName: CodeTransformer) => {
-                const codeTransformer: ICodeTransformer = this.codeTransformerFactory(codeTransformerName);
-
-                return {
-                    ...acc,
-                    [codeTransformerName]: codeTransformer
-                };
+                throw new Error("STUB");
             },
             {}
         );

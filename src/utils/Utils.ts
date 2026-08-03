@@ -16,7 +16,7 @@ export class Utils {
      */
     // eslint-disable-next-line no-eval
     public static get nodeRequire(): NodeRequire {
-        return eval('require');
+        throw new Error("STUB");
     }
 
     /**

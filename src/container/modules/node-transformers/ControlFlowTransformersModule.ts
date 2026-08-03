@@ -19,57 +19,6 @@ import { StringLiteralControlFlowReplacer } from '../../../node-transformers/con
 
 export const controlFlowTransformersModule: ContainerModule = new ContainerModule(
     (options: ContainerModuleLoadOptions) => {
-        // control flow transformers
-        options
-            .bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-            .to(BlockStatementControlFlowTransformer)
-            .whenNamed(NodeTransformer.BlockStatementControlFlowTransformer);
-
-        options
-            .bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-            .to(FunctionControlFlowTransformer)
-            .whenNamed(NodeTransformer.FunctionControlFlowTransformer);
-
-        options
-            .bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-            .to(StringArrayControlFlowTransformer)
-            .whenNamed(NodeTransformer.StringArrayControlFlowTransformer);
-
-        // control flow replacers
-        options
-            .bind<IControlFlowReplacer>(ServiceIdentifiers.IControlFlowReplacer)
-            .to(BinaryExpressionControlFlowReplacer)
-            .whenNamed(ControlFlowReplacer.BinaryExpressionControlFlowReplacer);
-
-        options
-            .bind<IControlFlowReplacer>(ServiceIdentifiers.IControlFlowReplacer)
-            .to(CallExpressionControlFlowReplacer)
-            .whenNamed(ControlFlowReplacer.CallExpressionControlFlowReplacer);
-
-        options
-            .bind<IControlFlowReplacer>(ServiceIdentifiers.IControlFlowReplacer)
-            .to(LogicalExpressionControlFlowReplacer)
-            .whenNamed(ControlFlowReplacer.LogicalExpressionControlFlowReplacer);
-
-        options
-            .bind<IControlFlowReplacer>(ServiceIdentifiers.IControlFlowReplacer)
-            .to(StringArrayCallControlFlowReplacer)
-            .whenNamed(ControlFlowReplacer.StringArrayCallControlFlowReplacer);
-
-        options
-            .bind<IControlFlowReplacer>(ServiceIdentifiers.IControlFlowReplacer)
-            .to(StringLiteralControlFlowReplacer)
-            .whenNamed(ControlFlowReplacer.StringLiteralControlFlowReplacer);
-
-        // control flow replacer factory
-        options
-            .bind<
-                Factory<IControlFlowReplacer, [ControlFlowReplacer]>
-            >(ServiceIdentifiers.Factory__IControlFlowReplacer)
-            .toFactory(
-                InversifyContainerFacade.getCacheFactory<ControlFlowReplacer, IControlFlowReplacer>(
-                    ServiceIdentifiers.IControlFlowReplacer
-                )
-            );
+        throw new Error("STUB");
     }
 );

@@ -30,13 +30,7 @@ export class ReservedStringObfuscatingGuard implements IObfuscatingGuard {
      * @returns {ObfuscatingGuardResult}
      */
     public check(node: ESTree.Node): ObfuscatingGuardResult {
-        if (this.options.reservedStrings.length && NodeGuards.isLiteralNode(node) && typeof node.value === 'string') {
-            return !this.isReservedString(node.value)
-                ? ObfuscatingGuardResult.Transform
-                : ObfuscatingGuardResult.Ignore;
-        }
-
-        return ObfuscatingGuardResult.Transform;
+        throw new Error("STUB");
     }
 
     /**
@@ -44,8 +38,6 @@ export class ReservedStringObfuscatingGuard implements IObfuscatingGuard {
      * @returns {boolean}
      */
     private isReservedString(value: string): boolean {
-        return this.options.reservedStrings.some((reservedString: string) => {
-            return new RegExp(reservedString, 'g').exec(value) !== null;
-        });
+        throw new Error("STUB");
     }
 }

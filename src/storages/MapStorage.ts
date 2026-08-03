@@ -63,13 +63,7 @@ export abstract class MapStorage<K, V> implements IMapStorage<K, V> {
      * @returns {V}
      */
     public getOrThrow(key: K): V {
-        const value: V | undefined = this.get(key);
-
-        if (!value) {
-            throw new Error(`No value found in map storage with key \`${key}\``);
-        }
-
-        return value;
+        throw new Error("STUB");
     }
 
     /**
@@ -77,13 +71,7 @@ export abstract class MapStorage<K, V> implements IMapStorage<K, V> {
      * @returns {K | null}
      */
     public getKeyOf(value: V): K | null {
-        for (const [key, storageValue] of this.storage) {
-            if (value === storageValue) {
-                return key;
-            }
-        }
-
-        return null;
+        throw new Error("STUB");
     }
 
     /**
@@ -104,7 +92,7 @@ export abstract class MapStorage<K, V> implements IMapStorage<K, V> {
      * @returns {TDictionary<V>}
      */
     public getStorageAsDictionary(): TDictionary<V> {
-        return Object.fromEntries(this.storage);
+        throw new Error("STUB");
     }
 
     /**
@@ -127,11 +115,7 @@ export abstract class MapStorage<K, V> implements IMapStorage<K, V> {
      * @param {boolean} mergeId
      */
     public mergeWith(storage: this, mergeId: boolean = false): void {
-        this.storage = new Map<K, V>([...this.storage, ...storage.getStorage()]);
-
-        if (mergeId) {
-            this.storageId = storage.getStorageId();
-        }
+        throw new Error("STUB");
     }
 
     /**

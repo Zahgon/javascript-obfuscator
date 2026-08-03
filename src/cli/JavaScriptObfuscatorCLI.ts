@@ -145,15 +145,7 @@ export class JavaScriptObfuscatorCLI implements IInitializable {
         const filteredOptions: TInputOptions = {};
 
         Object.keys(options).forEach((option: keyof TInputCLIOptions) => {
-            if (options[option] === undefined) {
-                return;
-            }
-
-            if (command.getOptionValueSource(String(option)) === 'default') {
-                return;
-            }
-
-            filteredOptions[option] = options[option];
+            throw new Error("STUB");
         });
 
         return filteredOptions;
@@ -561,13 +553,7 @@ export class JavaScriptObfuscatorCLI implements IInitializable {
 
     private configureHelp(): void {
         this.commands.on('--help', () => {
-            console.log('  Examples:\n');
-            console.log('    %> javascript-obfuscator input_file_name.js --compact true --self-defending false');
-            console.log(
-                '    %> javascript-obfuscator input_file_name.js --output output_file_name.js --compact true --self-defending false'
-            );
-            console.log('    %> javascript-obfuscator input_directory_name --compact true --self-defending false');
-            console.log('');
+            throw new Error("STUB");
         });
     }
 
@@ -648,7 +634,7 @@ export class JavaScriptObfuscatorCLI implements IInitializable {
         });
 
         const result: IProObfuscationResult = await client.obfuscate(sourceCode, options, (message: string) => {
-            Logger.log(Logger.colorInfo, LoggingPrefix.CLI, message);
+            throw new Error("STUB");
         });
 
         this.obfuscatedCodeFileUtils.writeFile(outputCodePath, result.getObfuscatedCode());

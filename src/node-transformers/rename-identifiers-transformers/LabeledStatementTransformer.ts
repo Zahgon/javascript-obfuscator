@@ -65,9 +65,7 @@ export class LabeledStatementTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.RenameIdentifiers:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode && NodeGuards.isLabeledStatementNode(node)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -103,7 +101,7 @@ export class LabeledStatementTransformer extends AbstractNodeTransformer {
         labeledStatementNode: ESTree.LabeledStatement,
         lexicalScopeNode: TNodeWithLexicalScope
     ): void {
-        this.identifierReplacer.storeLocalName(labeledStatementNode.label, lexicalScopeNode);
+        throw new Error("STUB");
     }
 
     /**
@@ -114,14 +112,6 @@ export class LabeledStatementTransformer extends AbstractNodeTransformer {
         labeledStatementNode: ESTree.LabeledStatement,
         lexicalScopeNode: TNodeWithLexicalScope
     ): void {
-        estraverse.replace(labeledStatementNode, {
-            enter: (node: ESTree.Node, parentNode: ESTree.Node | null): void => {
-                if (parentNode && NodeGuards.isLabelIdentifierNode(node, parentNode)) {
-                    const newIdentifier: ESTree.Identifier = this.identifierReplacer.replace(node, lexicalScopeNode);
-
-                    node.name = newIdentifier.name;
-                }
-            }
-        });
+        throw new Error("STUB");
     }
 }

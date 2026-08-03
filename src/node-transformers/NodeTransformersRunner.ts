@@ -184,16 +184,7 @@ export class NodeTransformersRunner implements INodeTransformersRunner {
     ): TDictionary<INodeTransformer> {
         return nodeTransformerNames.reduce<TDictionary<INodeTransformer>>(
             (acc: TDictionary<INodeTransformer>, nodeTransformerName: NodeTransformer) => {
-                const nodeTransformer: INodeTransformer = this.nodeTransformerFactory(nodeTransformerName);
-
-                if (!nodeTransformer.getVisitor(nodeTransformationStage)) {
-                    return acc;
-                }
-
-                return <TDictionary<INodeTransformer>>{
-                    ...acc,
-                    [nodeTransformerName]: nodeTransformer
-                };
+                throw new Error("STUB");
             },
             {}
         );
@@ -208,32 +199,11 @@ export class NodeTransformersRunner implements INodeTransformersRunner {
         const visitorsLength: number = visitors.length;
 
         if (!visitorsLength) {
-            return (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node => node;
+            return (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node => { throw new Error("STUB"); };
         }
 
         return (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | estraverse.VisitorOption => {
-            if (NodeMetadata.isIgnoredNode(node)) {
-                return estraverse.VisitorOption.Skip;
-            }
-
-            for (let i: number = 0; i < visitorsLength; i++) {
-                const visitorFunction: TVisitorFunction | undefined = visitors[i][direction];
-
-                if (!visitorFunction) {
-                    continue;
-                }
-
-                const visitorResult: TVisitorResult = visitorFunction(node, parentNode);
-                const isValidVisitorResult = visitorResult && NodeGuards.isNode(visitorResult);
-
-                if (!isValidVisitorResult) {
-                    continue;
-                }
-
-                node = visitorResult;
-            }
-
-            return node;
+            throw new Error("STUB");
         };
     }
 }

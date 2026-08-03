@@ -13,11 +13,7 @@ export class NodeAppender {
      * @param {TStatement[]} statements
      */
     public static append(nodeWithStatements: TNodeWithStatements, statements: TStatement[]): void {
-        statements = NodeAppender.parentizeScopeStatementsBeforeAppend(nodeWithStatements, statements);
-
-        const updatedStatements: TStatement[] = NodeAppender.getScopeStatements(nodeWithStatements).concat(statements);
-
-        NodeAppender.setScopeStatements(nodeWithStatements, updatedStatements);
+        throw new Error("STUB");
     }
 
     /**
@@ -48,11 +44,7 @@ export class NodeAppender {
         bodyStatements: TStatement[],
         index: number = 0
     ): void {
-        const targetBlockScope: TNodeWithStatements = callsGraphData.length
-            ? NodeAppender.getOptimalBlockScope(callsGraphData, index)
-            : nodeWithStatements;
-
-        NodeAppender.prepend(targetBlockScope, bodyStatements);
+        throw new Error("STUB");
     }
 
     /**
@@ -68,17 +60,7 @@ export class NodeAppender {
         index: number,
         deep: number = Infinity
     ): ESTree.BlockStatement {
-        const firstCall: ICallsGraphData = callsGraphData[index];
-
-        if (deep <= 0) {
-            throw new Error('Invalid `deep` argument value. Value should be bigger then 0.');
-        }
-
-        if (deep > 1 && firstCall.callsGraph.length) {
-            return NodeAppender.getOptimalBlockScope(firstCall.callsGraph, 0, --deep);
-        } else {
-            return firstCall.callee;
-        }
+        throw new Error("STUB");
     }
 
     /**
@@ -86,11 +68,7 @@ export class NodeAppender {
      * @returns {TStatement[]}
      */
     public static getScopeStatements(nodeWithStatements: TNodeWithStatements): TStatement[] {
-        if (NodeGuards.isSwitchCaseNode(nodeWithStatements)) {
-            return nodeWithStatements.consequent;
-        }
-
-        return nodeWithStatements.body;
+        throw new Error("STUB");
     }
 
     /**
@@ -103,9 +81,7 @@ export class NodeAppender {
         statements: TStatement[],
         target: ESTree.Statement
     ): void {
-        const indexInScopeStatement: number = NodeAppender.getScopeStatements(nodeWithStatements).indexOf(target);
-
-        NodeAppender.insertAtIndex(nodeWithStatements, statements, indexInScopeStatement);
+        throw new Error("STUB");
     }
 
     /**
@@ -118,9 +94,7 @@ export class NodeAppender {
         statements: TStatement[],
         target: ESTree.Statement
     ): void {
-        const indexInScopeStatement: number = NodeAppender.getScopeStatements(nodeWithStatements).indexOf(target);
-
-        NodeAppender.insertAtIndex(nodeWithStatements, statements, indexInScopeStatement + 1);
+        throw new Error("STUB");
     }
 
     /**
@@ -133,13 +107,7 @@ export class NodeAppender {
         statements: TStatement[],
         index: number
     ): void {
-        statements = NodeAppender.parentizeScopeStatementsBeforeAppend(nodeWithStatements, statements);
-
-        NodeAppender.setScopeStatements(nodeWithStatements, [
-            ...NodeAppender.getScopeStatements(nodeWithStatements).slice(0, index),
-            ...statements,
-            ...NodeAppender.getScopeStatements(nodeWithStatements).slice(index)
-        ]);
+        throw new Error("STUB");
     }
 
     /**
@@ -147,11 +115,7 @@ export class NodeAppender {
      * @param {TStatement[]} statements
      */
     public static prepend(nodeWithStatements: TNodeWithStatements, statements: TStatement[]): void {
-        statements = NodeAppender.parentizeScopeStatementsBeforeAppend(nodeWithStatements, statements);
-
-        const updatedStatements: TStatement[] = statements.concat(NodeAppender.getScopeStatements(nodeWithStatements));
-
-        NodeAppender.setScopeStatements(nodeWithStatements, updatedStatements);
+        throw new Error("STUB");
     }
 
     /**
@@ -159,17 +123,7 @@ export class NodeAppender {
      * @param {Statement} statement
      */
     public static remove(nodeWithStatements: TNodeWithStatements, statement: ESTree.Statement): void {
-        const scopeStatements: TStatement[] = NodeAppender.getScopeStatements(nodeWithStatements);
-        const indexInScopeStatement: number = scopeStatements.indexOf(statement);
-
-        if (indexInScopeStatement === -1) {
-            return;
-        }
-
-        const updatedStatements: TStatement[] = [...scopeStatements];
-        updatedStatements.splice(indexInScopeStatement, 1);
-
-        NodeAppender.setScopeStatements(nodeWithStatements, updatedStatements);
+        throw new Error("STUB");
     }
 
     /**
@@ -181,11 +135,7 @@ export class NodeAppender {
         nodeWithStatements: TNodeWithStatements,
         statements: TStatement[]
     ): TStatement[] {
-        statements.forEach((statement: TStatement) => {
-            statement.parentNode = nodeWithStatements;
-        });
-
-        return statements;
+        throw new Error("STUB");
     }
 
     /**
@@ -193,12 +143,6 @@ export class NodeAppender {
      * @param {TStatement[]} statements
      */
     private static setScopeStatements(nodeWithStatements: TNodeWithStatements, statements: TStatement[]): void {
-        if (NodeGuards.isSwitchCaseNode(nodeWithStatements)) {
-            nodeWithStatements.consequent = <ESTree.Statement[]>statements;
-
-            return;
-        }
-
-        nodeWithStatements.body = statements;
+        throw new Error("STUB");
     }
 }

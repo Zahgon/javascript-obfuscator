@@ -30,17 +30,7 @@ export class ForceTransformStringObfuscatingGuard implements IObfuscatingGuard {
      * @returns {ObfuscatingGuardResult}
      */
     public check(node: ESTree.Node): ObfuscatingGuardResult {
-        if (
-            this.options.forceTransformStrings.length &&
-            NodeGuards.isLiteralNode(node) &&
-            typeof node.value === 'string'
-        ) {
-            return !this.isForceTransformString(node.value)
-                ? ObfuscatingGuardResult.Transform
-                : ObfuscatingGuardResult.ForceTransform;
-        }
-
-        return ObfuscatingGuardResult.Transform;
+        throw new Error("STUB");
     }
 
     /**
@@ -48,8 +38,6 @@ export class ForceTransformStringObfuscatingGuard implements IObfuscatingGuard {
      * @returns {boolean}
      */
     private isForceTransformString(value: string): boolean {
-        return this.options.forceTransformStrings.some((forceTransformString: string) => {
-            return new RegExp(forceTransformString, 'g').exec(value) !== null;
-        });
+        throw new Error("STUB");
     }
 }

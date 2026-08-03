@@ -42,18 +42,14 @@ export class CommentsTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.Initializing:
                 return {
                     leave: (node: ESTree.Node): ESTree.Node | undefined => {
-                        if (NodeGuards.isProgramNode(node)) {
-                            return this.transformNode(node);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
             case NodeTransformationStage.Finalizing:
                 return {
                     leave: (node: ESTree.Node): ESTree.Node | undefined => {
-                        if (NodeGuards.isProgramNode(node)) {
-                            return this.filterCommentsOnFinalizingTraverse(node);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -88,21 +84,7 @@ export class CommentsTransformer extends AbstractNodeTransformer {
 
         estraverse.traverse(rootNode, {
             enter: (node: ESTree.Node): void => {
-                if (node === rootNode) {
-                    return;
-                }
-
-                const commentIdx: number = comments.findIndex(
-                    (comment: ESTree.Comment) => comment.range && node.range && comment.range[0] < node.range[0]
-                );
-
-                if (commentIdx >= 0) {
-                    (isFirstNode ? rootNode : node).leadingComments = comments
-                        .splice(commentIdx, comments.length - commentIdx)
-                        .reverse();
-                }
-
-                isFirstNode = false;
+                throw new Error("STUB");
             }
         });
 
@@ -121,9 +103,7 @@ export class CommentsTransformer extends AbstractNodeTransformer {
      * @returns {ESTree.Program}
      */
     private filterCommentsOnPrimaryTraverse(rootNode: ESTree.Program): ESTree.Program {
-        rootNode.comments = rootNode.comments?.filter((comment: ESTree.Comment) => this.filterComment(comment, true));
-
-        return rootNode;
+        throw new Error("STUB");
     }
 
     /**
@@ -135,19 +115,7 @@ export class CommentsTransformer extends AbstractNodeTransformer {
     private filterCommentsOnFinalizingTraverse(rootNode: ESTree.Program): ESTree.Program {
         estraverse.replace(rootNode, {
             enter: (node: ESTree.Node): ESTree.Node => {
-                if (node.leadingComments) {
-                    node.leadingComments = node.leadingComments?.filter((comment: ESTree.Comment) =>
-                        this.filterComment(comment, false)
-                    );
-                }
-
-                if (node.trailingComments) {
-                    node.trailingComments = node.trailingComments?.filter((comment: ESTree.Comment) =>
-                        this.filterComment(comment, false)
-                    );
-                }
-
-                return node;
+                throw new Error("STUB");
             }
         });
 
@@ -160,12 +128,6 @@ export class CommentsTransformer extends AbstractNodeTransformer {
      * @returns {boolean}
      */
     private filterComment(comment: ESTree.Comment, keepConditionalComment: boolean): boolean {
-        if (keepConditionalComment && ConditionalCommentObfuscatingGuard.isConditionalComment(comment)) {
-            return true;
-        }
-
-        return CommentsTransformer.preservedWords.some((preservedWord: string) =>
-            comment.value.includes(preservedWord)
-        );
+        throw new Error("STUB");
     }
 }

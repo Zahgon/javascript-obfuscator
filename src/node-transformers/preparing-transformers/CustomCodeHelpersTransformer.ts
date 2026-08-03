@@ -85,23 +85,14 @@ export class CustomCodeHelpersTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.Preparing:
                 return {
                     leave: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (NodeGuards.isProgramNode(node)) {
-                            this.prepareNode(node, parentNode);
-                            this.appendCustomNodesForPreparingStage(node, parentNode);
-
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
             default:
                 return {
                     leave: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (NodeGuards.isProgramNode(node)) {
-                            this.appendCustomNodesForStage(nodeTransformationStage, node, parentNode);
-                        }
-
-                        return node;
+                        throw new Error("STUB");
                     }
                 };
         }
@@ -131,8 +122,7 @@ export class CustomCodeHelpersTransformer extends AbstractNodeTransformer {
      */
     private appendCustomNodesForPreparingStage(node: ESTree.Program, parentNode: ESTree.Node | null): void {
         this.customCodeHelperGroupStorage.getStorage().forEach((customCodeHelperGroup: ICustomCodeHelperGroup) => {
-            customCodeHelperGroup.initialize();
-            customCodeHelperGroup.appendOnPreparingStage?.(node, this.callsGraphData);
+            throw new Error("STUB");
         });
     }
 
@@ -147,9 +137,7 @@ export class CustomCodeHelpersTransformer extends AbstractNodeTransformer {
         parentNode: ESTree.Node | null
     ): void {
         this.customCodeHelperGroupStorage.getStorage().forEach((customCodeHelperGroup: ICustomCodeHelperGroup) => {
-            const methodName: TCustomCodeHelpersGroupAppendMethodName = `appendOn${nodeTransformationStage}Stage`;
-
-            customCodeHelperGroup[methodName]?.(node, this.callsGraphData);
+            throw new Error("STUB");
         });
     }
 }

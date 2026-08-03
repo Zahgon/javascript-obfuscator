@@ -53,7 +53,7 @@ export class EscapeSequenceEncoder implements IEscapeSequenceEncoder {
 
         const result: string = string.replace(
             EscapeSequenceEncoder.replaceRegExp,
-            (character: string): string => this.encodeCharacter(character, encodeAllSymbols)
+            (character: string): string => { throw new Error("STUB"); }
         );
 
         this.stringsCache.set(cacheKey, result);
@@ -69,24 +69,7 @@ export class EscapeSequenceEncoder implements IEscapeSequenceEncoder {
      * @returns {string}
      */
     public encodeLiteral(value: string, rawValue: string | undefined, encodeAllSymbols: boolean): string {
-        // when all symbols are being encoded every character becomes an escape sequence anyway,
-        // so there is nothing to preserve
-        if (encodeAllSymbols || rawValue === undefined) {
-            return this.encode(value, encodeAllSymbols);
-        }
-
-        const cacheKey: string = `literal-${value}-${rawValue}-${String(encodeAllSymbols)}`;
-
-        if (this.stringsCache.has(cacheKey)) {
-            return <string>this.stringsCache.get(cacheKey);
-        }
-
-        const preservedResult: string | null = this.encodePreservingUnicodeEscapes(value, rawValue);
-        const result: string = preservedResult ?? this.encode(value, encodeAllSymbols);
-
-        this.stringsCache.set(cacheKey, result);
-
-        return result;
+        throw new Error("STUB");
     }
 
     /**
@@ -124,60 +107,7 @@ export class EscapeSequenceEncoder implements IEscapeSequenceEncoder {
      * @returns {string | null}
      */
     private encodePreservingUnicodeEscapes(value: string, rawValue: string): string | null {
-        const rawBody: string = rawValue.slice(1, -1);
-
-        let result: string = '';
-        let decoded: string = '';
-        let index: number = 0;
-
-        while (index < rawBody.length) {
-            const character: string = rawBody[index];
-
-            if (character !== '\\') {
-                result += this.encodeCharacter(character, false);
-                decoded += character;
-                index++;
-
-                continue;
-            }
-
-            const nextCharacter: string | undefined = rawBody[index + 1];
-
-            if (nextCharacter === undefined) {
-                // dangling backslash - malformed, cannot trust the raw value
-                return null;
-            }
-
-            if (nextCharacter === 'u' || nextCharacter === 'x') {
-                const unicodeEscape: { raw: string; decoded: string } | null = this.readUnicodeEscapeSequence(
-                    rawBody,
-                    index
-                );
-
-                if (!unicodeEscape) {
-                    return null;
-                }
-
-                // keep the unicode/hex escape sequence exactly as it was in the source
-                result += unicodeEscape.raw;
-                decoded += unicodeEscape.decoded;
-                index += unicodeEscape.raw.length;
-
-                continue;
-            }
-
-            // any other escape sequence is decoded and re-encoded as a regular character
-            const simpleEscape: { raw: string; decoded: string } = this.readSimpleEscapeSequence(rawBody, index);
-
-            for (const decodedCharacter of simpleEscape.decoded) {
-                result += this.encodeCharacter(decodedCharacter, false);
-            }
-
-            decoded += simpleEscape.decoded;
-            index += simpleEscape.raw.length;
-        }
-
-        return decoded === value ? result : null;
+        throw new Error("STUB");
     }
 
     /**
@@ -189,18 +119,7 @@ export class EscapeSequenceEncoder implements IEscapeSequenceEncoder {
         rawBody: string,
         startIndex: number
     ): { raw: string; decoded: string } | null {
-        // `\xXX`
-        if (rawBody[startIndex + 1] === 'x') {
-            return this.readFixedLengthHexEscapeSequence(rawBody, startIndex, 2);
-        }
-
-        // `\u{XXXX}`
-        if (rawBody[startIndex + 2] === '{') {
-            return this.readCodePointEscapeSequence(rawBody, startIndex);
-        }
-
-        // `\uXXXX`
-        return this.readFixedLengthHexEscapeSequence(rawBody, startIndex, 4);
+        throw new Error("STUB");
     }
 
     /**
@@ -214,16 +133,7 @@ export class EscapeSequenceEncoder implements IEscapeSequenceEncoder {
         startIndex: number,
         hexLength: number
     ): { raw: string; decoded: string } | null {
-        const hexDigits: string = rawBody.slice(startIndex + 2, startIndex + 2 + hexLength);
-
-        if (hexDigits.length !== hexLength || !this.isHexString(hexDigits)) {
-            return null;
-        }
-
-        return {
-            raw: rawBody.slice(startIndex, startIndex + 2 + hexLength),
-            decoded: String.fromCharCode(parseInt(hexDigits, 16))
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -235,25 +145,7 @@ export class EscapeSequenceEncoder implements IEscapeSequenceEncoder {
         rawBody: string,
         startIndex: number
     ): { raw: string; decoded: string } | null {
-        const closingBraceIndex: number = rawBody.indexOf('}', startIndex + 3);
-
-        if (closingBraceIndex === -1) {
-            return null;
-        }
-
-        const hexDigits: string = rawBody.slice(startIndex + 3, closingBraceIndex);
-        const codePoint: number = parseInt(hexDigits, 16);
-
-        const maxCodePoint: number = 0x10_ff_ff;
-
-        if (!hexDigits.length || !this.isHexString(hexDigits) || codePoint > maxCodePoint) {
-            return null;
-        }
-
-        return {
-            raw: rawBody.slice(startIndex, closingBraceIndex + 1),
-            decoded: String.fromCodePoint(codePoint)
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -263,61 +155,7 @@ export class EscapeSequenceEncoder implements IEscapeSequenceEncoder {
      */
     // eslint-disable-next-line complexity
     private readSimpleEscapeSequence(rawBody: string, startIndex: number): { raw: string; decoded: string } {
-        const escapeCharacter: string = rawBody[startIndex + 1];
-
-        switch (escapeCharacter) {
-            case 'n':
-                return { raw: '\\n', decoded: '\n' };
-
-            case 'r':
-                return { raw: '\\r', decoded: '\r' };
-
-            case 't':
-                return { raw: '\\t', decoded: '\t' };
-
-            case 'b':
-                return { raw: '\\b', decoded: '\b' };
-
-            case 'f':
-                return { raw: '\\f', decoded: '\f' };
-
-            case 'v':
-                return { raw: '\\v', decoded: '\v' };
-
-            case '\r': {
-                // line continuation (`\` followed by a line terminator)
-                const isCarriageReturnLineFeed: boolean = rawBody[startIndex + 2] === '\n';
-
-                return { raw: isCarriageReturnLineFeed ? '\\\r\n' : '\\\r', decoded: '' };
-            }
-
-            case '\n':
-                return { raw: '\\\n', decoded: '' };
-
-            default:
-                break;
-        }
-
-        // legacy octal escape sequence (e.g. `\0`, `\12`, `\101`)
-        if (EscapeSequenceEncoder.octalDigitRegExp.test(escapeCharacter)) {
-            let octalDigits: string = escapeCharacter;
-            const maxOctalLength: number = escapeCharacter <= '3' ? 3 : 2;
-
-            while (
-                octalDigits.length < maxOctalLength &&
-                EscapeSequenceEncoder.octalDigitRegExp.test(rawBody[startIndex + 1 + octalDigits.length] ?? '')
-            ) {
-                octalDigits += rawBody[startIndex + 1 + octalDigits.length];
-            }
-
-            return {
-                raw: `\\${octalDigits}`,
-                decoded: String.fromCharCode(parseInt(octalDigits, 8))
-            };
-        }
-
-        // identity escape (`\\`, `\'`, `\"`, `` \` ``, `\/`, etc.)
-        return { raw: `\\${escapeCharacter}`, decoded: escapeCharacter };
+        throw new Error("STUB");
     }
 
     /**
@@ -325,12 +163,6 @@ export class EscapeSequenceEncoder implements IEscapeSequenceEncoder {
      * @returns {boolean}
      */
     private isHexString(string: string): boolean {
-        for (const character of string) {
-            if (!EscapeSequenceEncoder.hexDigitRegExp.test(character)) {
-                return false;
-            }
-        }
-
-        return true;
+        throw new Error("STUB");
     }
 }

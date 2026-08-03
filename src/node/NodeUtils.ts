@@ -27,7 +27,7 @@ export class NodeUtils {
      * @returns {T}
      */
     public static clone<T extends ESTree.Node = ESTree.Node>(astTree: T): T {
-        return NodeUtils.parentizeAst(NodeUtils.cloneRecursive(astTree));
+        throw new Error("STUB");
     }
 
     /**
@@ -42,15 +42,7 @@ export class NodeUtils {
 
         estraverse.replace(structure, {
             enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node => {
-                NodeUtils.parentizeNode(node, parentNode);
-
-                if (NodeGuards.isLiteralNode(node)) {
-                    NodeUtils.addXVerbatimPropertyTo(node);
-                }
-
-                NodeMetadata.set(node, { ignoredNode: false });
-
-                return node;
+                throw new Error("STUB");
             }
         });
 
@@ -63,12 +55,7 @@ export class NodeUtils {
      */
     public static convertStructureToCode(structure: ESTree.Node[]): string {
         return structure.reduce((code: string, node: ESTree.Node) => {
-            return (
-                code +
-                escodegen.generate(node, {
-                    sourceMapWithCode: true
-                }).code
-            );
+            throw new Error("STUB");
         }, '');
     }
 
@@ -118,40 +105,6 @@ export class NodeUtils {
      * @returns {T}
      */
     private static cloneRecursive<T>(node: NonNullable<T>): T {
-        if (node === null) {
-            return node;
-        }
-
-        // Handle primitives directly - don't try to clone them as objects
-        if (typeof node !== 'object') {
-            return node;
-        }
-
-        const copy: Partial<T> = {};
-        const nodeKeys: (keyof T)[] = <(keyof T)[]>Object.keys(node);
-
-        nodeKeys.forEach((property: keyof T) => {
-            if (property === 'parentNode') {
-                return;
-            }
-
-            const value: T[keyof T] | T[keyof T][] | null = node[property] ?? null;
-
-            let clonedValue: T[keyof T] | T[keyof T][] | null;
-
-            if (value === null || value instanceof RegExp) {
-                clonedValue = value;
-            } else if (value instanceof Array) {
-                clonedValue = value.map(NodeUtils.cloneRecursive);
-            } else if (typeof value === 'object') {
-                clonedValue = NodeUtils.cloneRecursive(value);
-            } else {
-                clonedValue = value;
-            }
-
-            copy[property] = <T[keyof T]>clonedValue;
-        });
-
-        return <T>copy;
+        throw new Error("STUB");
     }
 }

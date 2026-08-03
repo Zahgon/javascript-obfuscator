@@ -104,18 +104,7 @@ export class DeadCodeInjectionTransformer extends AbstractNodeTransformer {
      */
     // eslint-disable-next-line complexity
     private static isProhibitedNodeInsideCollectedBlockStatement(targetNode: ESTree.Node): boolean {
-        return (
-            NodeGuards.isFunctionDeclarationNode(targetNode) || // can break code on strict mode
-            NodeGuards.isBreakStatementNode(targetNode) ||
-            NodeGuards.isContinueStatementNode(targetNode) ||
-            NodeGuards.isAwaitExpressionNode(targetNode) ||
-            NodeGuards.isYieldExpressionNode(targetNode) ||
-            NodeGuards.isSuperNode(targetNode) ||
-            (NodeGuards.isForOfStatementNode(targetNode) && targetNode.await) ||
-            NodeGuards.isPrivateIdentifierNode(targetNode) ||
-            // `arguments` is not allowed in class field initializers or static initialization blocks
-            (NodeGuards.isIdentifierNode(targetNode) && targetNode.name === 'arguments')
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -123,37 +112,7 @@ export class DeadCodeInjectionTransformer extends AbstractNodeTransformer {
      * @returns {boolean}
      */
     private static isScopeHoistingFunctionDeclaration(targetNode: ESTree.Node): boolean {
-        if (!NodeGuards.isFunctionDeclarationNode(targetNode)) {
-            return false;
-        }
-
-        const scopeNode: TNodeWithStatements = NodeStatementUtils.getScopeOfNode(targetNode);
-        const scopeBody: ESTree.Statement[] = !NodeGuards.isSwitchCaseNode(scopeNode)
-            ? <ESTree.Statement[]>scopeNode.body
-            : scopeNode.consequent;
-        const indexInScope: number = scopeBody.indexOf(targetNode);
-
-        if (indexInScope === 0) {
-            return false;
-        }
-
-        const slicedBody: ESTree.Statement[] = scopeBody.slice(0, indexInScope);
-        const hostBlockStatementNode: ESTree.BlockStatement = NodeFactory.blockStatementNode(slicedBody);
-        const functionDeclarationName: string = targetNode.id.name;
-
-        let isScopeHoistedFunctionDeclaration: boolean = false;
-
-        estraverse.traverse(hostBlockStatementNode, {
-            enter: (node: ESTree.Node): estraverse.VisitorOption | void => {
-                if (NodeGuards.isIdentifierNode(node) && node.name === functionDeclarationName) {
-                    isScopeHoistedFunctionDeclaration = true;
-
-                    return estraverse.VisitorOption.Break;
-                }
-            }
-        });
-
-        return isScopeHoistedFunctionDeclaration;
+        throw new Error("STUB");
     }
 
     /**
@@ -161,32 +120,7 @@ export class DeadCodeInjectionTransformer extends AbstractNodeTransformer {
      * @returns {boolean}
      */
     private static isValidCollectedBlockStatementNode(blockStatementNode: ESTree.BlockStatement): boolean {
-        if (!blockStatementNode.body.length) {
-            return false;
-        }
-
-        let nestedBlockStatementsCount: number = 0;
-        let isValidBlockStatementNode: boolean = true;
-
-        estraverse.traverse(blockStatementNode, {
-            enter: (node: ESTree.Node): estraverse.VisitorOption | void => {
-                if (NodeGuards.isBlockStatementNode(node)) {
-                    nestedBlockStatementsCount++;
-                }
-
-                if (
-                    nestedBlockStatementsCount > DeadCodeInjectionTransformer.maxNestedBlockStatementsCount ||
-                    DeadCodeInjectionTransformer.isProhibitedNodeInsideCollectedBlockStatement(node) ||
-                    DeadCodeInjectionTransformer.isScopeHoistingFunctionDeclaration(node)
-                ) {
-                    isValidBlockStatementNode = false;
-
-                    return estraverse.VisitorOption.Break;
-                }
-            }
-        });
-
-        return isValidBlockStatementNode;
+        throw new Error("STUB");
     }
 
     /**
@@ -198,38 +132,7 @@ export class DeadCodeInjectionTransformer extends AbstractNodeTransformer {
         blockStatementNode: ESTree.BlockStatement,
         parentNode: ESTree.Node
     ): boolean {
-        /**
-         * Special case for ignoring all EvalHost nodes that are added by EvalCallExpressionTransformer
-         * So, all content of eval expressions should not be affected by dead code injection
-         */
-        if (NodeMetadata.isEvalHostNode(parentNode)) {
-            return false;
-        }
-
-        if (!blockStatementNode.body.length) {
-            return false;
-        }
-
-        let isValidBlockStatementNode: boolean = true;
-
-        estraverse.traverse(blockStatementNode, {
-            enter: (node: ESTree.Node): estraverse.VisitorOption | void => {
-                if (DeadCodeInjectionTransformer.isScopeHoistingFunctionDeclaration(node)) {
-                    isValidBlockStatementNode = false;
-
-                    return estraverse.VisitorOption.Break;
-                }
-            }
-        });
-
-        if (!isValidBlockStatementNode) {
-            return false;
-        }
-
-        const parentNodeWithStatements: TNodeWithStatements =
-            NodeStatementUtils.getParentNodeWithStatements(blockStatementNode);
-
-        return parentNodeWithStatements.type !== NodeType.Program;
+        throw new Error("STUB");
     }
 
     /**
@@ -241,19 +144,13 @@ export class DeadCodeInjectionTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.DeadCodeInjection:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode && NodeGuards.isProgramNode(node)) {
-                            this.prepareNode(node, parentNode);
-
-                            return node;
-                        }
+                        throw new Error("STUB");
                     },
                     leave: (
                         node: ESTree.Node,
                         parentNode: ESTree.Node | null
                     ): ESTree.Node | estraverse.VisitorOption | undefined => {
-                        if (parentNode && NodeGuards.isBlockStatementNode(node)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -263,9 +160,7 @@ export class DeadCodeInjectionTransformer extends AbstractNodeTransformer {
                         node: ESTree.Node,
                         parentNode: ESTree.Node | null
                     ): ESTree.Node | estraverse.VisitorOption | undefined => {
-                        if (parentNode && this.isDeadCodeInjectionRootAstHostNode(node)) {
-                            return this.restoreNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -281,23 +176,7 @@ export class DeadCodeInjectionTransformer extends AbstractNodeTransformer {
     public prepareNode(programNode: ESTree.Node, parentNode: ESTree.Node): void {
         estraverse.traverse(programNode, {
             enter: (node: ESTree.Node): void => {
-                if (!NodeGuards.isBlockStatementNode(node)) {
-                    return;
-                }
-
-                const clonedBlockStatementNode: ESTree.BlockStatement = NodeUtils.clone(node);
-
-                if (!DeadCodeInjectionTransformer.isValidCollectedBlockStatementNode(clonedBlockStatementNode)) {
-                    return;
-                }
-
-                /**
-                 * We should transform identifiers in the dead code block statement to avoid conflicts with original code
-                 */
-                const transformedBlockStatementNode: ESTree.BlockStatement =
-                    this.makeClonedBlockStatementNodeUnique(clonedBlockStatementNode);
-
-                this.collectedBlockStatements.push(transformedBlockStatementNode);
+                throw new Error("STUB");
             }
         });
 
@@ -380,21 +259,7 @@ export class DeadCodeInjectionTransformer extends AbstractNodeTransformer {
      * @returns {BlockStatement}
      */
     private makeClonedBlockStatementNodeUnique(clonedBlockStatementNode: ESTree.BlockStatement): ESTree.BlockStatement {
-        // should wrap cloned block statement node into function node for correct scope encapsulation
-        const hostNode: ESTree.Program = NodeFactory.programNode([
-            NodeFactory.expressionStatementNode(NodeFactory.functionExpressionNode([], clonedBlockStatementNode))
-        ]);
-
-        NodeUtils.parentizeAst(hostNode);
-        NodeUtils.parentizeNode(hostNode, hostNode);
-
-        this.transformersRunner.transform(
-            hostNode,
-            DeadCodeInjectionTransformer.transformersToRenameBlockScopeIdentifiers,
-            NodeTransformationStage.RenameIdentifiers
-        );
-
-        return clonedBlockStatementNode;
+        throw new Error("STUB");
     }
 
     /**
@@ -408,36 +273,6 @@ export class DeadCodeInjectionTransformer extends AbstractNodeTransformer {
         randomBlockStatementNode: ESTree.BlockStatement,
         parentNode: ESTree.Node
     ): ESTree.BlockStatement {
-        /**
-         * Should wrap original random block statement node into the parent block statement node (ast root host node)
-         * with function declaration node. This function declaration node will create block scope for all identifiers
-         * inside random block statement node and this identifiers won't affect identifiers of the rest AST tree.
-         */
-        const deadCodeInjectionRootAstHostNode: ESTree.BlockStatement = NodeFactory.blockStatementNode([
-            NodeFactory.functionDeclarationNode(
-                DeadCodeInjectionTransformer.deadCodeInjectionRootAstHostNodeName,
-                [],
-                randomBlockStatementNode
-            )
-        ]);
-
-        /**
-         * Should store that host node and then extract random block statement node on the `finalizing` stage
-         */
-        this.deadCodeInjectionRootAstHostNodeSet.add(deadCodeInjectionRootAstHostNode);
-
-        const blockStatementDeadCodeInjectionCustomNode: ICustomNode<
-            TInitialData<BlockStatementDeadCodeInjectionNode>
-        > = this.deadCodeInjectionCustomNodeFactory(DeadCodeInjectionCustomNode.BlockStatementDeadCodeInjectionNode);
-
-        blockStatementDeadCodeInjectionCustomNode.initialize(blockStatementNode, deadCodeInjectionRootAstHostNode);
-
-        const newBlockStatementNode: ESTree.BlockStatement = <ESTree.BlockStatement>(
-            blockStatementDeadCodeInjectionCustomNode.getNode()[0]
-        );
-
-        NodeUtils.parentizeNode(newBlockStatementNode, parentNode);
-
-        return newBlockStatementNode;
+        throw new Error("STUB");
     }
 }

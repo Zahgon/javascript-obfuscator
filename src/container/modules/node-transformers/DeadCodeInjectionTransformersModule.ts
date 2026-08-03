@@ -9,9 +9,6 @@ import { DeadCodeInjectionTransformer } from '../../../node-transformers/dead-co
 
 export const deadCodeInjectionTransformersModule: ContainerModule = new ContainerModule(
     (options: ContainerModuleLoadOptions) => {
-        // dead code injection
-        options.bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-            .to(DeadCodeInjectionTransformer)
-            .whenNamed(NodeTransformer.DeadCodeInjectionTransformer);
+        throw new Error("STUB");
     }
 );

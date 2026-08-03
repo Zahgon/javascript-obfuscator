@@ -94,9 +94,7 @@ export class StringArrayCodeHelper extends AbstractCustomCodeHelper {
     private getEncodedStringArrayStorageItems(): string {
         return Array.from(this.stringArrayStorage.getStorage().values())
             .map((stringArrayStorageItemData: IStringArrayStorageItemData): string => {
-                const escapedEncodedValue: string = StringUtils.escapeJsString(stringArrayStorageItemData.encodedValue);
-
-                return `'${escapedEncodedValue}'`;
+                throw new Error("STUB");
             })
             .toString();
     }

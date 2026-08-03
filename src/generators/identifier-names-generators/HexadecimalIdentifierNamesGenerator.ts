@@ -34,7 +34,7 @@ export class HexadecimalIdentifierNamesGenerator extends AbstractIdentifierNames
      * @returns {string}
      */
     public generateNext(nameLength?: number): string {
-        return this.generateNextName(nameLength, (name) => this.isValidIdentifierName(name));
+        return this.generateNextName(nameLength, (name) => { throw new Error("STUB"); });
     }
 
     /**
@@ -42,7 +42,7 @@ export class HexadecimalIdentifierNamesGenerator extends AbstractIdentifierNames
      * @returns {string}
      */
     public generateForGlobalScope(nameLength?: number): string {
-        return this.generateForGlobalScopeInternal(nameLength, (name) => this.isValidIdentifierName(name));
+        return this.generateForGlobalScopeInternal(nameLength, (name) => { throw new Error("STUB"); });
     }
 
     /**
@@ -50,7 +50,7 @@ export class HexadecimalIdentifierNamesGenerator extends AbstractIdentifierNames
      * @returns {string}
      */
     public generateForGlobalScopeWithAllScopesValidation(nameLength?: number): string {
-        return this.generateForGlobalScopeInternal(nameLength, (name) => this.isValidIdentifierNameInAllScopes(name));
+        return this.generateForGlobalScopeInternal(nameLength, (name) => { throw new Error("STUB"); });
     }
 
     /**

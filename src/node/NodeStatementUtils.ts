@@ -11,7 +11,7 @@ export class NodeStatementUtils {
      * @returns {TNodeWithStatements}
      */
     public static getParentNodeWithStatements(node: ESTree.Node): TNodeWithStatements {
-        return NodeStatementUtils.getParentNodesWithStatementsRecursive(node, 1)[0];
+        throw new Error("STUB");
     }
 
     /**
@@ -19,7 +19,7 @@ export class NodeStatementUtils {
      * @returns {TNodeWithStatements[]}
      */
     public static getParentNodesWithStatements(node: ESTree.Node): TNodeWithStatements[] {
-        return NodeStatementUtils.getParentNodesWithStatementsRecursive(node);
+        throw new Error("STUB");
     }
 
     /**
@@ -27,7 +27,7 @@ export class NodeStatementUtils {
      * @returns {TStatement | null}
      */
     public static getNextSiblingStatement(statement: ESTree.Statement): TStatement | null {
-        return NodeStatementUtils.getSiblingStatementByOffset(statement, 1);
+        throw new Error("STUB");
     }
 
     /**
@@ -35,7 +35,7 @@ export class NodeStatementUtils {
      * @returns {TStatement | null}
      */
     public static getPreviousSiblingStatement(statement: ESTree.Statement): TStatement | null {
-        return NodeStatementUtils.getSiblingStatementByOffset(statement, -1);
+        throw new Error("STUB");
     }
 
     /**
@@ -43,21 +43,7 @@ export class NodeStatementUtils {
      * @returns {Statement}
      */
     public static getRootStatementOfNode(node: ESTree.Node): ESTree.Statement {
-        if (NodeGuards.isProgramNode(node)) {
-            throw new Error('Unable to find root statement for `Program` node');
-        }
-
-        const parentNode: ESTree.Node | undefined = node.parentNode;
-
-        if (!parentNode) {
-            throw new ReferenceError('`parentNode` property of given node is `undefined`');
-        }
-
-        if (!NodeGuards.isNodeWithStatements(parentNode)) {
-            return NodeStatementUtils.getRootStatementOfNode(parentNode);
-        }
-
-        return <ESTree.Statement>node;
+        throw new Error("STUB");
     }
 
     /**
@@ -65,17 +51,7 @@ export class NodeStatementUtils {
      * @returns {TNodeWithStatements}
      */
     public static getScopeOfNode(node: ESTree.Node): TNodeWithStatements {
-        const parentNode: ESTree.Node | undefined = node.parentNode;
-
-        if (!parentNode) {
-            throw new ReferenceError('`parentNode` property of given node is `undefined`');
-        }
-
-        if (!NodeGuards.isNodeWithStatements(parentNode)) {
-            return NodeStatementUtils.getScopeOfNode(parentNode);
-        }
-
-        return parentNode;
+        throw new Error("STUB");
     }
 
     /**
@@ -91,36 +67,7 @@ export class NodeStatementUtils {
         nodesWithStatements: TNodeWithStatements[] = [],
         depth: number = 0
     ): TNodeWithStatements[] {
-        if (nodesWithStatements.length >= maxSize) {
-            return nodesWithStatements;
-        }
-
-        const parentNode: ESTree.Node | undefined = node.parentNode;
-
-        if (!parentNode) {
-            throw new ReferenceError('`parentNode` property of given node is `undefined`');
-        }
-
-        if (
-            /**
-             * we can add program node instantly
-             */
-            NodeGuards.isProgramNode(node) ||
-            (NodeGuards.isNodeWithLexicalScopeStatements(node, parentNode) && depth > 0)
-        ) {
-            nodesWithStatements.push(node);
-        }
-
-        if (node !== parentNode) {
-            return NodeStatementUtils.getParentNodesWithStatementsRecursive(
-                parentNode,
-                maxSize,
-                nodesWithStatements,
-                ++depth
-            );
-        }
-
-        return nodesWithStatements;
+        throw new Error("STUB");
     }
 
     /**
@@ -129,10 +76,6 @@ export class NodeStatementUtils {
      * @returns {TStatement | null}
      */
     private static getSiblingStatementByOffset(statement: ESTree.Statement, offset: number): TStatement | null {
-        const scopeNode: TNodeWithStatements = NodeStatementUtils.getScopeOfNode(statement);
-        const scopeBody: TStatement[] = !NodeGuards.isSwitchCaseNode(scopeNode) ? scopeNode.body : scopeNode.consequent;
-        const indexInScope: number = scopeBody.indexOf(statement);
-
-        return scopeBody[indexInScope + offset] || null;
+        throw new Error("STUB");
     }
 }

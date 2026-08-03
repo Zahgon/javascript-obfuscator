@@ -100,7 +100,7 @@ export class ObfuscationResult implements IObfuscationResult {
      * @returns {IOptions}
      */
     public getOptions(): IOptions {
-        return this.options;
+        throw new Error("STUB");
     }
 
     /**
@@ -121,29 +121,6 @@ export class ObfuscationResult implements IObfuscationResult {
      * @returns {string}
      */
     private correctObfuscatedCode(): string {
-        if (!this.sourceMap) {
-            return this.obfuscatedCode;
-        }
-
-        const sourceMapUrl: string = this.options.sourceMapBaseUrl + this.options.sourceMapFileName;
-
-        let sourceMappingUrl: string = '//# sourceMappingURL=';
-
-        switch (this.options.sourceMapMode) {
-            case SourceMapMode.Inline:
-                sourceMappingUrl += `data:application/json;base64,${this.cryptUtils.btoa(this.sourceMap)}`;
-
-                break;
-
-            case SourceMapMode.Separate:
-            default:
-                if (!sourceMapUrl) {
-                    return this.obfuscatedCode;
-                }
-
-                sourceMappingUrl += sourceMapUrl;
-        }
-
-        return `${this.obfuscatedCode}\n${sourceMappingUrl}`;
+        throw new Error("STUB");
     }
 }

@@ -47,7 +47,7 @@ export class VisitedLexicalScopeNodesStackStorage
      * @returns {TNodeWithLexicalScopeStatements | undefined}
      */
     public getPenultimateElement(): TNodeWithLexicalScopeStatements | undefined {
-        return this.arrayUtils.getLastElementByIndex(this.getStorage(), 1);
+        throw new Error("STUB");
     }
 
     /**
@@ -63,8 +63,6 @@ export class VisitedLexicalScopeNodesStackStorage
      * @returns {TNodeWithLexicalScopeStatements| undefined}
      */
     public pop(): TNodeWithLexicalScopeStatements | undefined {
-        const storageLength: number = this.getLength();
-
-        return this.delete(storageLength - 1);
+        throw new Error("STUB");
     }
 }

@@ -82,14 +82,14 @@ export class DictionaryIdentifierNamesGenerator extends AbstractIdentifierNamesG
      * @returns {string}
      */
     public generateForGlobalScope(): string {
-        return this.generateForGlobalScopeInternal((name) => this.isValidIdentifierName(name));
+        return this.generateForGlobalScopeInternal((name) => { throw new Error("STUB"); });
     }
 
     /**
      * @returns {string}
      */
     public generateForGlobalScopeWithAllScopesValidation(): string {
-        return this.generateForGlobalScopeInternal((name) => this.isValidIdentifierNameInAllScopes(name));
+        return this.generateForGlobalScopeInternal((name) => { throw new Error("STUB"); });
     }
 
     /**
@@ -102,7 +102,7 @@ export class DictionaryIdentifierNamesGenerator extends AbstractIdentifierNamesG
             ...NodeLexicalScopeUtils.getLexicalScopes(lexicalScopeNode)
         ];
         const identifierName: string = this.generateNewDictionaryName((newIdentifierName: string) =>
-            this.isValidIdentifierNameInLexicalScopes(newIdentifierName, lexicalScopes)
+            { throw new Error("STUB"); }
         );
 
         this.preserveNameForLexicalScope(identifierName, lexicalScopeNode);
@@ -126,9 +126,7 @@ export class DictionaryIdentifierNamesGenerator extends AbstractIdentifierNamesG
         const prefix: string = this.options.identifiersPrefix ? `${this.options.identifiersPrefix}` : '';
 
         const identifierName: string = this.generateNewDictionaryName((newIdentifierName: string) => {
-            const identifierNameWithPrefix: string = `${prefix}${newIdentifierName}`;
-
-            return validationFn(identifierNameWithPrefix);
+            throw new Error("STUB");
         });
         const identifierNameWithPrefix = `${prefix}${identifierName}`;
 
@@ -176,11 +174,7 @@ export class DictionaryIdentifierNamesGenerator extends AbstractIdentifierNamesG
      * @returns {string[]}
      */
     private getInitialIdentifierNames(identifierNames: string[]): string[] {
-        const formattedIdentifierNames: string[] = identifierNames
-            .filter(Boolean)
-            .map((identifierName: string) => identifierName.toLowerCase());
-
-        return this.arrayUtils.shuffle(formattedIdentifierNames);
+        throw new Error("STUB");
     }
 
     /**

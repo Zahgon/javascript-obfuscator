@@ -60,48 +60,7 @@ export class SelfDefendingCodeHelperGroup extends AbstractCustomCodeHelperGroup 
      * @param {ICallsGraphData[]} callsGraphData
      */
     public appendOnPreparingStage(nodeWithStatements: TNodeWithStatements, callsGraphData: ICallsGraphData[]): void {
-        if (!this.options.selfDefending) {
-            return;
-        }
-
-        const randomCallsGraphIndex: number = this.getRandomCallsGraphIndex(callsGraphData.length);
-
-        const selfDefendingFunctionHostNode: TNodeWithStatements = callsGraphData.length
-            ? NodeAppender.getOptimalBlockScope(callsGraphData, randomCallsGraphIndex)
-            : nodeWithStatements;
-        const callsControllerHostNode: TNodeWithStatements = callsGraphData.length
-            ? NodeAppender.getOptimalBlockScope(callsGraphData, randomCallsGraphIndex, 1)
-            : nodeWithStatements;
-
-        const selfDefendingFunctionLexicalScopeNode: TNodeWithLexicalScope | null =
-            NodeLexicalScopeUtils.getLexicalScope(selfDefendingFunctionHostNode) ?? null;
-
-        const selfDefendingFunctionName: string = selfDefendingFunctionLexicalScopeNode
-            ? this.identifierNamesGenerator.generate(selfDefendingFunctionLexicalScopeNode)
-            : this.identifierNamesGenerator.generateNext();
-        const callsControllerFunctionName: string = selfDefendingFunctionLexicalScopeNode
-            ? this.identifierNamesGenerator.generate(selfDefendingFunctionLexicalScopeNode)
-            : this.identifierNamesGenerator.generateNext();
-
-        // selfDefendingUnicode helper nodes append
-        this.appendCustomNodeIfExist(
-            CustomCodeHelper.SelfDefending,
-            (customCodeHelper: ICustomCodeHelper<TInitialData<SelfDefendingCodeHelper>>) => {
-                customCodeHelper.initialize(callsControllerFunctionName, selfDefendingFunctionName);
-
-                NodeAppender.prepend(selfDefendingFunctionHostNode, customCodeHelper.getNode());
-            }
-        );
-
-        // nodeCallsControllerFunction helper nodes append
-        this.appendCustomNodeIfExist(
-            CustomCodeHelper.CallsControllerFunction,
-            (customCodeHelper: ICustomCodeHelper<TInitialData<CallsControllerFunctionCodeHelper>>) => {
-                customCodeHelper.initialize(NodeTransformationStage.Preparing, callsControllerFunctionName);
-
-                NodeAppender.prepend(callsControllerHostNode, customCodeHelper.getNode());
-            }
-        );
+        throw new Error("STUB");
     }
 
     public initialize(): void {

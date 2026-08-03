@@ -10,10 +10,7 @@ export class ValidationErrorsFormatter {
     public static format(errors: ValidationError[]): string {
         return errors
             .reduce(
-                (errorMessages: string[], error: ValidationError) => [
-                    ...errorMessages,
-                    ValidationErrorsFormatter.formatWithNestedConstraints(error)
-                ],
+                (errorMessages: string[], error: ValidationError) => { throw new Error("STUB"); },
                 []
             )
             .join('\n');
@@ -32,7 +29,7 @@ export class ValidationErrorsFormatter {
 
         const rootError: string = `\`${error.property}\` errors:\n`;
         const nestedErrors: string = Object.keys(constraints)
-            .map((constraint: string) => `    - ${constraints[constraint]}\n`)
+            .map((constraint: string) => { throw new Error("STUB"); })
             .join();
 
         return `${rootError}${nestedErrors}`;

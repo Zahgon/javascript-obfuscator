@@ -59,18 +59,7 @@ export class BlockStatementControlFlowTransformer extends AbstractNodeTransforme
      * @returns {boolean}
      */
     private static isProhibitedStatementNode(node: ESTree.Node): boolean {
-        const isBreakOrContinueStatement: boolean =
-            NodeGuards.isBreakStatementNode(node) || NodeGuards.isContinueStatementNode(node);
-        const isVariableDeclarationWithLetOrConstKind: boolean =
-            NodeGuards.isVariableDeclarationNode(node) && (node.kind === 'const' || node.kind === 'let');
-        const isClassDeclaration: boolean = NodeGuards.isClassDeclarationNode(node);
-
-        return (
-            NodeGuards.isFunctionDeclarationNode(node) ||
-            isBreakOrContinueStatement ||
-            isVariableDeclarationWithLetOrConstKind ||
-            isClassDeclaration
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -78,25 +67,7 @@ export class BlockStatementControlFlowTransformer extends AbstractNodeTransforme
      * @returns {boolean}
      */
     private static canTransformBlockStatementNode(blockStatementNode: ESTree.BlockStatement): boolean {
-        if (blockStatementNode.body.length <= 4) {
-            return false;
-        }
-
-        let canTransform: boolean = true;
-
-        estraverse.traverse(blockStatementNode, {
-            enter: (node: ESTree.Node): estraverse.VisitorOption | void => {
-                if (NodeGuards.isWhileStatementNode(node)) {
-                    return estraverse.VisitorOption.Skip;
-                }
-
-                if (BlockStatementControlFlowTransformer.isProhibitedStatementNode(node)) {
-                    canTransform = false;
-                }
-            }
-        });
-
-        return canTransform;
+        throw new Error("STUB");
     }
 
     /**
@@ -112,9 +83,7 @@ export class BlockStatementControlFlowTransformer extends AbstractNodeTransforme
             case NodeTransformationStage.ControlFlowFlattening:
                 return {
                     leave: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode && NodeGuards.isBlockStatementNode(node)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -140,10 +109,10 @@ export class BlockStatementControlFlowTransformer extends AbstractNodeTransforme
         const originalKeys: number[] = this.arrayUtils.createWithRange(blockStatementBody.length);
         const shuffledKeys: number[] = this.arrayUtils.shuffle(originalKeys);
         const shuffledKeyToIndex: Map<number, number> = new Map(
-            shuffledKeys.map((key: number, index: number) => [key, index])
+            shuffledKeys.map((key: number, index: number) => { throw new Error("STUB"); })
         );
         const originalKeysIndexesInShuffledArray: number[] = originalKeys.map(
-            (key: number) => shuffledKeyToIndex.get(key)!
+            (key: number) => { throw new Error("STUB"); }
         );
         const blockStatementControlFlowFlatteningCustomNode: ICustomNode<
             TInitialData<BlockStatementControlFlowFlatteningNode>

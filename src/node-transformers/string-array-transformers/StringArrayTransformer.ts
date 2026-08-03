@@ -135,17 +135,7 @@ export class StringArrayTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.StringArray:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (NodeGuards.isProgramNode(node)) {
-                            this.prepareNode(node);
-                        }
-
-                        if (
-                            parentNode &&
-                            NodeGuards.isLiteralNode(node) &&
-                            !NodeMetadata.isStringArrayCallLiteralNode(node)
-                        ) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -215,29 +205,7 @@ export class StringArrayTransformer extends AbstractNodeTransformer {
      * @returns {Expression}
      */
     private getStringArrayCallNode(stringArrayStorageItemData: IStringArrayStorageItemData): ESTree.Expression {
-        const stringArrayScopeCallsWrapperData: IStringArrayScopeCallsWrapperData =
-            this.getStringArrayScopeCallsWrapperData(stringArrayStorageItemData);
-        const { decodeKey, index } = stringArrayStorageItemData;
-
-        const stringArrayCallCustomNode: ICustomNode<TInitialData<StringArrayCallNode>> =
-            this.stringArrayTransformerCustomNodeFactory(StringArrayCustomNode.StringArrayCallNode);
-
-        stringArrayCallCustomNode.initialize(
-            index,
-            this.stringArrayStorage.getIndexShiftAmount(),
-            stringArrayScopeCallsWrapperData,
-            decodeKey
-        );
-
-        const statementNode: TStatement = stringArrayCallCustomNode.getNode()[0];
-
-        if (!NodeGuards.isExpressionStatementNode(statementNode)) {
-            throw new Error(
-                '`stringArrayCallCustomNode.getNode()[0]` should returns array with `ExpressionStatement` node'
-            );
-        }
-
-        return statementNode.expression;
+        throw new Error("STUB");
     }
 
     /**
@@ -247,9 +215,7 @@ export class StringArrayTransformer extends AbstractNodeTransformer {
     private getStringArrayScopeCallsWrapperData(
         stringArrayStorageItemData: IStringArrayStorageItemData
     ): IStringArrayScopeCallsWrapperData {
-        return !this.options.stringArrayWrappersCount
-            ? this.getRootStringArrayScopeCallsWrapperData(stringArrayStorageItemData)
-            : this.getUpperStringArrayScopeCallsWrapperData(stringArrayStorageItemData);
+        throw new Error("STUB");
     }
 
     /**
@@ -259,15 +225,7 @@ export class StringArrayTransformer extends AbstractNodeTransformer {
     private getRootStringArrayScopeCallsWrapperData(
         stringArrayStorageItemData: IStringArrayStorageItemData
     ): IStringArrayScopeCallsWrapperData {
-        const { encoding } = stringArrayStorageItemData;
-
-        const rootStringArrayCallsWrapperName: string = this.stringArrayStorage.getStorageCallsWrapperName(encoding);
-
-        return {
-            name: rootStringArrayCallsWrapperName,
-            index: 0,
-            parameterIndexesData: null
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -277,24 +235,7 @@ export class StringArrayTransformer extends AbstractNodeTransformer {
     private getUpperStringArrayScopeCallsWrapperData(
         stringArrayStorageItemData: IStringArrayStorageItemData
     ): IStringArrayScopeCallsWrapperData {
-        const { encoding } = stringArrayStorageItemData;
-        const currentLexicalScopeBodyNode: TNodeWithLexicalScopeStatements | null =
-            this.visitedLexicalScopeNodesStackStorage.getLastElement() ?? null;
-
-        if (!currentLexicalScopeBodyNode) {
-            throw new Error('Cannot find current lexical scope body node');
-        }
-
-        const stringArrayScopeCallsWrappersDataByEncoding: TStringArrayScopeCallsWrappersDataByEncoding =
-            this.getAndUpdateStringArrayScopeCallsWrappersDataByEncoding(
-                currentLexicalScopeBodyNode,
-                stringArrayStorageItemData
-            );
-
-        const stringArrayScopeCallsWrappersData: IStringArrayScopeCallsWrapperData[] =
-            stringArrayScopeCallsWrappersDataByEncoding[encoding]?.scopeCallsWrappersData ?? [];
-
-        return this.randomGenerator.getRandomGenerator().pickone(stringArrayScopeCallsWrappersData);
+        throw new Error("STUB");
     }
 
     /**
@@ -306,86 +247,20 @@ export class StringArrayTransformer extends AbstractNodeTransformer {
         currentLexicalScopeBodyNode: TNodeWithLexicalScopeStatements,
         stringArrayStorageItemData: IStringArrayStorageItemData
     ): TStringArrayScopeCallsWrappersDataByEncoding {
-        const { encoding } = stringArrayStorageItemData;
-        const stringArrayScopeCallsWrappersDataByEncoding: TStringArrayScopeCallsWrappersDataByEncoding =
-            this.stringArrayScopeCallsWrappersDataStorage.get(currentLexicalScopeBodyNode) ?? {};
-
-        const stringArrayScopeCallsWrappersData: IStringArrayScopeCallsWrapperData[] =
-            stringArrayScopeCallsWrappersDataByEncoding[encoding]?.scopeCallsWrappersData ?? [];
-        const isFilledScopeCallsWrapperNamesList: boolean =
-            stringArrayScopeCallsWrappersData.length === this.options.stringArrayWrappersCount;
-
-        if (isFilledScopeCallsWrapperNamesList) {
-            return stringArrayScopeCallsWrappersDataByEncoding;
-        }
-
-        // have to use `generateForGlobalScope` for program node for correct attach prefix to the calls wrapper name
-        const nextScopeCallsWrapperName: string = NodeGuards.isProgramNode(currentLexicalScopeBodyNode)
-            ? this.identifierNamesGenerator.generateForGlobalScope()
-            : this.identifierNamesGenerator.generateNext();
-        const nextScopeCallsWrapperShiftedIndex: number = this.getStringArrayCallsWrapperShiftedIndex();
-        const nextScopeCallsWrapperParameterIndexesData: IStringArrayScopeCallsWrapperParameterIndexesData | null =
-            this.getStringArrayCallsWrapperParameterIndexesData();
-
-        const newWrapperData: IStringArrayScopeCallsWrapperData = {
-            name: nextScopeCallsWrapperName,
-            index: nextScopeCallsWrapperShiftedIndex,
-            parameterIndexesData: nextScopeCallsWrapperParameterIndexesData
-        };
-
-        let encodingData = stringArrayScopeCallsWrappersDataByEncoding[encoding];
-
-        if (!encodingData) {
-            encodingData = {
-                encoding,
-                scopeCallsWrappersData: [newWrapperData]
-            };
-            stringArrayScopeCallsWrappersDataByEncoding[encoding] = encodingData;
-        } else {
-            encodingData.scopeCallsWrappersData.push(newWrapperData);
-        }
-
-        this.stringArrayScopeCallsWrappersDataStorage.set(
-            currentLexicalScopeBodyNode,
-            stringArrayScopeCallsWrappersDataByEncoding
-        );
-
-        return stringArrayScopeCallsWrappersDataByEncoding;
+        throw new Error("STUB");
     }
 
     /**
      * @returns {number}
      */
     private getStringArrayCallsWrapperShiftedIndex(): number {
-        return this.options.stringArrayWrappersType === StringArrayWrappersType.Function
-            ? this.randomGenerator.getRandomInteger(
-                  StringArrayTransformer.minShiftedIndexValue,
-                  StringArrayTransformer.maxShiftedIndexValue
-              )
-            : 0;
+        throw new Error("STUB");
     }
 
     /**
      * @returns {IStringArrayScopeCallsWrapperParameterIndexesData | null}
      */
     private getStringArrayCallsWrapperParameterIndexesData(): IStringArrayScopeCallsWrapperParameterIndexesData | null {
-        if (this.options.stringArrayWrappersType !== StringArrayWrappersType.Function) {
-            return null;
-        }
-
-        const minIndexValue: number = 0;
-        const maxIndexValue: number = this.options.stringArrayWrappersParametersMaxCount - 1;
-
-        const valueIndexParameterIndex: number = this.randomGenerator.getRandomInteger(minIndexValue, maxIndexValue);
-        const decodeKeyParameterIndex: number = this.randomGenerator.getRandomIntegerExcluding(
-            minIndexValue,
-            maxIndexValue,
-            [valueIndexParameterIndex]
-        );
-
-        return {
-            valueIndexParameterIndex,
-            decodeKeyParameterIndex
-        };
+        throw new Error("STUB");
     }
 }

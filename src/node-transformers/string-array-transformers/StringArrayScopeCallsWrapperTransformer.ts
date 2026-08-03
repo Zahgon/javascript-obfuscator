@@ -98,16 +98,10 @@ export class StringArrayScopeCallsWrapperTransformer extends AbstractNodeTransfo
             case NodeTransformationStage.StringArray:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): void => {
-                        if (parentNode && NodeGuards.isNodeWithLexicalScopeStatements(node, parentNode)) {
-                            this.onLexicalScopeNodeEnter(node);
-                        }
+                        throw new Error("STUB");
                     },
                     leave: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode && NodeGuards.isNodeWithLexicalScopeStatements(node, parentNode)) {
-                            this.onLexicalScopeNodeLeave();
-
-                            return this.transformNode(node);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -170,13 +164,7 @@ export class StringArrayScopeCallsWrapperTransformer extends AbstractNodeTransfo
     private getRootStringArrayCallsWrapperData(
         stringArrayScopeCallsWrappersData: IStringArrayScopeCallsWrappersData
     ): IStringArrayScopeCallsWrapperData {
-        const { encoding } = stringArrayScopeCallsWrappersData;
-
-        return {
-            name: this.stringArrayStorage.getStorageCallsWrapperName(encoding),
-            index: 0,
-            parameterIndexesData: null
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -186,33 +174,7 @@ export class StringArrayScopeCallsWrapperTransformer extends AbstractNodeTransfo
     private getUpperStringArrayCallsWrapperData(
         stringArrayScopeCallsWrappersData: IStringArrayScopeCallsWrappersData
     ): IStringArrayScopeCallsWrapperData {
-        const { encoding } = stringArrayScopeCallsWrappersData;
-
-        const rootStringArrayCallsWrapperData = this.getRootStringArrayCallsWrapperData(
-            stringArrayScopeCallsWrappersData
-        );
-
-        if (!this.options.stringArrayWrappersChainedCalls) {
-            return rootStringArrayCallsWrapperData;
-        }
-
-        const parentLexicalScopeBodyNode: TNodeWithLexicalScopeStatements | null =
-            this.visitedLexicalScopeNodesStackStorage.getLastElement() ?? null;
-
-        if (!parentLexicalScopeBodyNode) {
-            return rootStringArrayCallsWrapperData;
-        }
-
-        const parentLexicalScopeCallsWrappersDataByEncoding: TStringArrayScopeCallsWrappersDataByEncoding | null =
-            this.stringArrayScopeCallsWrappersDataStorage.get(parentLexicalScopeBodyNode) ?? null;
-        const parentScopeCallsWrappersData: IStringArrayScopeCallsWrapperData[] | null =
-            parentLexicalScopeCallsWrappersDataByEncoding?.[encoding]?.scopeCallsWrappersData ?? null;
-
-        if (!parentScopeCallsWrappersData?.length) {
-            return rootStringArrayCallsWrapperData;
-        }
-
-        return this.randomGenerator.getRandomGenerator().pickone(parentScopeCallsWrappersData);
+        throw new Error("STUB");
     }
 
     /**
@@ -225,35 +187,7 @@ export class StringArrayScopeCallsWrapperTransformer extends AbstractNodeTransfo
         stringArrayScopeCallsWrapperData: IStringArrayScopeCallsWrapperData,
         upperStringArrayCallsWrapperData: IStringArrayScopeCallsWrapperData
     ): void {
-        let stringArrayScopeCallsWrapperNode: TStatement[];
-
-        switch (this.options.stringArrayWrappersType) {
-            case StringArrayWrappersType.Function: {
-                const randomIndex: number = this.randomGenerator.getRandomInteger(
-                    0,
-                    lexicalScopeBodyNode.body.length - 1
-                );
-
-                stringArrayScopeCallsWrapperNode = this.getStringArrayScopeCallsWrapperFunctionNode(
-                    stringArrayScopeCallsWrapperData,
-                    upperStringArrayCallsWrapperData
-                );
-
-                NodeAppender.insertAtIndex(lexicalScopeBodyNode, stringArrayScopeCallsWrapperNode, randomIndex);
-
-                break;
-            }
-
-            case StringArrayWrappersType.Variable:
-            default: {
-                stringArrayScopeCallsWrapperNode = this.getStringArrayScopeCallsWrapperVariableNode(
-                    stringArrayScopeCallsWrapperData,
-                    upperStringArrayCallsWrapperData
-                );
-
-                NodeAppender.prepend(lexicalScopeBodyNode, stringArrayScopeCallsWrapperNode);
-            }
-        }
+        throw new Error("STUB");
     }
 
     /**
@@ -265,18 +199,7 @@ export class StringArrayScopeCallsWrapperTransformer extends AbstractNodeTransfo
         stringArrayScopeCallsWrapperData: IStringArrayScopeCallsWrapperData,
         upperStringArrayCallsWrapperData: IStringArrayScopeCallsWrapperData
     ): TStatement[] {
-        const stringArrayScopeCallsWrapperVariableNode: ICustomNode<
-            TInitialData<StringArrayScopeCallsWrapperVariableNode>
-        > = this.stringArrayTransformerCustomNodeFactory(
-            StringArrayCustomNode.StringArrayScopeCallsWrapperVariableNode
-        );
-
-        stringArrayScopeCallsWrapperVariableNode.initialize(
-            stringArrayScopeCallsWrapperData,
-            upperStringArrayCallsWrapperData
-        );
-
-        return stringArrayScopeCallsWrapperVariableNode.getNode();
+        throw new Error("STUB");
     }
 
     /**
@@ -288,18 +211,7 @@ export class StringArrayScopeCallsWrapperTransformer extends AbstractNodeTransfo
         stringArrayScopeCallsWrapperData: IStringArrayScopeCallsWrapperData,
         upperStringArrayCallsWrapperData: IStringArrayScopeCallsWrapperData
     ): TStatement[] {
-        const stringArrayScopeCallsWrapperFunctionNode: ICustomNode<
-            TInitialData<StringArrayScopeCallsWrapperFunctionNode>
-        > = this.stringArrayTransformerCustomNodeFactory(
-            StringArrayCustomNode.StringArrayScopeCallsWrapperFunctionNode
-        );
-
-        stringArrayScopeCallsWrapperFunctionNode.initialize(
-            stringArrayScopeCallsWrapperData,
-            upperStringArrayCallsWrapperData
-        );
-
-        return stringArrayScopeCallsWrapperFunctionNode.getNode();
+        throw new Error("STUB");
     }
 
     /**

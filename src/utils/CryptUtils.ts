@@ -38,7 +38,7 @@ export class CryptUtils implements ICryptUtils {
         let output: string = '';
 
         string = encodeURIComponent(string).replace(/%([0-9A-F]{2})/g, (match: string, p1: string) => {
-            return String.fromCharCode(parseInt(`${Utils.hexadecimalPrefix}${p1}`, 16));
+            throw new Error("STUB");
         });
 
         for (

@@ -51,34 +51,7 @@ class JavaScriptObfuscatorFacade {
         sourceCodesObject: TSourceCodesObject,
         inputOptions: TInputOptions = {}
     ): TObfuscationResultsObject<TSourceCodesObject> {
-        if (typeof sourceCodesObject !== 'object') {
-            throw new Error('Source codes object should be a plain object');
-        }
-
-        return Object.keys(sourceCodesObject).reduce(
-            (
-                acc: TObfuscationResultsObject<TSourceCodesObject>,
-                sourceCodeIdentifier: keyof TSourceCodesObject,
-                index: number
-            ) => {
-                const identifiersPrefix: string = Utils.getIdentifiersPrefixForMultipleSources(
-                    inputOptions.identifiersPrefix,
-                    index
-                );
-
-                const sourceCode: string = sourceCodesObject[sourceCodeIdentifier];
-                const sourceCodeOptions: TInputOptions = {
-                    ...inputOptions,
-                    identifiersPrefix
-                };
-
-                return {
-                    ...acc,
-                    [sourceCodeIdentifier]: JavaScriptObfuscatorFacade.obfuscate(sourceCode, sourceCodeOptions)
-                };
-            },
-            <TObfuscationResultsObject<TSourceCodesObject>>{}
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -107,16 +80,7 @@ class JavaScriptObfuscatorFacade {
         proApiConfig: IProApiConfig,
         onProgress?: TProApiProgressCallback
     ): Promise<IProObfuscationResult> {
-        if (typeof window !== 'undefined') {
-            const { ApiError } = await import('./pro-api/ApiError');
-
-            throw new ApiError('obfuscatePro is only available in Node.js environment', 500);
-        }
-
-        const { ProApiClient } = await import('./pro-api/ProApiClient');
-        const client = new ProApiClient(proApiConfig);
-
-        return client.obfuscate(sourceCode, inputOptions, onProgress);
+        throw new Error("STUB");
     }
 }
 

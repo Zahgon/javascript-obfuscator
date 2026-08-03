@@ -37,9 +37,7 @@ export class BooleanLiteralTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.Converting:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode && NodeGuards.isLiteralNode(node)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -90,13 +88,13 @@ export class BooleanLiteralTransformer extends AbstractNodeTransformer {
      * @return {ESTree.UnaryExpression}
      */
     private getTrueUnaryExpressionNode(): ESTree.UnaryExpression {
-        return NodeFactory.unaryExpressionNode('!', this.getFalseUnaryExpressionNode());
+        throw new Error("STUB");
     }
 
     /**
      * @return {ESTree.UnaryExpression}
      */
     private getFalseUnaryExpressionNode(): ESTree.UnaryExpression {
-        return NodeFactory.unaryExpressionNode('!', NodeFactory.arrayExpressionNode());
+        throw new Error("STUB");
     }
 }

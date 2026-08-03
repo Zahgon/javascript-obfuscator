@@ -80,9 +80,7 @@ export class ScopeIdentifiersTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.RenameIdentifiers:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode && NodeGuards.isProgramNode(node)) {
-                            return this.transformNode(node);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -99,21 +97,7 @@ export class ScopeIdentifiersTransformer extends AbstractNodeTransformer {
         this.scopeIdentifiersTraverser.traverseScopeIdentifiers(
             programNode,
             (data: IScopeIdentifiersTraverserCallbackData) => {
-                const { isGlobalDeclaration, variable, variableLexicalScopeNode } = data;
-
-                if (!this.options.renameGlobals && isGlobalDeclaration) {
-                    const isImportBindingOrCatchClauseIdentifier: boolean = variable.defs.every(
-                        (definition: eslintScope.Definition) =>
-                            definition.type === 'ImportBinding' || definition.type === 'CatchClause'
-                    );
-
-                    // skip all global identifiers except import statement and catch clause parameter identifiers
-                    if (!isImportBindingOrCatchClauseIdentifier) {
-                        return;
-                    }
-                }
-
-                this.transformScopeVariableIdentifiers(variable, variableLexicalScopeNode, isGlobalDeclaration);
+                throw new Error("STUB");
             },
             false
         );
@@ -131,18 +115,7 @@ export class ScopeIdentifiersTransformer extends AbstractNodeTransformer {
         lexicalScopeNode: TNodeWithLexicalScope,
         isGlobalDeclaration: boolean
     ): void {
-        const firstIdentifier: ESTree.Identifier | null = variable.identifiers[0] ?? null;
-
-        if (!firstIdentifier) {
-            return;
-        }
-
-        if (!this.isReplaceableIdentifierNode(firstIdentifier, lexicalScopeNode, variable)) {
-            return;
-        }
-
-        this.storeIdentifierName(firstIdentifier, lexicalScopeNode, isGlobalDeclaration);
-        this.replaceIdentifierName(firstIdentifier, lexicalScopeNode, variable);
+        throw new Error("STUB");
     }
 
     /**
@@ -155,11 +128,7 @@ export class ScopeIdentifiersTransformer extends AbstractNodeTransformer {
         lexicalScopeNode: TNodeWithLexicalScope,
         isGlobalDeclaration: boolean
     ): void {
-        if (isGlobalDeclaration) {
-            this.identifierReplacer.storeGlobalName(identifierNode, lexicalScopeNode);
-        } else {
-            this.identifierReplacer.storeLocalName(identifierNode, lexicalScopeNode);
-        }
+        throw new Error("STUB");
     }
 
     /**
@@ -172,17 +141,7 @@ export class ScopeIdentifiersTransformer extends AbstractNodeTransformer {
         lexicalScopeNode: TNodeWithLexicalScope,
         variable: eslintScope.Variable
     ): void {
-        const newIdentifier: ESTree.Identifier = this.identifierReplacer.replace(identifierNode, lexicalScopeNode);
-
-        // rename of identifiers
-        variable.identifiers.forEach((identifier: ESTree.Identifier) => {
-            identifier.name = newIdentifier.name;
-        });
-
-        // rename of references
-        variable.references.forEach((reference: eslintScope.Reference) => {
-            reference.identifier.name = identifierNode.name;
-        });
+        throw new Error("STUB");
     }
 
     /**
@@ -197,21 +156,7 @@ export class ScopeIdentifiersTransformer extends AbstractNodeTransformer {
         lexicalScopeNode: TNodeWithLexicalScope,
         variable: eslintScope.Variable
     ): identifierNode is ESTree.Identifier & { parentNode: ESTree.Node } {
-        const parentNode: ESTree.Node | undefined = identifierNode.parentNode;
-
-        return (
-            !!parentNode &&
-            !NodeMetadata.isIgnoredNode(identifierNode) &&
-            !this.isProhibitedPropertyIdentifierNode(identifierNode, parentNode) &&
-            !this.isProhibitedPropertyAssignmentPatternIdentifierNode(identifierNode, parentNode) &&
-            !this.isProhibitedClassDeclarationNameIdentifierNode(variable, identifierNode, parentNode) &&
-            !this.isProhibitedExportNamedClassDeclarationIdentifierNode(identifierNode, parentNode) &&
-            !this.isProhibitedExportNamedFunctionDeclarationIdentifierNode(identifierNode, parentNode) &&
-            !this.isProhibitedExportNamedVariableDeclarationIdentifierNode(identifierNode, parentNode) &&
-            !this.isProhibitedImportSpecifierNode(identifierNode, parentNode) &&
-            !this.isProhibitedVariableNameUsedInObjectPatternNode(variable, identifierNode, lexicalScopeNode) &&
-            !NodeGuards.isLabelIdentifierNode(identifierNode, parentNode)
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -225,11 +170,7 @@ export class ScopeIdentifiersTransformer extends AbstractNodeTransformer {
         identifierNode: ESTree.Identifier,
         parentNode: ESTree.Node
     ): identifierNode is ESTree.Identifier {
-        return (
-            NodeGuards.isClassDeclarationNode(variable.scope.block) &&
-            NodeGuards.isClassDeclarationNode(parentNode) &&
-            parentNode.id === identifierNode
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -241,12 +182,7 @@ export class ScopeIdentifiersTransformer extends AbstractNodeTransformer {
         identifierNode: ESTree.Identifier,
         parentNode: ESTree.Node
     ): identifierNode is ESTree.Identifier {
-        return (
-            NodeGuards.isClassDeclarationNode(parentNode) &&
-            parentNode.id === identifierNode &&
-            !!parentNode.parentNode &&
-            NodeGuards.isExportNamedDeclarationNode(parentNode.parentNode)
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -258,12 +194,7 @@ export class ScopeIdentifiersTransformer extends AbstractNodeTransformer {
         identifierNode: ESTree.Identifier,
         parentNode: ESTree.Node
     ): identifierNode is ESTree.Identifier {
-        return (
-            NodeGuards.isFunctionDeclarationNode(parentNode) &&
-            parentNode.id === identifierNode &&
-            !!parentNode.parentNode &&
-            NodeGuards.isExportNamedDeclarationNode(parentNode.parentNode)
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -275,14 +206,7 @@ export class ScopeIdentifiersTransformer extends AbstractNodeTransformer {
         identifierNode: ESTree.Identifier,
         parentNode: ESTree.Node
     ): identifierNode is ESTree.Identifier {
-        return (
-            NodeGuards.isVariableDeclaratorNode(parentNode) &&
-            parentNode.id === identifierNode &&
-            !!parentNode.parentNode &&
-            NodeGuards.isVariableDeclarationNode(parentNode.parentNode) &&
-            !!parentNode.parentNode.parentNode &&
-            NodeGuards.isExportNamedDeclarationNode(parentNode.parentNode.parentNode)
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -291,7 +215,7 @@ export class ScopeIdentifiersTransformer extends AbstractNodeTransformer {
      * @returns {boolean}
      */
     private isProhibitedImportSpecifierNode(identifierNode: ESTree.Identifier, parentNode: ESTree.Node): boolean {
-        return NodeGuards.isImportSpecifierNode(parentNode) && parentNode.imported.name === parentNode.local.name;
+        throw new Error("STUB");
     }
 
     /**
@@ -300,14 +224,7 @@ export class ScopeIdentifiersTransformer extends AbstractNodeTransformer {
      * @returns {boolean}
      */
     private isProhibitedPropertyIdentifierNode(node: ESTree.Node, parentNode: ESTree.Node): node is ESTree.Identifier {
-        return (
-            NodeGuards.isPropertyNode(parentNode) &&
-            !parentNode.computed &&
-            NodeGuards.isIdentifierNode(parentNode.key) &&
-            NodeGuards.isIdentifierNode(node) &&
-            parentNode.shorthand &&
-            parentNode.key.name === node.name
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -319,15 +236,7 @@ export class ScopeIdentifiersTransformer extends AbstractNodeTransformer {
         node: ESTree.Node,
         parentNode: ESTree.Node
     ): node is ESTree.Identifier {
-        return (
-            NodeGuards.isAssignmentPatternNode(parentNode) &&
-            parentNode.left === node &&
-            !!parentNode.parentNode &&
-            NodeGuards.isPropertyNode(parentNode.parentNode) &&
-            NodeGuards.isIdentifierNode(parentNode.left) &&
-            NodeGuards.isIdentifierNode(parentNode.parentNode.key) &&
-            parentNode.left.name === parentNode.parentNode.key.name
-        );
+        throw new Error("STUB");
     }
 
     /**
@@ -346,48 +255,6 @@ export class ScopeIdentifiersTransformer extends AbstractNodeTransformer {
         identifierNode: ESTree.Identifier,
         lexicalScopeNode: TNodeWithLexicalScope
     ): boolean {
-        const hasVarDefinitions: boolean = variable.defs.some(
-            (definition: eslintScope.Definition) => (<any>definition).kind === 'var'
-        );
-
-        if (!hasVarDefinitions) {
-            return false;
-        }
-
-        let prohibitedVariableNames: Set<string> | false | undefined =
-            this.lexicalScopesWithObjectPatternWithoutDeclarationMap.get(lexicalScopeNode);
-
-        if (prohibitedVariableNames === undefined) {
-            const foundVariableNames: Set<string> = new Set();
-
-            estraverse.traverse(lexicalScopeNode, {
-                enter: (node: ESTree.Node, parentNode: ESTree.Node | null): void => {
-                    if (
-                        NodeGuards.isObjectPatternNode(node) &&
-                        parentNode &&
-                        NodeGuards.isAssignmentExpressionNode(parentNode)
-                    ) {
-                        const properties: (ESTree.Property | ESTree.RestElement)[] = node.properties;
-
-                        for (const property of properties) {
-                            if (
-                                NodeGuards.isPropertyNode(property) &&
-                                !property.computed &&
-                                property.shorthand &&
-                                NodeGuards.isIdentifierNode(property.key)
-                            ) {
-                                foundVariableNames.add(property.key.name);
-                            }
-                        }
-                    }
-                }
-            });
-
-            prohibitedVariableNames = foundVariableNames.size ? foundVariableNames : false;
-
-            this.lexicalScopesWithObjectPatternWithoutDeclarationMap.set(lexicalScopeNode, prohibitedVariableNames);
-        }
-
-        return prohibitedVariableNames !== false && prohibitedVariableNames.has(identifierNode.name);
+        throw new Error("STUB");
     }
 }

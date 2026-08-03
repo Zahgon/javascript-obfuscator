@@ -41,7 +41,7 @@ export class SourceCodeFileUtils {
         const fileName: string = path.basename(filePath);
         const isExcludedFilePathByGlobPattern: boolean = !!multimatch([filePath], excludePatterns).length;
         const isExcludedFilePathByInclusion: boolean = excludePatterns.some(
-            (excludePattern: string) => filePath.includes(excludePattern) || fileName.includes(excludePattern)
+            (excludePattern: string) => { throw new Error("STUB"); }
         );
 
         return isExcludedFilePathByInclusion || isExcludedFilePathByGlobPattern;
@@ -123,7 +123,7 @@ export class SourceCodeFileUtils {
         }
 
         const availableFilePaths: string = JavaScriptObfuscatorCLI.availableInputExtensions
-            .map((extension: string) => `\`${extension}\``)
+            .map((extension: string) => { throw new Error("STUB"); })
             .join(', ');
 
         throw new ReferenceError(`Given input path must be a valid ${availableFilePaths} file or directory path`);
@@ -136,27 +136,7 @@ export class SourceCodeFileUtils {
      */
     private readDirectoryRecursive(directoryPath: string, filesData: IFileData[] = []): IFileData[] {
         fs.readdirSync(directoryPath, JavaScriptObfuscatorCLI.encoding).forEach((fileName: string) => {
-            const filePath: string = path.join(directoryPath, fileName);
-
-            if (
-                SourceCodeFileUtils.isDirectoryPath(filePath) &&
-                SourceCodeFileUtils.isValidDirectory(filePath, this.options.exclude)
-            ) {
-                filesData.push(...this.readDirectoryRecursive(filePath));
-
-                return;
-            }
-
-            if (
-                SourceCodeFileUtils.isFilePath(filePath) &&
-                SourceCodeFileUtils.isValidFile(filePath, this.options.exclude)
-            ) {
-                const fileData: IFileData = SourceCodeFileUtils.readFile(filePath);
-
-                filesData.push(fileData);
-
-                return;
-            }
+            throw new Error("STUB");
         });
 
         return filesData;

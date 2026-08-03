@@ -47,17 +47,7 @@ export class NumberNumericalExpressionAnalyzer implements INumberNumericalExpres
      * @returns {TNumberNumericalExpressionData}
      */
     public analyze(number: number, additionalPartsCount: number): TNumberNumericalExpressionData {
-        if (isNaN(number)) {
-            throw new Error('Given value is NaN');
-        }
-
-        if (NumberUtils.isUnsafeNumber(number)) {
-            return [number];
-        }
-
-        const additionParts: number[] = this.generateAdditionParts(number, additionalPartsCount);
-
-        return additionParts.map((addition: number) => this.mixWithMultiplyParts(addition));
+        throw new Error("STUB");
     }
 
     /**
@@ -66,44 +56,7 @@ export class NumberNumericalExpressionAnalyzer implements INumberNumericalExpres
      * @returns {number[]}
      */
     private generateAdditionParts(number: number, additionalPartsCount: number): number[] {
-        const additionParts = [];
-
-        const upperNumberLimit: number = Math.min(Math.abs(number * 2), Number.MAX_SAFE_INTEGER);
-
-        const from: number = Math.min(-NumberNumericalExpressionAnalyzer.delta, -upperNumberLimit);
-        const to: number = Math.max(NumberNumericalExpressionAnalyzer.delta, upperNumberLimit);
-
-        let temporarySum = 0;
-
-        for (let i = 0; i < additionalPartsCount; i++) {
-            if (i < additionalPartsCount - 1) {
-                // trailing parts
-
-                let addition: number = this.randomGenerator.getRandomInteger(from, to);
-                const isUnsafeCombination: boolean = NumberUtils.isUnsafeNumber(temporarySum + addition);
-
-                // we have to flip sign if total expression sum overflows over safe integer limits
-                if (isUnsafeCombination) {
-                    addition = -addition;
-                }
-
-                additionParts.push(addition);
-                temporarySum += addition;
-            } else {
-                const combination: number = number - temporarySum;
-                const isUnsafeCombination: boolean = NumberUtils.isUnsafeNumber(combination);
-
-                // last part
-                if (isUnsafeCombination) {
-                    additionParts.push(0 - temporarySum);
-                    additionParts.push(number);
-                } else {
-                    additionParts.push(combination);
-                }
-            }
-        }
-
-        return additionParts;
+        throw new Error("STUB");
     }
 
     /**
@@ -111,25 +64,6 @@ export class NumberNumericalExpressionAnalyzer implements INumberNumericalExpres
      * @returns {number | number[]}
      */
     private mixWithMultiplyParts(number: number): number | number[] {
-        const shouldMixWithMultiplyParts: boolean = this.randomGenerator.getMathRandom() > 0.5;
-
-        if (!shouldMixWithMultiplyParts || number === 0) {
-            return number;
-        }
-
-        let factors: number[] | null = this.numberFactorsMap.get(number) ?? null;
-
-        if (!factors) {
-            factors = NumberUtils.getFactors(number);
-            this.numberFactorsMap.set(number, factors);
-        }
-
-        if (!factors.length) {
-            return number;
-        }
-
-        const factor: number = factors[this.randomGenerator.getRandomInteger(0, factors.length - 1)];
-
-        return [factor, number / factor];
+        throw new Error("STUB");
     }
 }

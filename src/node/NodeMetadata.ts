@@ -26,7 +26,7 @@ export class NodeMetadata {
      * @returns {boolean}
      */
     public static isEvalHostNode(node: ESTree.Node): boolean {
-        return NodeMetadata.get<ESTree.FunctionExpressionNodeMetadata, 'evalHostNode'>(node, 'evalHostNode') === true;
+        throw new Error("STUB");
     }
 
     /**
@@ -34,7 +34,7 @@ export class NodeMetadata {
      * @returns {boolean}
      */
     public static isForceTransformNode(node: ESTree.Node): boolean {
-        return NodeMetadata.get<ESTree.BaseNodeMetadata, 'forceTransformNode'>(node, 'forceTransformNode') === true;
+        throw new Error("STUB");
     }
 
     /**
@@ -52,12 +52,7 @@ export class NodeMetadata {
     public static isPropertyKeyToRenameNode(
         node: ESTree.Identifier | ESTree.PrivateIdentifier | ESTree.Literal
     ): boolean {
-        return (
-            NodeMetadata.get<ESTree.IdentifierNodeMetadata | ESTree.LiteralNodeMetadata, 'propertyKeyToRenameNode'>(
-                node,
-                'propertyKeyToRenameNode'
-            ) === true
-        );
+        throw new Error("STUB");
     }
 
     /**

@@ -114,7 +114,7 @@ export class StringArrayCallNode extends AbstractStringArrayCallNode {
                   AbstractStringArrayCallNode.stringArrayRootCallsWrapperParametersCount
                 : // scope string array calls wrapper
                   this.options.stringArrayWrappersParametersMaxCount,
-            () => this.getFakeStringArrayIndexNode(resultIndex)
+            () => { throw new Error("STUB"); }
         );
 
         callExpressionArgs.splice(

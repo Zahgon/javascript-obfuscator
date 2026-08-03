@@ -108,7 +108,7 @@ export class ProApiClient {
         };
 
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
+        const timeoutId = setTimeout(() => { throw new Error("STUB"); }, this.config.timeout);
 
         let url = ProApiClient.apiUrl;
 
@@ -178,7 +178,7 @@ export class ProApiClient {
         };
 
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
+        const timeoutId = setTimeout(() => { throw new Error("STUB"); }, this.config.timeout);
 
         let url = ProApiClient.apiUrl;
 
@@ -224,7 +224,7 @@ export class ProApiClient {
      */
     private async getUploadToken(pathname: string): Promise<string> {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 30000);
+        const timeoutId = setTimeout(() => { throw new Error("STUB"); }, 30000);
 
         try {
             const response = await fetch(ProApiClient.uploadTokenUrl, {
@@ -287,7 +287,7 @@ export class ProApiClient {
         const blobClient = await import('@vercel/blob/client');
 
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 minutes for upload
+        const timeoutId = setTimeout(() => { throw new Error("STUB"); }, 120000); // 2 minutes for upload
 
         try {
             const blob = await blobClient.put(pathname, content, {
@@ -349,7 +349,7 @@ export class ProApiClient {
             }
         }
 
-        const errorMessage = messages.find((message) => message.type === 'error');
+        const errorMessage = messages.find((message) => { throw new Error("STUB"); });
 
         if (errorMessage) {
             throw new ApiError(errorMessage.message ?? 'Unknown API error', response.status);

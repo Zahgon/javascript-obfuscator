@@ -39,7 +39,7 @@ export class ObfuscatedCodeFileUtils {
             return normalizedFilePath
                 .split(StringSeparator.Dot)
                 .map((value: string, index: number) => {
-                    return index === 0 ? `${value}${JavaScriptObfuscatorCLI.obfuscatedFilePrefix}` : value;
+                    throw new Error("STUB");
                 })
                 .join(StringSeparator.Dot);
         }
@@ -154,25 +154,13 @@ export class ObfuscatedCodeFileUtils {
      * @returns {string}
      */
     private getUniqueSourceMapFileName(outputCodePath: string, sourceMapFileName: string): string {
-        if (!sourceMapFileName || !this.isDirectoryInputPath()) {
-            return sourceMapFileName;
-        }
-
-        const outputCodeName: string = path.parse(outputCodePath).name;
-        const parsedSourceMapFileName: path.ParsedPath = path.parse(sourceMapFileName);
-
-        // keep any leading directory part of `sourceMapFileName`, prefix only its file name
-        return path.join(parsedSourceMapFileName.dir, `${outputCodeName}-${parsedSourceMapFileName.base}`);
+        throw new Error("STUB");
     }
 
     /**
      * @returns {boolean}
      */
     private isDirectoryInputPath(): boolean {
-        try {
-            return fs.lstatSync(this.inputPath).isDirectory();
-        } catch {
-            return false;
-        }
+        throw new Error("STUB");
     }
 }

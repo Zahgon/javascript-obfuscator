@@ -75,7 +75,7 @@ export class ObfuscatingGuardsTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.Preparing:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        return this.transformNode(node, parentNode);
+                        throw new Error("STUB");
                     }
                 };
 
@@ -91,7 +91,7 @@ export class ObfuscatingGuardsTransformer extends AbstractNodeTransformer {
      */
     public transformNode(node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node {
         const obfuscatingGuardResults: ObfuscatingGuardResult[] = this.obfuscatingGuards.map(
-            (obfuscatingGuard: IObfuscatingGuard) => obfuscatingGuard.check(node)
+            (obfuscatingGuard: IObfuscatingGuard) => { throw new Error("STUB"); }
         );
 
         this.setNodeMetadata(node, obfuscatingGuardResults);
@@ -104,22 +104,6 @@ export class ObfuscatingGuardsTransformer extends AbstractNodeTransformer {
      * @param {ObfuscatingGuardResult[]} obfuscatingGuardResults
      */
     private setNodeMetadata(node: ESTree.Node, obfuscatingGuardResults: ObfuscatingGuardResult[]): void {
-        const isTransformNode: boolean = obfuscatingGuardResults.every(
-            (obfuscatingGuardResult: ObfuscatingGuardResult) =>
-                obfuscatingGuardResult === ObfuscatingGuardResult.Transform
-        );
-
-        let isForceTransformNode: boolean = false;
-        let isIgnoredNode: boolean = false;
-
-        if (!isTransformNode) {
-            isForceTransformNode = obfuscatingGuardResults.includes(ObfuscatingGuardResult.ForceTransform);
-            isIgnoredNode = !isForceTransformNode && obfuscatingGuardResults.includes(ObfuscatingGuardResult.Ignore);
-        }
-
-        NodeMetadata.set(node, {
-            forceTransformNode: isForceTransformNode && !NodeGuards.isProgramNode(node),
-            ignoredNode: isIgnoredNode && !NodeGuards.isProgramNode(node)
-        });
+        throw new Error("STUB");
     }
 }

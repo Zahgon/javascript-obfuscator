@@ -5,5 +5,5 @@ import { TCLISanitizer } from '../../types/cli/TCLISanitizer';
  * @returns {boolean}
  */
 export const BooleanSanitizer: TCLISanitizer<boolean> = (value: string): boolean => {
-    return value === 'true' || value === '1';
+    throw new Error("STUB");
 };

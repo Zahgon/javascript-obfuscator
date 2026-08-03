@@ -35,27 +35,13 @@ export class PrevailingKindOfVariablesAnalyzer implements IPrevailingKindOfVaria
      * @param {Program} astTree
      */
     public analyze(astTree: ESTree.Program): void {
-        const variableKinds: ESTree.VariableDeclaration['kind'][] = [];
-
-        estraverse.traverse(astTree, {
-            enter: (node: ESTree.Node): estraverse.VisitorOption | void => {
-                if (!NodeGuards.isVariableDeclarationNode(node)) {
-                    return;
-                }
-
-                variableKinds.push(node.kind);
-            }
-        });
-
-        this.prevailingKindOfVariables =
-            this.arrayUtils.findMostOccurringElement(variableKinds) ??
-            PrevailingKindOfVariablesAnalyzer.defaultKindOfVariables;
+        throw new Error("STUB");
     }
 
     /**
      * @returns {VariableDeclaration["kind"]}
      */
     public getPrevailingKind(): ESTree.VariableDeclaration['kind'] {
-        return this.prevailingKindOfVariables;
+        throw new Error("STUB");
     }
 }

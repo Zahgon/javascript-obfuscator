@@ -126,9 +126,7 @@ export class StringArrayStorage
 
         this.rc4Keys = this.randomGenerator.getRandomGenerator().n(
             () =>
-                this.randomGenerator.getRandomGenerator().string({
-                    length: StringArrayStorage.rc4KeyLength
-                }),
+                { throw new Error("STUB"); },
             StringArrayStorage.rc4KeysCount
         );
     }
@@ -169,7 +167,7 @@ export class StringArrayStorage
      * @returns {number}
      */
     public getRotationAmount(): number {
-        return this.rotationAmount;
+        throw new Error("STUB");
     }
 
     /**
@@ -214,25 +212,11 @@ export class StringArrayStorage
     }
 
     public rotateStorage(): void {
-        if (!this.getLength()) {
-            return;
-        }
-
-        this.storage = new Map(this.arrayUtils.rotate(Array.from(this.storage.entries()), this.rotationAmount));
+        throw new Error("STUB");
     }
 
     public shuffleStorage(): void {
-        this.storage = new Map(
-            this.arrayUtils
-                .shuffle(Array.from(this.storage.entries()))
-                .map<
-                    [`${string}-${TStringArrayEncoding}`, IStringArrayStorageItemData]
-                >(([value, stringArrayStorageItemData], index: number) => {
-                    stringArrayStorageItemData.index = index;
-
-                    return [value, stringArrayStorageItemData];
-                })
-        );
+        throw new Error("STUB");
     }
 
     /**

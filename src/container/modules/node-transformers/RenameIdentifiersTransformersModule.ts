@@ -16,28 +16,6 @@ import { IThroughIdentifierReplacer } from '../../../interfaces/node-transformer
 
 export const renameIdentifiersTransformersModule: ContainerModule = new ContainerModule(
     (options: ContainerModuleLoadOptions) => {
-        // rename identifiers transformers
-        options.bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-            .to(DeadCodeInjectionIdentifiersTransformer)
-            .whenNamed(NodeTransformer.DeadCodeInjectionIdentifiersTransformer);
-
-        options.bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-            .to(LabeledStatementTransformer)
-            .whenNamed(NodeTransformer.LabeledStatementTransformer);
-
-        options.bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-            .to(ScopeIdentifiersTransformer)
-            .whenNamed(NodeTransformer.ScopeIdentifiersTransformer);
-
-        options.bind<INodeTransformer>(ServiceIdentifiers.INodeTransformer)
-            .to(ScopeThroughIdentifiersTransformer)
-            .whenNamed(NodeTransformer.ScopeThroughIdentifiersTransformer);
-
-        // identifier replacer
-        options.bind<IIdentifierReplacer>(ServiceIdentifiers.IIdentifierReplacer).to(IdentifierReplacer).inSingletonScope();
-
-        options.bind<IThroughIdentifierReplacer>(ServiceIdentifiers.IThroughIdentifierReplacer)
-            .to(ThroughIdentifierReplacer)
-            .inSingletonScope();
+        throw new Error("STUB");
     }
 );

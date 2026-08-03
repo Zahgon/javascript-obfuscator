@@ -38,7 +38,7 @@ export class ParentificationTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.Preparing:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        return this.transformNode(node, parentNode);
+                        throw new Error("STUB");
                     }
                 };
 

@@ -81,13 +81,7 @@ export abstract class ArrayStorage<V> implements IArrayStorage<V> {
      * @returns {V}
      */
     public getOrThrow(key: number): V {
-        const value: V | undefined = this.get(key);
-
-        if (!value) {
-            throw new Error(`No value found in array storage with key \`${key}\``);
-        }
-
-        return value;
+        throw new Error("STUB");
     }
 
     /**
@@ -95,9 +89,7 @@ export abstract class ArrayStorage<V> implements IArrayStorage<V> {
      * @returns {number}
      */
     public getKeyOf(value: V): number | null {
-        const key: number = this.storage.indexOf(value);
-
-        return key >= 0 ? key : null;
+        throw new Error("STUB");
     }
 
     /**
@@ -126,11 +118,7 @@ export abstract class ArrayStorage<V> implements IArrayStorage<V> {
      * @param {boolean} mergeId
      */
     public mergeWith(storage: this, mergeId: boolean = false): void {
-        this.storage = [...this.storage, ...storage.getStorage()];
-
-        if (mergeId) {
-            this.storageId = storage.getStorageId();
-        }
+        throw new Error("STUB");
     }
 
     /**

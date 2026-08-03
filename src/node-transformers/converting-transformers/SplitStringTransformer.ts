@@ -55,17 +55,7 @@ export class SplitStringTransformer extends AbstractNodeTransformer {
      * @returns {string[]}
      */
     private static chunkString(string: string, stringLength: number, chunkSize: number): string[] {
-        const chunksCount: number = Math.ceil(stringLength / chunkSize);
-        const chunks: string[] = [];
-
-        let nextChunkStartIndex: number = 0;
-
-        for (let chunkIndex: number = 0; chunkIndex < chunksCount; ++chunkIndex, nextChunkStartIndex += chunkSize) {
-            // eslint-disable-next-line unicorn/prefer-string-slice
-            chunks[chunkIndex] = stringz.substr(string, nextChunkStartIndex, chunkSize);
-        }
-
-        return chunks;
+        throw new Error("STUB");
     }
 
     /**
@@ -81,9 +71,7 @@ export class SplitStringTransformer extends AbstractNodeTransformer {
             case NodeTransformationStage.Converting:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode && NodeGuards.isLiteralNode(node)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -115,9 +103,7 @@ export class SplitStringTransformer extends AbstractNodeTransformer {
         const secondPassChunksNode: ESTree.Node = estraverse.replace(firstPassChunksNode, {
             // eslint-disable-next-line @typescript-eslint/no-shadow
             enter: (node: ESTree.Node, parentNode: ESTree.Node | null) => {
-                if (NodeGuards.isLiteralNode(node)) {
-                    return this.transformLiteralNodeByChunkLength(node, this.options.splitStringsChunkLength);
-                }
+                throw new Error("STUB");
             }
         });
 
@@ -133,19 +119,7 @@ export class SplitStringTransformer extends AbstractNodeTransformer {
      * @returns {Node}
      */
     private transformLiteralNodeByChunkLength(literalNode: ESTree.Literal, chunkLength: number): ESTree.Node {
-        if (!NodeLiteralUtils.isStringLiteralNode(literalNode)) {
-            return literalNode;
-        }
-
-        const valueLength: number = stringz.length(literalNode.value);
-
-        if (chunkLength >= valueLength) {
-            return literalNode;
-        }
-
-        const stringChunks: string[] = SplitStringTransformer.chunkString(literalNode.value, valueLength, chunkLength);
-
-        return this.transformStringChunksToBinaryExpressionNode(stringChunks);
+        throw new Error("STUB");
     }
 
     /**
@@ -153,25 +127,6 @@ export class SplitStringTransformer extends AbstractNodeTransformer {
      * @returns {BinaryExpression}
      */
     private transformStringChunksToBinaryExpressionNode(chunks: string[]): ESTree.BinaryExpression {
-        const chunksLength: number = chunks.length;
-
-        if (chunksLength < 2) {
-            throw new Error('First and second chunks values should not be empty');
-        }
-
-        const initialBinaryExpressionNode: ESTree.BinaryExpression = NodeFactory.binaryExpressionNode(
-            '+',
-            NodeFactory.literalNode(chunks[0]),
-            NodeFactory.literalNode(chunks[1])
-        );
-
-        let result: ESTree.BinaryExpression = initialBinaryExpressionNode;
-
-        // Start from index 2 since we already used 0 and 1
-        for (let i: number = 2; i < chunksLength; i++) {
-            result = NodeFactory.binaryExpressionNode('+', result, NodeFactory.literalNode(chunks[i]));
-        }
-
-        return result;
+        throw new Error("STUB");
     }
 }

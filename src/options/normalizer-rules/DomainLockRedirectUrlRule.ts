@@ -9,12 +9,5 @@ import { DEFAULT_PRESET } from '../presets/Default';
  * @returns {IOptions}
  */
 export const DomainLockRedirectUrlRule: TOptionsNormalizerRule = (options: IOptions): IOptions => {
-    if (!options.domainLock.length) {
-        options = {
-            ...options,
-            domainLockRedirectUrl: <string>DEFAULT_PRESET.domainLockRedirectUrl
-        };
-    }
-
-    return options;
+    throw new Error("STUB");
 };

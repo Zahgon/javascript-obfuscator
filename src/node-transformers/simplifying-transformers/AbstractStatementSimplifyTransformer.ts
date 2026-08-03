@@ -48,61 +48,7 @@ export abstract class AbstractStatementSimplifyTransformer extends AbstractNodeT
     protected getStatementSimplifyData(
         statementNode: ESTree.Statement | null | undefined
     ): IStatementSimplifyData | null {
-        if (!statementNode) {
-            return null;
-        }
-
-        if (!NodeGuards.isBlockStatementNode(statementNode)) {
-            return {
-                leadingStatements: [statementNode],
-                trailingStatement: null,
-                hasReturnStatement: false,
-                hasSingleExpression: false
-            };
-        }
-
-        const { startIndex, unwrappedExpressions, hasReturnStatement, hasStatementsAfterReturnStatement } =
-            this.collectIteratedStatementsSimplifyData(statementNode);
-
-        if (hasStatementsAfterReturnStatement) {
-            return {
-                leadingStatements: statementNode.body,
-                trailingStatement: null,
-                hasReturnStatement: false,
-                hasSingleExpression: false
-            };
-        }
-
-        const leadingStatements: ESTree.Statement[] = this.getLeadingStatements(statementNode, startIndex);
-
-        if (!unwrappedExpressions.length) {
-            return {
-                leadingStatements,
-                trailingStatement: null,
-                hasReturnStatement,
-                hasSingleExpression: false
-            };
-        }
-
-        const hasSingleExpression: boolean = unwrappedExpressions.length === 1;
-
-        const expression: ESTree.Expression = hasSingleExpression
-            ? unwrappedExpressions[0]
-            : NodeFactory.sequenceExpressionNode(unwrappedExpressions);
-
-        const statement: ESTree.Statement = hasReturnStatement
-            ? NodeFactory.returnStatementNode(expression)
-            : NodeFactory.expressionStatementNode(expression);
-
-        return {
-            leadingStatements,
-            trailingStatement: {
-                statement,
-                expression
-            },
-            hasReturnStatement,
-            hasSingleExpression
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -114,44 +60,7 @@ export abstract class AbstractStatementSimplifyTransformer extends AbstractNodeT
     protected collectIteratedStatementsSimplifyData(
         statementNode: ESTree.BlockStatement
     ): IIteratedStatementsSimplifyData {
-        const statementNodeBodyLength: number = statementNode.body.length;
-        const unwrappedExpressions: ESTree.Expression[] = [];
-
-        let hasReturnStatement: boolean = false;
-        let hasStatementsAfterReturnStatement: boolean = false;
-        let startIndex: number | null = null;
-
-        for (let i = statementNodeBodyLength - 1; i >= 0; i--) {
-            const statementBodyStatementNode: ESTree.Statement = statementNode.body[i];
-
-            if (NodeGuards.isExpressionStatementNode(statementBodyStatementNode)) {
-                if (NodeGuards.isSequenceExpressionNode(statementBodyStatementNode.expression)) {
-                    unwrappedExpressions.unshift(...statementBodyStatementNode.expression.expressions);
-                } else {
-                    unwrappedExpressions.unshift(statementBodyStatementNode.expression);
-                }
-
-                startIndex = i;
-                continue;
-            }
-
-            if (NodeGuards.isReturnStatementNode(statementBodyStatementNode) && statementBodyStatementNode.argument) {
-                unwrappedExpressions.unshift(statementBodyStatementNode.argument);
-                hasReturnStatement = true;
-                hasStatementsAfterReturnStatement = i !== statementNodeBodyLength - 1;
-                startIndex = i;
-                continue;
-            }
-
-            break;
-        }
-
-        return {
-            startIndex,
-            unwrappedExpressions,
-            hasReturnStatement,
-            hasStatementsAfterReturnStatement
-        };
+        throw new Error("STUB");
     }
 
     /**
@@ -165,16 +74,7 @@ export abstract class AbstractStatementSimplifyTransformer extends AbstractNodeT
         statementNode: ESTree.BlockStatement,
         startIndex: number | null
     ): ESTree.Statement[] {
-        // variant #1: no valid statements inside `BlockStatement` are found
-        if (startIndex === null) {
-            return statementNode.body;
-        }
-
-        return startIndex === 0
-            ? // variant #2: all statements inside `BlockStatement` branch are valid
-              []
-            : // variant #3: only last N statements inside `BlockStatement` branch are valid
-              statementNode.body.slice(0, startIndex);
+        throw new Error("STUB");
     }
 
     /**
@@ -182,16 +82,7 @@ export abstract class AbstractStatementSimplifyTransformer extends AbstractNodeT
      * @returns {ESTree.Statement}
      */
     protected getPartialStatement(statementSimplifyData: IStatementSimplifyData): ESTree.Statement {
-        // variant #1: all statements inside `BlockStatement` branch are valid
-        if (!statementSimplifyData.leadingStatements.length && statementSimplifyData.trailingStatement) {
-            return statementSimplifyData.trailingStatement.statement;
-        }
-
-        // variant #2: only last N statements inside `BlockStatement` branch are valid
-        return NodeFactory.blockStatementNode([
-            ...(statementSimplifyData.leadingStatements.length ? statementSimplifyData.leadingStatements : []),
-            ...(statementSimplifyData.trailingStatement ? [statementSimplifyData.trailingStatement.statement] : [])
-        ]);
+        throw new Error("STUB");
     }
 
     /**

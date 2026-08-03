@@ -58,7 +58,7 @@ export class ThroughIdentifierReplacer implements IThroughIdentifierReplacer {
         }
 
         return this.options.reservedNames.some((reservedName: string) => {
-            return new RegExp(reservedName, 'g').exec(name) !== null;
+            throw new Error("STUB");
         });
     }
 }

@@ -53,7 +53,7 @@ export abstract class AbstractCustomCodeHelperGroup implements ICustomCodeHelper
      * @returns {Map<CustomCodeHelper, ICustomCodeHelper>}
      */
     public getCustomCodeHelpers(): Map<CustomCodeHelper, ICustomCodeHelper> {
-        return this.customCodeHelpers;
+        throw new Error("STUB");
     }
 
     /**
@@ -64,13 +64,7 @@ export abstract class AbstractCustomCodeHelperGroup implements ICustomCodeHelper
         customCodeHelperName: CustomCodeHelper,
         callback: (customCodeHelper: ICustomCodeHelper) => void
     ): void {
-        const customCodeHelper: ICustomCodeHelper | undefined = this.customCodeHelpers.get(customCodeHelperName);
-
-        if (!customCodeHelper) {
-            return;
-        }
-
-        callback(customCodeHelper);
+        throw new Error("STUB");
     }
 
     /**
@@ -79,7 +73,7 @@ export abstract class AbstractCustomCodeHelperGroup implements ICustomCodeHelper
      */
 
     protected getRandomCallsGraphIndex(callsGraphLength: number): number {
-        return this.randomGenerator.getRandomInteger(0, Math.max(0, Math.round(callsGraphLength - 1)));
+        throw new Error("STUB");
     }
 
     public abstract initialize(): void;

@@ -10,7 +10,7 @@ export class NodeLexicalScopeUtils {
      * @returns {TNodeWithLexicalScope}
      */
     public static getLexicalScope(node: ESTree.Node): TNodeWithLexicalScope | undefined {
-        return NodeLexicalScopeUtils.getLexicalScopesRecursive(node, 1)[0];
+        throw new Error("STUB");
     }
 
     /**

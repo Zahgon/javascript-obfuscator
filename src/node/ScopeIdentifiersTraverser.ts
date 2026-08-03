@@ -50,9 +50,7 @@ export class ScopeIdentifiersTraverser implements IScopeIdentifiersTraverser {
         callback: TScopeIdentifiersTraverserCallback<IScopeIdentifiersTraverserCallbackData>,
         analyzeScope: boolean = true
     ): void {
-        const globalScope: eslintScope.Scope = this.acquireGlobalScope(programNode, analyzeScope);
-
-        this.traverseScopeIdentifiersRecursive(globalScope, globalScope, callback);
+        throw new Error("STUB");
     }
 
     /**
@@ -64,9 +62,7 @@ export class ScopeIdentifiersTraverser implements IScopeIdentifiersTraverser {
         callback: TScopeIdentifiersTraverserCallback<IScopeThroughIdentifiersTraverserCallbackData>,
         analyzeScope: boolean = true
     ): void {
-        const globalScope: eslintScope.Scope = this.acquireGlobalScope(programNode, analyzeScope);
-
-        this.traverseScopeThroughIdentifiersRecursive(globalScope, globalScope, callback);
+        throw new Error("STUB");
     }
 
     /**
@@ -79,43 +75,7 @@ export class ScopeIdentifiersTraverser implements IScopeIdentifiersTraverser {
         currentScope: eslintScope.Scope,
         callback: TScopeIdentifiersTraverserCallback<IScopeIdentifiersTraverserCallbackData>
     ): void {
-        const variableScope: eslintScope.Scope = currentScope.variableScope;
-        const variableLexicalScopeNode: TNodeWithLexicalScope | null = NodeGuards.isNodeWithBlockLexicalScope(
-            variableScope.block
-        )
-            ? variableScope.block
-            : null;
-        const isGlobalDeclaration: boolean = ScopeIdentifiersTraverser.globalScopeNames.includes(variableScope.type);
-
-        if (!variableLexicalScopeNode) {
-            return;
-        }
-
-        for (const variable of currentScope.variables) {
-            if (variable.name === ScopeIdentifiersTraverser.argumentsVariableName) {
-                continue;
-            }
-
-            const isBubblingDeclaration: boolean = variable.identifiers.some(
-                (identifier: ESTree.Node) =>
-                    identifier.parentNode &&
-                    NodeGuards.isPropertyNode(identifier.parentNode) &&
-                    identifier.parentNode.shorthand
-            );
-
-            callback({
-                isGlobalDeclaration,
-                isBubblingDeclaration,
-                rootScope,
-                variable,
-                variableScope,
-                variableLexicalScopeNode
-            });
-        }
-
-        for (const childScope of currentScope.childScopes) {
-            this.traverseScopeIdentifiersRecursive(rootScope, childScope, callback);
-        }
+        throw new Error("STUB");
     }
 
     /**
@@ -128,29 +88,7 @@ export class ScopeIdentifiersTraverser implements IScopeIdentifiersTraverser {
         currentScope: eslintScope.Scope,
         callback: TScopeIdentifiersTraverserCallback<IScopeThroughIdentifiersTraverserCallbackData>
     ): void {
-        const variableScope: eslintScope.Scope = currentScope.variableScope;
-        const variableLexicalScopeNode: TNodeWithLexicalScope | null = NodeGuards.isNodeWithBlockLexicalScope(
-            variableScope.block
-        )
-            ? variableScope.block
-            : null;
-        const isGlobalDeclaration: boolean = ScopeIdentifiersTraverser.globalScopeNames.includes(variableScope.type);
-
-        if (!variableLexicalScopeNode) {
-            return;
-        }
-
-        for (const reference of currentScope.through) {
-            callback({
-                isGlobalDeclaration,
-                reference,
-                variableLexicalScopeNode
-            });
-        }
-
-        for (const childScope of currentScope.childScopes) {
-            this.traverseScopeThroughIdentifiersRecursive(rootScope, childScope, callback);
-        }
+        throw new Error("STUB");
     }
 
     /**
@@ -159,10 +97,6 @@ export class ScopeIdentifiersTraverser implements IScopeIdentifiersTraverser {
      * @returns {Scope}
      */
     private acquireGlobalScope(programNode: ESTree.Program, analyzeScope: boolean): eslintScope.Scope {
-        if (analyzeScope || !this.scopeAnalyzer.isAnalyzed(programNode)) {
-            this.scopeAnalyzer.analyze(programNode);
-        }
-
-        return this.scopeAnalyzer.acquireScope(programNode);
+        throw new Error("STUB");
     }
 }

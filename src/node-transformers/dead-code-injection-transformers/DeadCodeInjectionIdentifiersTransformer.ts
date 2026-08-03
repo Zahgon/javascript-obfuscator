@@ -61,9 +61,7 @@ export class DeadCodeInjectionIdentifiersTransformer extends AbstractNodeTransfo
             case NodeTransformationStage.RenameIdentifiers:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode && NodeGuards.isProgramNode(node)) {
-                            return this.transformNode(node);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -80,9 +78,7 @@ export class DeadCodeInjectionIdentifiersTransformer extends AbstractNodeTransfo
         this.scopeIdentifiersTraverser.traverseScopeThroughIdentifiers(
             programNode,
             (data: IScopeThroughIdentifiersTraverserCallbackData) => {
-                const { reference, variableLexicalScopeNode } = data;
-
-                this.transformScopeThroughIdentifiers(reference, variableLexicalScopeNode);
+                throw new Error("STUB");
             }
         );
 
@@ -97,14 +93,7 @@ export class DeadCodeInjectionIdentifiersTransformer extends AbstractNodeTransfo
         reference: eslintScope.Reference,
         lexicalScopeNode: TNodeWithLexicalScope
     ): void {
-        if (reference.resolved) {
-            return;
-        }
-
-        const identifier: ESTree.Identifier = reference.identifier;
-
-        this.storeIdentifierName(identifier, lexicalScopeNode);
-        this.replaceIdentifierName(identifier, lexicalScopeNode, reference);
+        throw new Error("STUB");
     }
 
     /**
@@ -112,7 +101,7 @@ export class DeadCodeInjectionIdentifiersTransformer extends AbstractNodeTransfo
      * @param {TNodeWithLexicalScope} lexicalScopeNode
      */
     private storeIdentifierName(identifierNode: ESTree.Identifier, lexicalScopeNode: TNodeWithLexicalScope): void {
-        this.identifierReplacer.storeLocalName(identifierNode, lexicalScopeNode);
+        throw new Error("STUB");
     }
 
     /**
@@ -125,9 +114,6 @@ export class DeadCodeInjectionIdentifiersTransformer extends AbstractNodeTransfo
         lexicalScopeNode: TNodeWithLexicalScope,
         reference: eslintScope.Reference
     ): void {
-        const newIdentifier: ESTree.Identifier = this.identifierReplacer.replace(identifierNode, lexicalScopeNode);
-
-        // rename of identifier
-        reference.identifier.name = newIdentifier.name;
+        throw new Error("STUB");
     }
 }

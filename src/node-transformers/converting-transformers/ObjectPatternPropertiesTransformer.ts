@@ -39,9 +39,7 @@ export class ObjectPatternPropertiesTransformer extends AbstractNodeTransformer 
             case NodeTransformationStage.Converting:
                 return {
                     enter: (node: ESTree.Node, parentNode: ESTree.Node | null): ESTree.Node | undefined => {
-                        if (parentNode && NodeGuards.isPropertyNode(node)) {
-                            return this.transformNode(node, parentNode);
-                        }
+                        throw new Error("STUB");
                     }
                 };
 
@@ -90,20 +88,6 @@ export class ObjectPatternPropertiesTransformer extends AbstractNodeTransformer 
      * @returns {boolean}
      */
     private isInsideStaticBlock(node: ESTree.Node): boolean {
-        let currentNode: ESTree.Node | undefined = node;
-
-        while (currentNode) {
-            if (NodeGuards.isStaticBlockNode(currentNode)) {
-                return true;
-            }
-
-            if (NodeGuards.isFunctionNode(currentNode) || NodeGuards.isProgramNode(currentNode)) {
-                return false;
-            }
-
-            currentNode = currentNode.parentNode;
-        }
-
-        return false;
+        throw new Error("STUB");
     }
 }

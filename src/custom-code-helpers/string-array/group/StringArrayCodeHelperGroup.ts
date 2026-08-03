@@ -80,40 +80,7 @@ export class StringArrayCodeHelperGroup extends AbstractCustomCodeHelperGroup {
      * @param {ICallsGraphData[]} callsGraphData
      */
     public appendOnFinalizingStage(nodeWithStatements: TNodeWithStatements, callsGraphData: ICallsGraphData[]): void {
-        if (!this.stringArrayStorage.getLength()) {
-            return;
-        }
-
-        // stringArray helper nodes append
-        const scopeStatements: TStatement[] = NodeAppender.getScopeStatements(nodeWithStatements);
-
-        this.appendCustomNodeIfExist(
-            CustomCodeHelper.StringArray,
-            (customCodeHelper: ICustomCodeHelper<TInitialData<StringArrayCodeHelper>>) => {
-                NodeAppender.insertAtIndex(
-                    nodeWithStatements,
-                    customCodeHelper.getNode(),
-                    this.getScopeStatementRandomIndex(scopeStatements)
-                );
-            }
-        );
-
-        // stringArrayCallsWrapper helper nodes append
-        for (const stringArrayEncoding of this.options.stringArrayEncoding) {
-            const stringArrayCallsWrapperCodeHelperName: CustomCodeHelper =
-                this.getStringArrayCallsWrapperCodeHelperName(stringArrayEncoding);
-
-            this.appendCustomNodeIfExist(
-                stringArrayCallsWrapperCodeHelperName,
-                (customCodeHelper: ICustomCodeHelper<TInitialData<StringArrayCallsWrapperCodeHelper>>) => {
-                    NodeAppender.insertAtIndex(
-                        nodeWithStatements,
-                        customCodeHelper.getNode(),
-                        this.getScopeStatementRandomIndex(scopeStatements)
-                    );
-                }
-            );
-        }
+        throw new Error("STUB");
     }
 
     public initialize(): void {
@@ -168,6 +135,6 @@ export class StringArrayCodeHelperGroup extends AbstractCustomCodeHelperGroup {
      * @returns {number}
      */
     private getScopeStatementRandomIndex(scopeStatements: TStatement[]): number {
-        return this.randomGenerator.getRandomInteger(0, Math.max(0, scopeStatements.length));
+        throw new Error("STUB");
     }
 }

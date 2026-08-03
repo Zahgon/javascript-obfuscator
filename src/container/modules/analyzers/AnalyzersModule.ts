@@ -20,52 +20,5 @@ import { ScopeAnalyzer } from '../../../analyzers/scope-analyzer/ScopeAnalyzer';
 import { StringArrayStorageAnalyzer } from '../../../analyzers/string-array-storage-analyzer/StringArrayStorageAnalyzer';
 
 export const analyzersModule: ContainerModule = new ContainerModule((options: ContainerModuleLoadOptions) => {
-    // calls graph analyzer
-    options.bind<ICallsGraphAnalyzer>(ServiceIdentifiers.ICallsGraphAnalyzer).to(CallsGraphAnalyzer).inSingletonScope();
-
-    // number numerical expression analyzer
-    options
-        .bind<INumberNumericalExpressionAnalyzer>(ServiceIdentifiers.INumberNumericalExpressionAnalyzer)
-        .to(NumberNumericalExpressionAnalyzer)
-        .inSingletonScope();
-
-    // prevailing kind of variables analyzer
-    options
-        .bind<IPrevailingKindOfVariablesAnalyzer>(ServiceIdentifiers.IPrevailingKindOfVariablesAnalyzer)
-        .to(PrevailingKindOfVariablesAnalyzer)
-        .inSingletonScope();
-
-    // scope analyzer
-    options.bind<IScopeAnalyzer>(ServiceIdentifiers.IScopeAnalyzer).to(ScopeAnalyzer).inSingletonScope();
-
-    // string array storage analyzer
-    options
-        .bind<IStringArrayStorageAnalyzer>(ServiceIdentifiers.IStringArrayStorageAnalyzer)
-        .to(StringArrayStorageAnalyzer)
-        .inSingletonScope();
-
-    // callee data extractors
-    options
-        .bind<ICalleeDataExtractor>(ServiceIdentifiers.ICalleeDataExtractor)
-        .to(FunctionDeclarationCalleeDataExtractor)
-        .whenNamed(CalleeDataExtractor.FunctionDeclarationCalleeDataExtractor);
-
-    options
-        .bind<ICalleeDataExtractor>(ServiceIdentifiers.ICalleeDataExtractor)
-        .to(FunctionExpressionCalleeDataExtractor)
-        .whenNamed(CalleeDataExtractor.FunctionExpressionCalleeDataExtractor);
-
-    options
-        .bind<ICalleeDataExtractor>(ServiceIdentifiers.ICalleeDataExtractor)
-        .to(ObjectExpressionCalleeDataExtractor)
-        .whenNamed(CalleeDataExtractor.ObjectExpressionCalleeDataExtractor);
-
-    // callee data extractor factory
-    options
-        .bind<Factory<ICalleeDataExtractor, [CalleeDataExtractor]>>(ServiceIdentifiers.Factory__ICalleeDataExtractor)
-        .toFactory(
-            InversifyContainerFacade.getCacheFactory<CalleeDataExtractor, ICalleeDataExtractor>(
-                ServiceIdentifiers.ICalleeDataExtractor
-            )
-        );
+    throw new Error("STUB");
 });

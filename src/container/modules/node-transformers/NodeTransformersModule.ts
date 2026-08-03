@@ -10,20 +10,5 @@ import { NodeTransformer } from '../../../enums/node-transformers/NodeTransforme
 import { NodeTransformerNamesGroupsBuilder } from '../../../node-transformers/NodeTransformerNamesGroupsBuilder';
 
 export const nodeTransformersModule: ContainerModule = new ContainerModule((options: ContainerModuleLoadOptions) => {
-    // node transformers factory
-    options
-        .bind<Factory<INodeTransformer, [NodeTransformer]>>(ServiceIdentifiers.Factory__INodeTransformer)
-        .toFactory(
-            InversifyContainerFacade.getCacheFactory<NodeTransformer, INodeTransformer>(
-                ServiceIdentifiers.INodeTransformer
-            )
-        );
-
-    // node transformer names groups builder
-    options
-        .bind<
-            ITransformerNamesGroupsBuilder<NodeTransformer, INodeTransformer>
-        >(ServiceIdentifiers.INodeTransformerNamesGroupsBuilder)
-        .to(NodeTransformerNamesGroupsBuilder)
-        .inSingletonScope();
+    throw new Error("STUB");
 });
